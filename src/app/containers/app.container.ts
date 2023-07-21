@@ -1,0 +1,23 @@
+import {Container} from "inversify";
+import {TYPES} from "src/app/app.types";
+import NavigationService from "src/services/navigation.service";
+import {INavigationService} from "src/services/types/navigation.interface";
+import {LocalStorageService} from "src/services/localStorage.service";
+import {IStorage} from "src/services/types/storage.interface";
+import {SessionStorageService} from "src/services/sessionStorage.service";
+import {CommonService} from "src/services/common.service";
+import {ICommonServices} from "src/services/types/common.interface";
+
+export class AppContainer extends Container {
+  constructor() {
+    super({defaultScope: "Singleton", skipBaseClassChecks: true});
+
+    this.bind<INavigationService>(TYPES.NavigationService).to(
+      NavigationService
+    );
+    this.bind<IStorage>(TYPES.LocalStorageService).to(LocalStorageService);
+    this.bind(TYPES.SessionStorageService).to(SessionStorageService);
+
+    this.bind<ICommonServices>(TYPES.CommonServices).to(CommonService);
+  }
+}
