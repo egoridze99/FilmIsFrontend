@@ -7,6 +7,8 @@ import {IStorage} from "src/services/types/storage.interface";
 import {SessionStorageService} from "src/services/sessionStorage.service";
 import {CommonService} from "src/services/common.service";
 import {ICommonServices} from "src/services/types/common.interface";
+import {AuthenticationService} from "src/services/authentication.service";
+import {IAuthenticationService} from "src/services/types/authentication.interface";
 
 export class AppContainer extends Container {
   constructor() {
@@ -16,7 +18,10 @@ export class AppContainer extends Container {
       NavigationService
     );
     this.bind<IStorage>(TYPES.LocalStorageService).to(LocalStorageService);
-    this.bind(TYPES.SessionStorageService).to(SessionStorageService);
+    this.bind<IStorage>(TYPES.SessionStorageService).to(SessionStorageService);
+    this.bind<IAuthenticationService>(TYPES.AuthenticationService).to(
+      AuthenticationService
+    );
 
     this.bind<ICommonServices>(TYPES.CommonServices).to(CommonService);
   }

@@ -3,6 +3,7 @@ import Schedule from "src/UI/pages/workspace/schedule";
 import Analytics from "src/UI/pages/admin/analytics";
 import {ROUTER_PATHS} from "src/constants/routerPaths";
 import Workspace from "src/UI/pages/workspace";
+import SignIn from "src/UI/pages/sign-in";
 
 export const ROUTER_CONFIG = {
   ROUTES: [
@@ -31,6 +32,11 @@ export const ROUTER_CONFIG = {
           title: "Расписание сеансов"
         }
       ]
+    },
+    {
+      path: ROUTER_PATHS.signIn,
+      title: "Страница входа",
+      component: SignIn
     }
   ] as RouteType[]
 };
