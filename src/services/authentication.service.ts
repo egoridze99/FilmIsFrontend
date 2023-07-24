@@ -1,4 +1,11 @@
-import {action, computed, makeObservable, observable, reaction} from "mobx";
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  reaction,
+  runInAction
+} from "mobx";
 import {inject, injectable} from "inversify";
 import {TYPES} from "src/app/app.types";
 import {IStorage} from "src/services/types/storage.interface";
@@ -30,19 +37,12 @@ export class AuthenticationService implements IAuthenticationService {
       (localStorageService) => {
         const jwt = localStorageService.getItem(AUTHENTICATION_KEY);
 
-        if (jwt) {
-          this.isAuthenticated = true;
-          this.jwt = jwt;
-        }
-      }
-    );
-
-    reaction(
-      () => this.isAuthenticated,
-      (isAuthenticated) => {
-        if (!isAuthenticated) {
-          this.navigationService.navigateToSignIn();
-        }
+        runInAction(() => {
+          if (jwt) {
+            this.isAuthenticated = true;
+            this.jwt = jwt;
+          }
+        });
       }
     );
   }

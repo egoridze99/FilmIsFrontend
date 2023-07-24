@@ -1,6 +1,6 @@
 export const ROUTER_PATHS = {
   root: "/",
-  signIn: "sign-in",
+  signIn: "/sign-in",
   workspace: "/workspace",
   workspaceSchedule: "/workspace/schedule",
   admin: "/admin",

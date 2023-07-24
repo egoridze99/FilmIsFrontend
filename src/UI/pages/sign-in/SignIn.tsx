@@ -4,7 +4,9 @@ import {observer} from "mobx-react-lite";
 import * as yup from "yup";
 import {Form, Formik} from "formik";
 import {ReactComponent as SignInIcon} from "./assets/authIcon.svg";
-import {Button, TextField} from "@mui/material";
+import {TextField} from "@mui/material";
+import {LoadingButton} from "@mui/lab";
+import SendIcon from "@mui/icons-material/Send";
 
 import "./signIn.scss";
 
@@ -77,7 +79,9 @@ const SignIn = () => {
                   />
                 </div>
                 <div className="SignIn__submit">
-                  <Button
+                  <LoadingButton
+                    loading={authenticationService.isLoading}
+                    loadingPosition="end"
                     fullWidth
                     variant="outlined"
                     disabled={
@@ -86,7 +90,7 @@ const SignIn = () => {
                     type={"submit"}
                   >
                     Войти
-                  </Button>
+                  </LoadingButton>
                 </div>
               </Form>
               <div className="SignIn__info">

@@ -4,6 +4,7 @@ import Analytics from "src/UI/pages/admin/analytics";
 import {ROUTER_PATHS} from "src/constants/routerPaths";
 import Workspace from "src/UI/pages/workspace";
 import SignIn from "src/UI/pages/sign-in";
+import {GuardsEnum} from "src/types/guards.types";
 
 export const ROUTER_CONFIG = {
   ROUTES: [
@@ -12,6 +13,7 @@ export const ROUTER_CONFIG = {
       component: Workspace,
       title: "Рабочее место",
       isProtected: true,
+      guards: [GuardsEnum.AUTHENTICATION_GUARD],
       subpages: [
         {
           path: ROUTER_PATHS.workspaceSchedule,
@@ -25,6 +27,7 @@ export const ROUTER_CONFIG = {
       path: ROUTER_PATHS.admin,
       title: "Панель администратора",
       isProtected: true,
+      guards: [GuardsEnum.AUTHENTICATION_GUARD],
       subpages: [
         {
           path: ROUTER_PATHS.adminAnalytics,

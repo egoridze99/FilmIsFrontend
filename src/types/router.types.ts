@@ -1,4 +1,5 @@
 import {FC} from "react";
+import {GuardsEnum} from "src/types/guards.types";
 
 export type RouteType = {
   path: string;
@@ -7,6 +8,7 @@ export type RouteType = {
   title: string;
   hidden?: boolean;
   isProtected?: boolean;
+  guards?: GuardsEnum[];
 };
 
 export type SubpageType = {

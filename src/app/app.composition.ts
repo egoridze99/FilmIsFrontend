@@ -13,6 +13,7 @@ const appContainer = new AppContainer();
 export const commonServices = appContainer.get<ICommonServices>(
   TYPES.CommonServices
 );
+
 /**
  * Расписание сеансов
  */
