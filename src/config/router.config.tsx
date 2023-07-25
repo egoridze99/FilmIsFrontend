@@ -11,7 +11,7 @@ export const ROUTER_CONFIG = {
     {
       path: ROUTER_PATHS.workspace,
       component: Workspace,
-      title: "Рабочее место",
+      title: "Рабочее место администратора",
       isProtected: true,
       guards: [GuardsEnum.AUTHENTICATION_GUARD],
       subpages: [
@@ -25,21 +25,22 @@ export const ROUTER_CONFIG = {
     },
     {
       path: ROUTER_PATHS.admin,
-      title: "Панель администратора",
+      title: "Панель суперпользователя",
       isProtected: true,
       guards: [GuardsEnum.AUTHENTICATION_GUARD],
       subpages: [
         {
           path: ROUTER_PATHS.adminAnalytics,
           component: Analytics,
-          title: "Расписание сеансов"
+          title: "Информация о выручке"
         }
       ]
     },
     {
       path: ROUTER_PATHS.signIn,
       title: "Страница входа",
-      component: SignIn
+      component: SignIn,
+      hidden: true
     }
   ] as RouteType[]
 };

@@ -1,7 +1,7 @@
 import React, {useLayoutEffect, useState} from "react";
 
 import "./stylesheets/core.scss";
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Outlet, Route, Routes} from "react-router-dom";
 import {ROUTER_CONFIG} from "src/config/router.config";
 import {ROUTER_PATHS} from "src/constants/routerPaths";
 import NotFound from "src/UI/pages/not-found";
@@ -53,7 +53,7 @@ function Router() {
                 key={route.path}
                 element={
                   <RouteWrapper guards={route.guards}>
-                    {route.component ? <route.component /> : undefined}
+                    {route.component ? <route.component /> : <Outlet />}
                   </RouteWrapper>
                 }
                 path={route.path}
@@ -75,7 +75,7 @@ function Router() {
               key={route.path}
               element={
                 <RouteWrapper guards={route.guards}>
-                  {route.component ? <route.component /> : undefined}
+                  {route.component ? <route.component /> : <Outlet />}
                 </RouteWrapper>
               }
               path={route.path}

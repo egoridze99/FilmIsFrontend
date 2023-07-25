@@ -1,15 +1,16 @@
 import React from "react";
+import {Outlet} from "react-router-dom";
+import {AppLayout} from "src/layouts";
 
 import "./workspace.scss";
-import {Outlet} from "react-router-dom";
+import SubpagesToolbar from "src/UI/components/SubpagesToolbar";
 
 const Workspace = () => {
   return (
-    <>
-      <div className="">It's workspace wrapper</div>
-
+    <AppLayout>
+      <SubpagesToolbar />
       <Outlet></Outlet>
-    </>
+    </AppLayout>
   );
 };
 

@@ -1,0 +1,42 @@
+import React from "react";
+import {AppBar, Toolbar} from "@mui/material";
+import {RouteType} from "src/types/router.types";
+import {useActiveRoute} from "src/hooks/useActiveRoute";
+import Link from "src/UI/components/Link";
+
+import "./subpagesToolbar.scss";
+import classNames from "classnames";
+
+type SubpagesToolbarProps = {
+  customContent?: React.ReactNode;
+  routes: RouteType[];
+};
+
+const SubpagesToolbar = () => {
+  const [page, activeSubpage] = useActiveRoute();
+
+  return (
+    <AppBar position={"static"} className="SubpagesToolbar">
+      <Toolbar variant="dense" className="SubpagesToolbar__toolbar">
+        <div className="SubpagesToolbar__navigation">
+          <ul className="SubpagesToolbar__list">
+            {page?.subpages?.map((subpage) => (
+              <li
+                className={classNames("SubpagesToolbar__list-item", {
+                  "SubpagesToolbar__list-item_active": subpage === activeSubpage
+                })}
+              >
+                <Link to={subpage.path} className="SubpagesToolbar__link">
+                  {subpage.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="SubpagesToolbar__custom"></div>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default SubpagesToolbar;

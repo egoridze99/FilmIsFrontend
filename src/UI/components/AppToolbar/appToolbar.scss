@@ -1,0 +1,47 @@
+.AppToolbar {
+  z-index: 1;
+
+  &__toolbar {
+    height: 50px;
+
+    display: flex;
+  }
+
+  &__navigation {
+    display: flex;
+    align-items: center;
+  }
+
+  &__nav {
+    &-list {
+      list-style: none;
+      display: flex;
+      padding: 0;
+      margin-left: 20px;
+
+      &-item {
+        margin-right: 10px;
+        border-radius: 4px;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.1);
+        }
+
+        &_active {
+          background: rgba(0, 0, 0, 0.2);
+
+          &:hover {
+            background: rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+    }
+
+    &-link {
+      color: #fff;
+      text-decoration: none;
+      display: block;
+      padding: 4px 8px;
+    }
+  }
+}

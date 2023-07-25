@@ -6,7 +6,6 @@ import {Form, Formik} from "formik";
 import {ReactComponent as SignInIcon} from "./assets/authIcon.svg";
 import {TextField} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
-import SendIcon from "@mui/icons-material/Send";
 
 import "./signIn.scss";
 
