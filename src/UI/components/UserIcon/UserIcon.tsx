@@ -1,10 +1,15 @@
 import React from "react";
 import {observer} from "mobx-react-lite";
 import {useCommonServices} from "src/contexts/commonServices.context";
-import {Avatar, IconButton, Menu, MenuItem, Tooltip} from "@mui/material";
+import {
+  Avatar,
+  IconButton,
+  Menu,
+  MenuItem,
+  MenuList,
+  Tooltip
+} from "@mui/material";
 import {indigo} from "@mui/material/colors";
-
-import "./userIcon.scss";
 
 const UserIcon = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -38,10 +43,16 @@ const UserIcon = () => {
         MenuListProps={{
           "aria-labelledby": "basic-button"
         }}
+        sx={{width: 500}}
       >
-        <MenuItem onClick={() => authenticationService.logout()}>
-          Выйти
-        </MenuItem>
+        <MenuList sx={{padding: 0, width: 100}}>
+          <MenuItem
+            onClick={() => authenticationService.logout()}
+            sx={{width: "100%"}}
+          >
+            Выйти
+          </MenuItem>
+        </MenuList>
       </Menu>
     </div>
   );

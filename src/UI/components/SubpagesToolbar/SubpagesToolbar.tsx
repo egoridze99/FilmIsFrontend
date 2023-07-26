@@ -1,6 +1,5 @@
 import React from "react";
 import {AppBar, Toolbar} from "@mui/material";
-import {RouteType} from "src/types/router.types";
 import {useActiveRoute} from "src/hooks/useActiveRoute";
 import Link from "src/UI/components/Link";
 
@@ -9,10 +8,9 @@ import classNames from "classnames";
 
 type SubpagesToolbarProps = {
   customContent?: React.ReactNode;
-  routes: RouteType[];
 };
 
-const SubpagesToolbar = () => {
+const SubpagesToolbar: React.FC<SubpagesToolbarProps> = ({customContent}) => {
   const [page, activeSubpage] = useActiveRoute();
 
   return (
@@ -33,7 +31,9 @@ const SubpagesToolbar = () => {
             ))}
           </ul>
         </div>
-        <div className="SubpagesToolbar__custom"></div>
+        {customContent && (
+          <div className="SubpagesToolbar__custom">{customContent}</div>
+        )}
       </Toolbar>
     </AppBar>
   );
