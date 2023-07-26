@@ -6,6 +6,7 @@ import Link from "src/UI/components/Link";
 import classNames from "classnames";
 
 import "src/UI/components/AppToolbar/appToolbar.scss";
+import UserIcon from "src/UI/components/UserIcon";
 
 type AppToolbarProps = {
   routes: RouteType[];
@@ -43,9 +44,12 @@ const AppToolbar: React.FC<AppToolbarProps> = ({routes, customContent}) => {
             </ul>
           </nav>
         </div>
-        {customContent && (
-          <div className="AppToolbar__custom">{customContent}</div>
-        )}
+        <div className="AppToolbar__controls">
+          {customContent && (
+            <div className="AppToolbar__custom">{customContent}</div>
+          )}
+          <UserIcon />
+        </div>
       </Toolbar>
     </AppBar>
   );
