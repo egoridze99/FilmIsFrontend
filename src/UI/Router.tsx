@@ -29,18 +29,6 @@ function Router() {
       navigator={navigationService.history}
     >
       <Routes>
-        <Route
-          path={ROUTER_PATHS.workspace}
-          element={<Navigate to={ROUTER_PATHS.workspaceSchedule} />}
-        />
-        <Route
-          path={ROUTER_PATHS.admin}
-          element={<Navigate to={ROUTER_PATHS.adminAnalytics} />}
-        />
-        <Route
-          path={ROUTER_PATHS.root}
-          element={<Navigate to={ROUTER_PATHS.workspace} />}
-        />
         {ROUTER_CONFIG.ROUTES.map((route) => {
           const isProtected = route.guards && route.guards.length > 0;
           const subpages = route.subpages;
@@ -66,7 +54,6 @@ function Router() {
               key={subpage.path}
               path={subpage.path}
               element={<subpage.component />}
-              index={subpage.index}
             />
           ));
 
@@ -80,10 +67,20 @@ function Router() {
               }
               path={route.path}
             >
+              {route.navigateToNestedPath && (
+                <Route
+                  index
+                  element={<Navigate to={route.navigateToNestedPath} replace />}
+                />
+              )}
               {subroutes}
             </Route>
           );
         })}
+        <Route
+          path={ROUTER_PATHS.root}
+          element={<Navigate to={ROUTER_PATHS.workspace} />}
+        />
         <Route path={"*"} element={<NotFound />} />
       </Routes>
     </BaseRouter>

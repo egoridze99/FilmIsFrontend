@@ -9,11 +9,11 @@ export type RouteType = {
   hidden?: boolean;
   isProtected?: boolean;
   guards?: GuardsEnum[];
+  navigateToNestedPath?: string;
 };
 
 export type SubpageType = {
   path: string;
   component: FC;
   title: string;
-  index?: boolean;
 };

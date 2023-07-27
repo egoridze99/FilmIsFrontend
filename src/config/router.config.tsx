@@ -14,6 +14,7 @@ export const ROUTER_CONFIG = {
       title: "Рабочее место администратора",
       isProtected: true,
       guards: [GuardsEnum.AUTHENTICATION_GUARD],
+      navigateToNestedPath: ROUTER_PATHS.workspaceSchedule,
       subpages: [
         {
           path: ROUTER_PATHS.workspaceSchedule,
@@ -28,6 +29,7 @@ export const ROUTER_CONFIG = {
       title: "Панель суперпользователя",
       isProtected: true,
       guards: [GuardsEnum.AUTHENTICATION_GUARD],
+      navigateToNestedPath: ROUTER_PATHS.adminAnalytics,
       subpages: [
         {
           path: ROUTER_PATHS.adminAnalytics,
