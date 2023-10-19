@@ -22,7 +22,7 @@
     "noImplicitAny": false,
     "useUnknownInCatchVariables": false,
     "strictPropertyInitialization": false,
-    "sourceMap": true
+    "sourceMap": true,
   },
   "include": [
     "src"

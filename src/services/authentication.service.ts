@@ -22,9 +22,6 @@ export class AuthenticationService implements IAuthenticationService {
   @observable
   private readonly localStorageService: IStorage;
 
-  @inject(TYPES.NavigationService)
-  private readonly navigationService: INavigationService;
-
   @observable isLoading: boolean = false;
   @observable isAuthenticated: boolean = false;
   @observable private jwt: string | null = null;
@@ -65,6 +62,7 @@ export class AuthenticationService implements IAuthenticationService {
         login,
         password
       });
+
       this.jwt = response.data.jwt;
       this.localStorageService.setItem(AUTHENTICATION_KEY, this.jwt as string);
       this.isAuthenticated = true;

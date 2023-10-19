@@ -13,7 +13,7 @@ export class CommonService implements ICommonServices {
   @inject(TYPES.LocalStorageService)
   readonly localStorageService: IStorage;
 
-  @inject(TYPES.LocalStorageService)
+  @inject(TYPES.SessionStorageService)
   readonly sessionStorageService: IStorage;
 
   @inject(TYPES.AuthenticationService)

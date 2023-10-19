@@ -22,6 +22,7 @@ const initialFormValues = {
 const SignIn = () => {
   const [error, setError] = React.useState<string>("");
   const {authenticationService, navigationService} = useCommonServices();
+  const isLoading = authenticationService.isLoading;
 
   const handleSubmit = async (formValues: typeof initialFormValues) => {
     const {error} = await authenticationService.signIn(
@@ -79,7 +80,7 @@ const SignIn = () => {
                 </div>
                 <div className="SignIn__submit">
                   <LoadingButton
-                    loading={authenticationService.isLoading}
+                    loading={isLoading}
                     loadingPosition="end"
                     fullWidth
                     variant="outlined"

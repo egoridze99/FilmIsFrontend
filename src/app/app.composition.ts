@@ -5,6 +5,8 @@ import {ScheduleContainer} from "src/app/containers/schedule.container";
 import {TYPES} from "src/app/app.types";
 import {ScheduleDataClient} from "src/stores/schedule/schedule.dataClient";
 import {ICommonServices} from "src/services/types/common.interface";
+import {WorkspaceEnvContainer} from "src/app/containers/workspaceEnv.container";
+import {WorkspaceEnvRepository} from "src/stores/workspaceEnv/workspaceEnv.repository";
 
 /**
  * Сервисы
@@ -12,6 +14,15 @@ import {ICommonServices} from "src/services/types/common.interface";
 const appContainer = new AppContainer();
 export const commonServices = appContainer.get<ICommonServices>(
   TYPES.CommonServices
+);
+
+/**
+ * Окружение рабочего места администратора
+ */
+const workspaceEnvContainer = new WorkspaceEnvContainer();
+workspaceEnvContainer.parent = appContainer;
+export const workspaceEnv = workspaceEnvContainer.get<WorkspaceEnvRepository>(
+  TYPES.WorkspaceEnvRepository
 );
 
 /**

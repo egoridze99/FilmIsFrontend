@@ -1,8 +1,10 @@
 import {IStorage} from "src/services/types/storage.interface";
 import {isJSON} from "src/utils/isJSON";
+import {injectable, unmanaged} from "inversify";
 
-export abstract class AbstractStorage implements IStorage {
-  protected constructor(private readonly storage: Storage) {}
+@injectable()
+export class AbstractStorage implements IStorage {
+  constructor(@unmanaged() private readonly storage: Storage) {}
 
   setItem(key: string, value: any) {
     const finalValue =

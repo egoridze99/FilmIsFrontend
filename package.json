@@ -25,6 +25,7 @@
     "jwt-decode": "^3.1.2",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.3",
+    "moment": "^2.29.4",
     "node-sass": "4.14.1",
     "prettier": "^3.0.0",
     "ramda": "^0.29.0",
@@ -50,7 +51,11 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "import/no-anonymous-default-export": "off",
+      "react-hooks/exhaustive-deps": "off"
+    }
   },
   "browserslist": {
     "production": [
