@@ -6,4 +6,8 @@ import {ScheduleDataClient} from "src/stores/schedule/schedule.dataClient";
 export class ScheduleDataService {
   @inject(TYPES.ScheduleDataClient)
   private readonly dataClient: ScheduleDataClient;
+
+  loadReservations(cinemaId: number, roomId: number | undefined, date: Date) {
+    this.dataClient.loadReservations(cinemaId, roomId, date);
+  }
 }

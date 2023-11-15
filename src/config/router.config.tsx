@@ -5,6 +5,7 @@ import {ROUTER_PATHS} from "src/constants/routerPaths";
 import Workspace from "src/UI/pages/workspace";
 import SignIn from "src/UI/pages/sign-in";
 import {GuardsEnum} from "src/types/guards.types";
+import Queue from "src/UI/pages/workspace/queue";
 
 export const ROUTER_CONFIG = {
   ROUTES: [
@@ -19,8 +20,12 @@ export const ROUTER_CONFIG = {
         {
           path: ROUTER_PATHS.workspaceSchedule,
           component: Schedule,
-          title: "Расписание сеансов",
-          index: true
+          title: "Расписание сеансов"
+        },
+        {
+          path: ROUTER_PATHS.workspaceQueue,
+          component: Queue,
+          title: "Очередь"
         }
       ]
     },

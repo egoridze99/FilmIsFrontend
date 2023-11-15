@@ -1,10 +1,15 @@
 import React from "react";
 import {Outlet} from "react-router-dom";
 import {AppLayout} from "src/layouts";
+import SettingsIcon from "@mui/icons-material/Settings";
+import {useDomainStore} from "src/contexts/store.context";
+import {IconButton} from "@mui/material";
+import {WorkspaceContext} from "src/UI/pages/workspace/Workspace.types";
 
 import "./workspace.scss";
-import SubpagesToolbar from "src/UI/components/SubpagesToolbar";
-import {useDomainStore} from "src/contexts/store.context";
+import WorkspaceSettingsPanel from "src/UI/pages/workspace/components/WorkspaceSettingsPanel";
+import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
+import {observer} from "mobx-react-lite";
 
 const Workspace = () => {
   const {workspaceEnv} = useDomainStore();
@@ -17,12 +22,37 @@ const Workspace = () => {
     };
   }, []);
 
+  const [isSettingsPanelOpen, setIsSettingsPanelOpen] = React.useState(false);
+  const toggleSettingsPanel = (val?: boolean) => {
+    if (val === undefined) {
+      setIsSettingsPanelOpen((prev) => !prev);
+    } else {
+      setIsSettingsPanelOpen(val);
+    }
+  };
+
   return (
-    <AppLayout>
-      <SubpagesToolbar />
-      <Outlet></Outlet>
+    <AppLayout
+      toolbarCustomContent={
+        <div>
+          <IconButton onClick={() => toggleSettingsPanel()}>
+            <SettingsIcon />
+          </IconButton>
+        </div>
+      }
+    >
+      <WorkspaceSettingsPanel
+        isOpen={isSettingsPanelOpen}
+        toggleIsOpen={toggleSettingsPanel}
+        envModel={workspaceEnv.envModel as WorkspaceEnvModel}
+      />
+      <Outlet
+        context={
+          {closeSettings: () => toggleSettingsPanel(false)} as WorkspaceContext
+        }
+      />
     </AppLayout>
   );
 };
 
-export default Workspace;
+export default observer(Workspace);

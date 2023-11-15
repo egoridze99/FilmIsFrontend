@@ -13,6 +13,8 @@ export const TYPES = {
    * Расписание сеансов
    */
   ScheduleDataClient: Symbol.for("ScheduleDataClient"),
+  ScheduleDataService: Symbol.for("ScheduleDataService"),
+  ScheduleRepository: Symbol.for("ScheduleRepository"),
 
   /**
    * WorkspaceEnv

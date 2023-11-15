@@ -1,9 +1,9 @@
 import {createContext, useContext} from "react";
-import {scheduleDataClient, workspaceEnv} from "src/app/app.composition";
+import {schedule, workspaceEnv} from "src/app/app.composition";
 
 const domainStore = {
-  workspaceEnv: workspaceEnv,
-  schedule: scheduleDataClient
+  workspaceEnv,
+  schedule
 };
 
 const domainStoreContext = createContext(domainStore);

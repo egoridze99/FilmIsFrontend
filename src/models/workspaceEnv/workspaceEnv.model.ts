@@ -1,4 +1,10 @@
-import {action, makeObservable, observable} from "mobx";
+import {
+  action,
+  IReactionDisposer,
+  makeObservable,
+  observable,
+  reaction
+} from "mobx";
 import {Cinema, Room} from "src/types/workspace.types";
 import {IStorage} from "src/services/types/storage.interface";
 import {
@@ -13,8 +19,10 @@ export class WorkspaceEnvModel {
   cinemas: Cinema[];
 
   @observable cinema: Cinema;
-  @observable room: Room;
+  @observable room: Room | null;
   @observable date: Date;
+
+  reactionDisposers: IReactionDisposer[] = [];
 
   constructor(
     private readonly storage: IStorage,
@@ -24,6 +32,8 @@ export class WorkspaceEnvModel {
 
     this.cinemas = cinemas;
 
+    this.registerReactions();
+
     const currentCinemaId = storage.getItem(CURRENT_CINEMA_ID);
     const cinema = cinemas.find((c) => c.id === currentCinemaId);
     if (!cinema) {
@@ -31,7 +41,6 @@ export class WorkspaceEnvModel {
     } else {
       this.cinema = cinema;
     }
-    this.storage.setItem(CURRENT_CINEMA_ID, this.cinema.id.toString());
 
     const currentRoomId = storage.getItem(CURRENT_ROOM_ID);
     const room = this.cinema.rooms.find((r) => r.id === currentRoomId);
@@ -40,7 +49,6 @@ export class WorkspaceEnvModel {
     } else {
       this.room = room;
     }
-    this.storage.setItem(CURRENT_ROOM_ID, this.room.id.toString());
 
     const currentDate = storage.getItem(CURRENT_DATE);
     if (currentDate) {
@@ -48,13 +56,62 @@ export class WorkspaceEnvModel {
     } else {
       this.date = new Date();
     }
-    this.storage.setItem(CURRENT_DATE, moment(this.date).format(DATE_FORMAT));
   }
 
-  @action
-  reset() {
+  @action setCinema(cinema: Cinema) {
+    this.cinema = cinema;
+    this.setRoom(cinema.rooms[0]);
+  }
+
+  @action setRoom(room: Room | null) {
+    this.room = room;
+  }
+
+  @action setDate(date: Date) {
+    this.date = date;
+  }
+
+  @action reset() {
+    this.reactionDisposers.forEach((rd) => rd());
+    this.reactionDisposers = [];
+
     this.storage.removeItem(CURRENT_CINEMA_ID);
     this.storage.removeItem(CURRENT_ROOM_ID);
     this.storage.removeItem(CURRENT_DATE);
+  }
+
+  private registerReactions() {
+    this.reactionDisposers.push(
+      reaction(
+        () => this.cinema,
+        () => {
+          this.storage.setItem(CURRENT_CINEMA_ID, this.cinema.id.toString());
+        }
+      )
+    );
+
+    this.reactionDisposers.push(
+      reaction(
+        () => this.room,
+        () => {
+          this.storage.setItem(
+            CURRENT_ROOM_ID,
+            this?.room?.id?.toString() || "-1"
+          );
+        }
+      )
+    );
+
+    this.reactionDisposers.push(
+      reaction(
+        () => this.date,
+        () => {
+          this.storage.setItem(
+            CURRENT_DATE,
+            moment(this.date).format(DATE_FORMAT)
+          );
+        }
+      )
+    );
   }
 }

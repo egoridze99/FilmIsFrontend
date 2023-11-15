@@ -15,7 +15,10 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   return (
     <div className="AppLayout">
       <div className="AppLayout__toolbar">
-        <AppToolbar routes={ROUTER_CONFIG.ROUTES} />
+        <AppToolbar
+          routes={ROUTER_CONFIG.ROUTES}
+          customContent={toolbarCustomContent}
+        />
       </div>
 
       <div className="AppLayout__content">{children}</div>
