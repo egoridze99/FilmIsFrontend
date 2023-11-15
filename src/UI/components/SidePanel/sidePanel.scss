@@ -1,0 +1,49 @@
+.SidePanel {
+  margin: 0 !important;
+  position: fixed;
+  right: 0;
+  box-sizing: border-box;
+  background: white;
+  z-index: 1000;
+  border-left: 1px solid #dfdee2;
+
+  &_hidden {
+    display: block;
+  }
+
+  &_bottom {
+    bottom: 0;
+    border-top: 1px solid #dfdee2;
+  }
+
+  &_top {
+    top: 0;
+    border-bottom: 1px solid #dfdee2;
+  }
+
+  &_middle {
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 1px solid #dfdee2;
+    border-bottom: 1px solid #dfdee2;
+  }
+
+  &__close {
+    position: absolute;
+
+    button {
+      width: unset;
+      height: unset;
+      padding: 0;
+      background: none;
+
+      &:hover {
+        background: none;
+      }
+    }
+  }
+
+  &__body {
+    padding: 20px;
+  }
+}
