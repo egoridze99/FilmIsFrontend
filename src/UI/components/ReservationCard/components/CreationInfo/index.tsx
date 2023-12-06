@@ -14,7 +14,7 @@ export type CreationInfoProps = {
     date: string;
     created_at: string;
     id: number;
-    author: {fullname: string; status: UserStatus};
+    author: {fullname: string; status?: UserStatus};
     certificate?: Certificate | null;
   };
 };

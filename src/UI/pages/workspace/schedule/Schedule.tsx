@@ -34,7 +34,7 @@ const Schedule = () => {
           {schedule.reservations.map((reservation) => (
             <ReservationCard
               title={reservation.room.name}
-              reservation={reservation}
+              item={reservation}
               cells={reservationCardCells}
               className="Schedule__reservation"
             />

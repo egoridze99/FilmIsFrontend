@@ -1,5 +1,4 @@
 import React from "react";
-import {Reservation} from "src/types/shared.types";
 import classNames from "classnames";
 import {Box, Grid} from "@mui/material";
 import {ReservationCardCell} from "src/UI/components/ReservationCard/ReservationCard.types";
@@ -7,16 +6,16 @@ import {CardContainer, CreationInfo, Title, Panel} from "./components";
 
 import "./reservationCard.scss";
 
-export type ReservationCardProps = {
+export type ReservationCardProps<T extends object = any> = {
   title: React.ReactNode;
-  reservation: Reservation;
-  cells: ReservationCardCell[];
+  item: T;
+  cells: ReservationCardCell<T>[];
 
   className?: string;
 };
 
 const ReservationCard: React.FC<ReservationCardProps> = ({
-  reservation,
+  item,
   title,
   cells,
   className
@@ -24,17 +23,16 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
   return (
     <CardContainer classname={classNames(className)}>
       <Title>{title}</Title>
-      <CreationInfo data={reservation} />
+      <CreationInfo data={item} />
       <Box flexGrow={1} mt={2}>
         <Grid container spacing={2}>
           {cells.map((cell) =>
-            (cell.shouldRender && cell.shouldRender(cell.id, reservation)) ??
-            true ? (
+            (cell.shouldRender && cell.shouldRender(cell.id, item)) ?? true ? (
               <Grid
                 item
                 md={
                   typeof cell.size === "function"
-                    ? cell.size(cell.id, reservation)
+                    ? cell.size(cell.id, item)
                     : cell.size
                 }
               >
@@ -43,11 +41,11 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
                   withPadding={cell.align && cell.align !== "center"}
                 >
                   {cell.render ? (
-                    cell.render(cell.id, reservation)
+                    cell.render(cell.id, item)
                   ) : (
                     <>
                       {cell.title && `${cell.title}: `}
-                      {reservation[cell.id] as string}
+                      {item[cell.id] as string}
                     </>
                   )}
                 </Panel>

@@ -59,4 +59,4 @@ export const reservationCardCells = [
     shouldRender: (key, data) => !!data[key],
     render: (_, data) => `Сертификат: ${data.certificate?.sum}`
   }
-] as ReservationCardCell[];
+] as ReservationCardCell<Reservation>[];

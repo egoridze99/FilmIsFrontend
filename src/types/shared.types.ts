@@ -79,6 +79,38 @@ export type Certificate = {
   cinema: Cinema;
 };
 
+export type QueueItem = {
+  author: UserInfoData;
+  contact: GuestInfoData;
+  created_at: string;
+  date: string;
+  duration: number;
+  end_time: string | null;
+  guests_count: number;
+  has_another_reservation: boolean;
+  id: number;
+  note: string;
+  reservation_id: number | null;
+  rooms: Room[];
+  start_time: string;
+  status: QueueItemStatusEnum;
+  view_by: QueueViewLog[];
+};
+
+export type QueueViewLog = {
+  reservation_id: number;
+  created_at: string;
+  user: UserInfo;
+};
+
+export type UserInfo = {
+  id: number;
+  login: string;
+  role: Roles;
+  status: UserStatus;
+  fullname: string;
+};
+
 export enum CertificateStatusEnum {
   active = "active",
   redeemed = "redeemed"
@@ -95,4 +127,12 @@ export enum ReservationStatus {
   waiting = "waiting",
   finished = "finished",
   canceled = "canceled"
+}
+
+export enum QueueItemStatusEnum {
+  active = "active",
+  expired = "expired",
+  reserved = "reserved",
+  canceled = "canceled",
+  waiting = "waiting"
 }

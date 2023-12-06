@@ -1,16 +1,12 @@
-import {Reservation} from "src/types/shared.types";
 import React from "react";
 import {PanelProps} from "src/UI/components/ReservationCard/components";
 
-export type ReservationCardCell = {
-  id: keyof Reservation;
+export type ReservationCardCell<T extends object> = {
+  id: keyof T;
   title?: string;
-  size: ((key: keyof Reservation, reservation: Reservation) => number) | number;
-  render?: (
-    key: keyof Reservation,
-    reservation: Reservation
-  ) => React.ReactNode;
-  shouldRender?: (key: keyof Reservation, reservation: Reservation) => boolean;
+  size: ((key: keyof T, data: T) => number) | number;
+  render?: (key: keyof T, data: T) => React.ReactNode;
+  shouldRender?: (key: keyof T, data: T) => boolean;
   align?: PanelProps["align"];
   postfix?: React.ReactNode;
 };
