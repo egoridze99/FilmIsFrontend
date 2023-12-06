@@ -6,9 +6,8 @@ import {useOutletContext} from "react-router-dom";
 import {WorkspaceContext} from "src/UI/pages/workspace/Workspace.types";
 import {useDomainStore} from "src/contexts/store.context";
 import {observer} from "mobx-react-lite";
-import ReservationCard from "src/UI/components/ReservationCard";
 import ContentContainer from "src/UI/components/ContentContainer";
-import {reservationCardCells} from "src/UI/pages/workspace/schedule/constants/reservationCardCells";
+import ScheduleReservationCard from "src/UI/pages/workspace/schedule/components/ScheduleReservationCard";
 
 import "./schedule.scss";
 
@@ -32,11 +31,9 @@ const Schedule = () => {
       <div className="Schedule">
         <ContentContainer>
           {schedule.reservations.map((reservation) => (
-            <ReservationCard
-              title={reservation.room.name}
-              item={reservation}
-              cells={reservationCardCells}
-              className="Schedule__reservation"
+            <ScheduleReservationCard
+              reservation={reservation}
+              classname="Schedule__reservation"
             />
           ))}
         </ContentContainer>

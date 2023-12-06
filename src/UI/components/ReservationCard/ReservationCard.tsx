@@ -11,6 +11,7 @@ export type ReservationCardProps<T extends object = any> = {
   item: T;
   cells: ReservationCardCell<T>[];
 
+  extraContent?: React.ReactNode;
   className?: string;
 };
 
@@ -18,7 +19,8 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
   item,
   title,
   cells,
-  className
+  className,
+  extraContent
 }) => {
   return (
     <CardContainer classname={classNames(className)}>
@@ -54,6 +56,11 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
           )}
         </Grid>
       </Box>
+      {extraContent && (
+        <Box flexGrow={1} mt={2}>
+          {extraContent}
+        </Box>
+      )}
     </CardContainer>
   );
 };

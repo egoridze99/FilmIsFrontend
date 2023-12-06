@@ -5,7 +5,7 @@ import "./panel.scss";
 import classNames from "classnames";
 
 export type PanelProps = {
-  children: JSX.Element | JSX.Element[] | React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
 
   withPadding?: boolean;
   classname?: string;

@@ -8,6 +8,7 @@ type ProtectedRouteProps = {
   children?: React.ReactNode;
 };
 
+// @ts-ignore
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({guards, children}) => {
   if (!guards) {
     return <>{children}</>;

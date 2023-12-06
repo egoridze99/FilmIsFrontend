@@ -3,7 +3,7 @@ import React, {JSX} from "react";
 import "./contentContainer.scss";
 
 type ContentContainerProps = {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode | React.ReactNode[];
 };
 
 const ContentContainer: React.FC<ContentContainerProps> = ({children}) => {

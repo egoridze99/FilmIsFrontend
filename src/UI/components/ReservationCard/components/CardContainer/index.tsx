@@ -5,7 +5,7 @@ import classNames from "classnames";
 import "./cardContainer.scss";
 
 export type CardContainerProps = {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode | React.ReactNode[];
   classname?: string;
 };
 
