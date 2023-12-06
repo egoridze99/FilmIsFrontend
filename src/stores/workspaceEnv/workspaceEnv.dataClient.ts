@@ -1,6 +1,6 @@
 import {injectable} from "inversify";
 import {axios} from "src/axios";
-import {Cinema} from "src/types/workspace.types";
+import {Cinema} from "src/types/shared.types";
 
 @injectable()
 export class WorkspaceEnvDataClient {

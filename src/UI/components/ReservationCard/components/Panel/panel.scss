@@ -1,0 +1,21 @@
+.ReservationCardPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  height: 55px;
+  box-sizing: border-box;
+  font-size: 14px;
+
+  &_left-align {
+    justify-content: flex-start;
+  }
+
+  &_right-align {
+    justify-content: flex-end;
+  }
+
+  &_with-padding {
+    padding: 10px;
+  }
+}

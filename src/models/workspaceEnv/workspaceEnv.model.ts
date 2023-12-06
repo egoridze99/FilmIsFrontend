@@ -1,11 +1,12 @@
 import {
   action,
+  computed,
   IReactionDisposer,
   makeObservable,
   observable,
   reaction
 } from "mobx";
-import {Cinema, Room} from "src/types/workspace.types";
+import {Cinema, Room} from "src/types/shared.types";
 import {IStorage} from "src/services/types/storage.interface";
 import {
   CURRENT_CINEMA_ID,
@@ -14,6 +15,7 @@ import {
 } from "src/constants/storageKeys";
 import moment from "moment";
 import {DATE_FORMAT} from "src/constants/date";
+import {convertArrayToDict} from "src/utils/convertArrayToDict";
 
 export class WorkspaceEnvModel {
   cinemas: Cinema[];
@@ -56,6 +58,14 @@ export class WorkspaceEnvModel {
     } else {
       this.date = new Date();
     }
+  }
+
+  @computed get cinemasAsDict() {
+    return convertArrayToDict(this.cinemas, "id");
+  }
+
+  @computed get roomsInCurrentCinemaAsDict() {
+    return convertArrayToDict(this.cinema.rooms, "id");
   }
 
   @action setCinema(cinema: Cinema) {

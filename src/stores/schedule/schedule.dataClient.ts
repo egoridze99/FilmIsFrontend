@@ -1,6 +1,7 @@
 import {injectable} from "inversify";
 import {axios} from "src/axios";
 import moment from "moment";
+import {Reservation} from "src/types/shared.types";
 
 @injectable()
 export class ScheduleDataClient {
@@ -8,8 +9,8 @@ export class ScheduleDataClient {
     cinemaId: number,
     roomId: number | undefined,
     date: Date
-  ) {
-    const response = await axios.get("/reservation", {
+  ): Promise<Reservation[]> {
+    const response = await axios.get<Reservation[]>("/reservation", {
       params: {
         room_id: roomId,
         date: moment(date).format("YYYY-MM-DD"),
@@ -17,6 +18,6 @@ export class ScheduleDataClient {
       }
     });
 
-    console.log(response.data);
+    return response.data;
   }
 }

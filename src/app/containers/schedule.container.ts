@@ -3,6 +3,7 @@ import {TYPES} from "src/app/app.types";
 import {ScheduleDataClient} from "src/stores/schedule/schedule.dataClient";
 import {ScheduleDataService} from "src/stores/schedule/schedule.dataService";
 import {ScheduleRepository} from "src/stores/schedule/schedule.repository";
+import {ScheduleDataStorage} from "src/stores/schedule/schedule.dataStorage";
 
 export class ScheduleContainer extends Container {
   constructor() {
@@ -11,5 +12,6 @@ export class ScheduleContainer extends Container {
     this.bind(TYPES.ScheduleDataClient).to(ScheduleDataClient);
     this.bind(TYPES.ScheduleDataService).to(ScheduleDataService);
     this.bind(TYPES.ScheduleRepository).to(ScheduleRepository);
+    this.bind(TYPES.ScheduleDataStorage).to(ScheduleDataStorage);
   }
 }

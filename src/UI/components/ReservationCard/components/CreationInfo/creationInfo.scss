@@ -1,0 +1,27 @@
+.CreationInfo {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+
+  &__list-item {
+    position: relative;
+    margin: 0 20px 0 0;
+    color: #7e7e83;
+    font-size: 14px;
+
+    &:not(:last-child) {
+      &:after {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 15px;
+        background: #7e7e83;
+        position: absolute;
+        right: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}

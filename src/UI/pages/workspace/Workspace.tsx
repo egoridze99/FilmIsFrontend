@@ -36,7 +36,7 @@ const Workspace = () => {
       toolbarCustomContent={
         <div>
           <IconButton onClick={() => toggleSettingsPanel()}>
-            <SettingsIcon />
+            <SettingsIcon color={"inherit"} style={{color: "#fff"}} />
           </IconButton>
         </div>
       }

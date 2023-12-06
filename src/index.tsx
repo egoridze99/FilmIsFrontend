@@ -19,13 +19,11 @@ configure({
 
 const RootElement = () => {
   return (
-    <React.StrictMode>
-      <CssBaseline>
-        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="ru">
-          <Router />
-        </LocalizationProvider>
-      </CssBaseline>
-    </React.StrictMode>
+    <CssBaseline>
+      <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="ru">
+        <Router />
+      </LocalizationProvider>
+    </CssBaseline>
   );
 };
 

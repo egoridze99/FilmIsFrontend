@@ -10,7 +10,7 @@ import {
   Select,
   SelectChangeEvent
 } from "@mui/material";
-import {Cinema} from "src/types/workspace.types";
+import {Cinema} from "src/types/shared.types";
 import moment from "moment";
 import Datepicker from "src/UI/components/Datepicker";
 
@@ -30,13 +30,19 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
 }) => {
   const handleCinemaChange = (event: SelectChangeEvent<number>) => {
     const cinemaId = event.target.value;
-    const cinema = envModel.cinemas.find((c) => c.id === cinemaId);
+    const cinema = envModel.cinemasAsDict[cinemaId];
+
+    if (!cinema) {
+      return;
+    }
+
     envModel.setCinema(cinema as Cinema);
   };
 
   const handleRoomChange = (event: SelectChangeEvent<number>) => {
     const roomId = event.target.value;
-    const room = envModel.cinema.rooms.find((r) => r.id === roomId);
+    const room = envModel.cinemasAsDict[roomId];
+
     envModel.setRoom(room || null);
   };
 

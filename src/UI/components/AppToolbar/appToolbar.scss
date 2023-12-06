@@ -45,4 +45,9 @@
       padding: 4px 8px;
     }
   }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+  }
 }
