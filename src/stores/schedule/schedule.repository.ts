@@ -24,11 +24,28 @@ export class ScheduleRepository {
     );
   }
 
+  @computed
+  get cashierInfo() {
+    return this.dataService.dataStorage.cashierInfo;
+  }
+
   loadData(env: WorkspaceEnvModel | null) {
     if (!env) {
       return;
     }
 
     this.dataService.loadReservations(env.cinema.id, env.room?.id, env.date);
+  }
+
+  loadCashierInfo(env: WorkspaceEnvModel | null) {
+    if (!env) {
+      return;
+    }
+
+    this.dataService.loadCashierInfo(env.cinema.id, env.date);
+  }
+
+  reset() {
+    this.dataService.dataStorage.reset();
   }
 }

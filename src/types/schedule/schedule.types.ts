@@ -1,4 +1,17 @@
-import {Certificate, Room, UserStatus} from "src/types/shared.types";
+import {Certificate, Room, UserStatus, Cinema} from "src/types/shared.types";
+
+export type CashierInfo = {
+  id: number;
+  cinema: Cinema;
+  date: string;
+  income: number;
+  expense: number;
+  proceeds: number;
+  cashier_start: number;
+  cashier_end: number;
+  all_by_card: number;
+  all_by_cash: number;
+};
 
 export type Reservation = {
   id: number;

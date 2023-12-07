@@ -29,4 +29,10 @@ export class ScheduleDataService {
       }))
     );
   }
+
+  async loadCashierInfo(cinemaId: number, date: Date) {
+    this.dataStorage.setCashierInfo(
+      (await this.dataClient.loadCashierInfo(cinemaId, date)) || null
+    );
+  }
 }

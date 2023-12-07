@@ -1,7 +1,8 @@
 import {injectable} from "inversify";
 import {axios} from "src/axios";
 import moment from "moment";
-import {Reservation} from "src/types/schedule/schedule.types";
+import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
+import {DATE_FORMAT} from "src/constants/date";
 
 @injectable()
 export class ScheduleDataClient {
@@ -13,8 +14,19 @@ export class ScheduleDataClient {
     const response = await axios.get<Reservation[]>("/reservation", {
       params: {
         room_id: roomId,
-        date: moment(date).format("YYYY-MM-DD"),
+        date: moment(date).format(DATE_FORMAT),
         cinema_id: cinemaId
+      }
+    });
+
+    return response.data;
+  }
+
+  async loadCashierInfo(cinemaId: number, date: Date): Promise<CashierInfo> {
+    const response = await axios.get<CashierInfo>("/money", {
+      params: {
+        cinema_id: cinemaId,
+        date: moment(date).format(DATE_FORMAT)
       }
     });
 
