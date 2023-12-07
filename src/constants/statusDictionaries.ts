@@ -1,4 +1,4 @@
-import {ReservationStatus} from "src/types/shared.types";
+import {ReservationStatus} from "src/types/schedule/schedule.types";
 
 export const reservationStatusDictionary: Record<
   ReservationStatus,

@@ -1,7 +1,7 @@
 import {injectable} from "inversify";
 import {axios} from "src/axios";
 import moment from "moment";
-import {Reservation} from "src/types/shared.types";
+import {Reservation} from "src/types/schedule/schedule.types";
 
 @injectable()
 export class ScheduleDataClient {

@@ -1,8 +1,7 @@
 import React from "react";
 import ReservationCard from "src/UI/components/ReservationCard";
-import {Reservation} from "src/types/shared.types";
+import {Reservation} from "src/types/schedule/schedule.types";
 import {reservationCardCells} from "src/UI/pages/workspace/schedule/components/ScheduleReservationCard/constants/reservationCardCells";
-import {Table, TableCell, TableHead, TableRow} from "@mui/material";
 import CheckoutsTable from "./components/CheckoutsTable";
 
 type ScheduleReservationCard = {

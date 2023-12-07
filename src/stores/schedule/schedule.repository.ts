@@ -3,7 +3,7 @@ import {TYPES} from "src/app/app.types";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {ScheduleDataService} from "src/stores/schedule/schedule.dataService";
 import {computed} from "mobx";
-import {Reservation} from "src/types/shared.types";
+import {Reservation} from "src/types/schedule/schedule.types";
 import {sortBy} from "ramda";
 import moment from "moment";
 

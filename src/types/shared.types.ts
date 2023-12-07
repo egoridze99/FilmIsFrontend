@@ -11,43 +11,6 @@ export type Room = {
   name: string;
 };
 
-export type Reservation = {
-  id: number;
-
-  date: string;
-  time: string;
-  duration: number;
-
-  count: number; // Кол-во человек
-  room: Room;
-  guest: {
-    name: string;
-    tel: string;
-  };
-
-  film: string;
-  note: string;
-  author: {
-    fullname: string;
-    status: UserStatus;
-  };
-  status: ReservationStatus;
-
-  card: number;
-  cash: number;
-  rent: number;
-  certificate: Certificate | null;
-
-  created_at: string;
-  checkouts: CheckoutType[];
-};
-
-export type CheckoutType = {
-  id: number | undefined;
-  sum: number;
-  note: string;
-};
-
 export type UserInfoData = {
   id: number;
   login: string;
@@ -119,14 +82,6 @@ export enum CertificateStatusEnum {
 export enum UserStatus {
   active = "active",
   deprecated = "deprecated"
-}
-
-export enum ReservationStatus {
-  not_allowed = "not_allowed",
-  progress = "progress",
-  waiting = "waiting",
-  finished = "finished",
-  canceled = "canceled"
 }
 
 export enum QueueItemStatusEnum {

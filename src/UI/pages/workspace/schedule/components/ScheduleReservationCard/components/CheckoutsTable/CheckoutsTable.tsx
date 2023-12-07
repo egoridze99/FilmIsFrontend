@@ -1,5 +1,5 @@
 import React from "react";
-import {CheckoutType} from "src/types/shared.types";
+import {CheckoutType} from "src/types/schedule/schedule.types";
 import {
   Card,
   Table,

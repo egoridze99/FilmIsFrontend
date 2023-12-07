@@ -1,6 +1,9 @@
 import {ReservationCardCell} from "src/UI/components/ReservationCard/ReservationCard.types";
 import {reservationStatusDictionary} from "src/constants/statusDictionaries";
-import {Reservation, ReservationStatus} from "src/types/shared.types";
+import {
+  Reservation,
+  ReservationStatus
+} from "src/types/schedule/schedule.types";
 import React from "react";
 
 export const reservationCardCells = [
