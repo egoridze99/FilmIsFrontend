@@ -5,6 +5,7 @@ import Link from "src/UI/components/Link";
 
 import "./subpagesToolbar.scss";
 import classNames from "classnames";
+import {usePageData} from "src/contexts/pageData.context";
 
 type SubpagesToolbarProps = {
   customContent?: React.ReactNode;
@@ -12,6 +13,12 @@ type SubpagesToolbarProps = {
 
 const SubpagesToolbar: React.FC<SubpagesToolbarProps> = ({customContent}) => {
   const [page, activeSubpage] = useActiveRoute();
+
+  const {reduceSize} = usePageData();
+  React.useEffect(() => {
+    reduceSize({height: {SubpagesToolbar: 50}});
+    return () => reduceSize({height: {SubpagesToolbar: -50}});
+  }, []);
 
   return (
     <AppBar position={"static"} className="SubpagesToolbar">

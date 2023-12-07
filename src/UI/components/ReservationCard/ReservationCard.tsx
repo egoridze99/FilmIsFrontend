@@ -22,12 +22,14 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
   className,
   extraContent
 }) => {
+  console.log(extraContent);
+
   return (
     <CardContainer classname={classNames(className)}>
       <Title>{title}</Title>
       <CreationInfo data={item} />
       <Box flexGrow={1} mt={2}>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           {cells.map((cell) =>
             (cell.shouldRender && cell.shouldRender(cell.id, item)) ?? true ? (
               <Grid

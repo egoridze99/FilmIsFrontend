@@ -8,6 +8,7 @@ import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterMoment} from "@mui/x-date-pickers/AdapterMoment";
 
 import "moment/locale/ru";
+import PageDataContextProvider from "src/contexts/providers/pageData.context.provider";
 
 configure({
   enforceActions: "never",
@@ -21,7 +22,9 @@ const RootElement = () => {
   return (
     <CssBaseline>
       <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="ru">
-        <Router />
+        <PageDataContextProvider>
+          <Router />
+        </PageDataContextProvider>
       </LocalizationProvider>
     </CssBaseline>
   );

@@ -14,15 +14,8 @@ const ScheduleReservationCard: React.FC<ScheduleReservationCard> = ({
   reservation,
   classname
 }) => {
-  const checkoutsTable = reservation.checkouts ? (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>Dessert (100g serving)</TableCell>
-          <TableCell>Dessert (100g serving)</TableCell>
-        </TableRow>
-      </TableHead>
-    </Table>
+  const checkoutsTable = reservation.checkouts.length ? (
+    <CheckoutsTable checkouts={reservation.checkouts} />
   ) : null;
 
   return (
@@ -31,7 +24,7 @@ const ScheduleReservationCard: React.FC<ScheduleReservationCard> = ({
       title={reservation.room.name}
       cells={reservationCardCells}
       className={classname}
-      extraContent={<CheckoutsTable checkouts={reservation.checkouts} />}
+      extraContent={checkoutsTable}
     />
   );
 };

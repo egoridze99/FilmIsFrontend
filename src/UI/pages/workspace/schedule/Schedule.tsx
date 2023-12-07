@@ -28,16 +28,14 @@ const Schedule = () => {
   return (
     <>
       <SubpagesToolbar />
-      <div className="Schedule">
-        <ContentContainer>
-          {schedule.reservations.map((reservation) => (
-            <ScheduleReservationCard
-              reservation={reservation}
-              classname="Schedule__reservation"
-            />
-          ))}
-        </ContentContainer>
-      </div>
+      <ContentContainer>
+        {schedule.reservations.map((reservation) => (
+          <ScheduleReservationCard
+            reservation={reservation}
+            classname="Schedule__reservation"
+          />
+        ))}
+      </ContentContainer>
     </>
   );
 };
