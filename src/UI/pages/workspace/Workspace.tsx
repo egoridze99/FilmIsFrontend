@@ -5,12 +5,11 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import {useDomainStore} from "src/contexts/store.context";
 import {IconButton} from "@mui/material";
 import {WorkspaceContext} from "src/UI/pages/workspace/Workspace.types";
-
-import "./workspace.scss";
 import WorkspaceSettingsPanel from "src/UI/pages/workspace/components/WorkspaceSettingsPanel";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {observer} from "mobx-react-lite";
 
+import "./workspace.scss";
 const Workspace = () => {
   const {workspaceEnv} = useDomainStore();
 

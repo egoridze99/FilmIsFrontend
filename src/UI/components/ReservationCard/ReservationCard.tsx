@@ -22,8 +22,6 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
   className,
   extraContent
 }) => {
-  console.log(extraContent);
-
   return (
     <CardContainer classname={classNames(className)}>
       <Title>{title}</Title>
@@ -47,10 +45,10 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
                   {cell.render ? (
                     cell.render(cell.id, item)
                   ) : (
-                    <>
+                    <div className="ReservationCard__panel">
                       {cell.title && `${cell.title}: `}
                       {item[cell.id] as string}
-                    </>
+                    </div>
                   )}
                 </Panel>
               </Grid>
