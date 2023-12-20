@@ -9,6 +9,8 @@ import {CommonService} from "src/services/common.service";
 import {ICommonServices} from "src/services/types/common.interface";
 import {AuthenticationService} from "src/services/authentication.service";
 import {IAuthenticationService} from "src/services/types/authentication.interface";
+import {INotificationService} from "src/services/types/notification.interface";
+import {NotificationService} from "src/services/notification.service";
 
 export class AppContainer extends Container {
   constructor() {
@@ -21,6 +23,9 @@ export class AppContainer extends Container {
     this.bind<IStorage>(TYPES.SessionStorageService).to(SessionStorageService);
     this.bind<IAuthenticationService>(TYPES.AuthenticationService).to(
       AuthenticationService
+    );
+    this.bind<INotificationService>(TYPES.NotificationService).to(
+      NotificationService
     );
 
     this.bind<ICommonServices>(TYPES.CommonServices).to(CommonService);

@@ -1,0 +1,72 @@
+@import "src/core/stylesheets/core.variables";
+@import "src/core/stylesheets/core.mixins";
+
+.Notification {
+  width: 400px;
+  padding: $space_M;
+  border-radius: 0 $border-radius_s $border-radius_s 0;
+  box-shadow: $shadow_M;
+  position: relative;
+  background-color: $white;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: $border-radius_s 0 0 $border-radius_s;
+    width: 4px;
+    left: 0;
+    top: 0;
+    height: 100%;
+  }
+
+  &_success {
+    &::before {
+      background: $success_color;
+    }
+  }
+
+  &_error {
+    &::before {
+      background: $error_color;
+    }
+  }
+
+  &_info {
+    &::before {
+      background: $element_color_active;
+    }
+  }
+
+  &_warning {
+    &::before {
+      background: $warning_color;
+    }
+  }
+
+  &__header {
+    margin-bottom: $space_M;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &-controls {
+      display: flex;
+    }
+  }
+
+  &__title {
+    width: 100%;
+    @include H1;
+  }
+
+  &__close-button {
+    color: $icon_color;
+    cursor: pointer;
+    margin-left: $space_S;
+  }
+
+  &__body {
+    @include text_M;
+  }
+}

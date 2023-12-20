@@ -4,6 +4,7 @@ import {TYPES} from "src/app/app.types";
 import type {INavigationService} from "src/services/types/navigation.interface";
 import type {IStorage} from "src/services/types/storage.interface";
 import {IAuthenticationService} from "src/services/types/authentication.interface";
+import {INotificationService} from "src/services/types/notification.interface";
 
 @injectable()
 export class CommonService implements ICommonServices {
@@ -18,4 +19,7 @@ export class CommonService implements ICommonServices {
 
   @inject(TYPES.AuthenticationService)
   readonly authenticationService: IAuthenticationService;
+
+  @inject(TYPES.NavigationService)
+  readonly notificationService: INotificationService;
 }

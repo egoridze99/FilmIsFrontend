@@ -1,0 +1,32 @@
+@import "src/core/stylesheets/core.variables";
+@import "src/core/stylesheets/core.mixins";
+
+.Notifications {
+  position: fixed;
+  bottom: 0;
+  right: 10px;
+  z-index: 3000;
+
+  &__notification-container {
+    margin-bottom: $space_S;
+  }
+
+  &__clear-button-container {
+    width: 100%;
+    padding: $space_S $space_L;
+    margin-bottom: $space_S;
+    box-shadow: $shadow_M;
+    box-sizing: border-box;
+    border-radius: $border-radius_s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: $white;
+  }
+
+  &__clear-button-text {
+    @include text_M;
+    margin: 0;
+  }
+}

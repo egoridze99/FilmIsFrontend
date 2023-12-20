@@ -6,6 +6,7 @@ export const TYPES = {
   LocalStorageService: Symbol.for("LocalStorageService"),
   SessionStorageService: Symbol.for("SessionStorageService"),
   AuthenticationService: Symbol.for("AuthenticationService"),
+  NotificationService: Symbol.for("NotificationService"),
 
   CommonServices: Symbol.for("CommonServices"),
 
