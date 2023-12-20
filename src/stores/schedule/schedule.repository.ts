@@ -7,12 +7,16 @@ import {Reservation} from "src/types/schedule/schedule.types";
 import {sortBy} from "ramda";
 import moment from "moment";
 import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
-import {WorkspaceEnvRepository} from "src/stores/workspaceEnv/workspaceEnv.repository";
+import {INotificationService} from "src/services/types/notification.interface";
+import {commonErrorText} from "src/constants/notifications";
 
 @injectable()
 export class ScheduleRepository {
   @inject(TYPES.ScheduleDataService)
   private readonly dataService: ScheduleDataService;
+
+  @inject(TYPES.NotificationService)
+  private readonly notificationService: INotificationService;
 
   @computed
   get reservations(): Reservation[] {
@@ -34,8 +38,18 @@ export class ScheduleRepository {
   async createReservation(data: ReservationCreationBodyType): Promise<boolean> {
     try {
       await this.dataService.createReservation(data);
+      this.notificationService.addNotification({
+        kind: "success",
+        title: "Резерв успешно создан"
+      });
+
       return true;
     } catch (e) {
+      this.notificationService.addNotification({
+        kind: "error",
+        title: "Произошла ошибка",
+        message: e?.response?.data?.msg || commonErrorText
+      });
       return false;
     }
   }

@@ -20,6 +20,6 @@ export class CommonService implements ICommonServices {
   @inject(TYPES.AuthenticationService)
   readonly authenticationService: IAuthenticationService;
 
-  @inject(TYPES.NavigationService)
+  @inject(TYPES.NotificationService)
   readonly notificationService: INotificationService;
 }

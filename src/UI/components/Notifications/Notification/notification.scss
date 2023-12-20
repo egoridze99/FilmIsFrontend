@@ -1,19 +1,16 @@
-@import "src/core/stylesheets/core.variables";
-@import "src/core/stylesheets/core.mixins";
-
 .Notification {
   width: 400px;
-  padding: $space_M;
-  border-radius: 0 $border-radius_s $border-radius_s 0;
-  box-shadow: $shadow_M;
+  padding: 16px;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);;
   position: relative;
-  background-color: $white;
+  background-color: #fff;
 
   &::before {
     content: "";
     display: block;
     position: absolute;
-    border-radius: $border-radius_s 0 0 $border-radius_s;
+    border-radius: 4px 0 0 4px;
     width: 4px;
     left: 0;
     top: 0;
@@ -22,30 +19,30 @@
 
   &_success {
     &::before {
-      background: $success_color;
+      background: #27c177;
     }
   }
 
   &_error {
     &::before {
-      background: $error_color;
+      background: #e31235;
     }
   }
 
   &_info {
     &::before {
-      background: $element_color_active;
+      background: #007aff;
     }
   }
 
   &_warning {
     &::before {
-      background: $warning_color;
+      background: #f28419;
     }
   }
 
   &__header {
-    margin-bottom: $space_M;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -57,16 +54,24 @@
 
   &__title {
     width: 100%;
-    @include H1;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    color: #333;
+    margin: 0;
   }
 
   &__close-button {
-    color: $icon_color;
+    color: #9e9e9e;
     cursor: pointer;
-    margin-left: $space_S;
+    margin-left: 10px;
   }
 
   &__body {
-    @include text_M;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #333;
+    margin: 0;
   }
 }

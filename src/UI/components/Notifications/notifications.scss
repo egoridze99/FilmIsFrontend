@@ -1,32 +1,30 @@
-@import "src/core/stylesheets/core.variables";
-@import "src/core/stylesheets/core.mixins";
-
 .Notifications {
   position: fixed;
   bottom: 0;
-  right: 10px;
+  left: 10px;
   z-index: 3000;
 
   &__notification-container {
-    margin-bottom: $space_S;
+    margin-bottom: 10px;
   }
 
   &__clear-button-container {
     width: 100%;
-    padding: $space_S $space_L;
-    margin-bottom: $space_S;
-    box-shadow: $shadow_M;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);;
     box-sizing: border-box;
-    border-radius: $border-radius_s;
+    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: $white;
+    background-color: #fff;
   }
 
   &__clear-button-text {
-    @include text_M;
+    font-size: 14px;
+    color: #333;
     margin: 0;
   }
 }
