@@ -13,6 +13,9 @@ import "./schedule.scss";
 import CashierInfoBar from "src/UI/pages/workspace/schedule/components/CashierInfoBar";
 import Toolbar from "src/UI/pages/workspace/schedule/components/Toolbar";
 import {ReservationStatus} from "src/types/schedule/schedule.types";
+import {Drawer} from "@mui/material";
+import ReservationForm from "src/UI/pages/workspace/schedule/components/ReservationForm";
+import {useReservationFormProps} from "src/UI/pages/workspace/schedule/hooks/useReservationFormProps";
 
 const Schedule = () => {
   useCurrentPageTitle();
@@ -37,6 +40,12 @@ const Schedule = () => {
     return () => closeSettings();
   }, []);
 
+  const {
+    isReservationFormOpened: isCreationFormOpened,
+    openReservationForm: openCreationForm,
+    closeReservationForm: closeCreationForm
+  } = useReservationFormProps(closeSettings);
+
   const reservations = React.useMemo(() => {
     return showCancelled
       ? schedule.reservations
@@ -52,6 +61,7 @@ const Schedule = () => {
           <Toolbar
             showCancelled={showCancelled}
             toggleShowCancelled={toggleShowCancelled}
+            openCreationForm={openCreationForm}
           />
         }
       />
@@ -63,6 +73,19 @@ const Schedule = () => {
           />
         ))}
       </ContentContainer>
+
+      <Drawer
+        open={isCreationFormOpened}
+        onClose={closeCreationForm}
+        anchor={"right"}
+        classes={{paper: "Schedule__reservation-form"}}
+      >
+        <ReservationForm
+          cinemas={env?.cinemas || []}
+          close={closeCreationForm}
+        />
+      </Drawer>
+
       {schedule.cashierInfo && <CashierInfoBar data={schedule.cashierInfo} />}
     </>
   );

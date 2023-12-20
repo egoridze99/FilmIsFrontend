@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
@@ -19,25 +20,37 @@ import PopoverContentContainer from "src/UI/components/containers/PopoverContent
 type ToolbarProps = {
   showCancelled: boolean;
   toggleShowCancelled(): void;
+  openCreationForm(): void;
 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
   showCancelled,
-  toggleShowCancelled
+  toggleShowCancelled,
+  openCreationForm
 }) => {
   const tunePopoverProps = usePopoverProps("schedule-tune-popover");
 
   return (
-    <div className="Toolbar">
-      <Tooltip title={"Управление элементами на странице"}>
+    <div className="ScheduleToolbar">
+      <Tooltip
+        title={"Управление элементами на странице"}
+        className="ScheduleToolbar__item"
+      >
         <IconButton
-          aria-label="qwerty"
           aria-describedby={tunePopoverProps.id}
           onClick={tunePopoverProps.openPopover}
         >
           <Tune color={"inherit"} style={{color: "#fff"}} />
         </IconButton>
       </Tooltip>
+
+      <Button
+        onClick={openCreationForm}
+        variant={"contained"}
+        className="ScheduleToolbar__create-btn ScheduleToolbar__item"
+      >
+        Добавить резерв
+      </Button>
 
       <Popover
         id={tunePopoverProps.id}

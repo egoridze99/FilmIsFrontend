@@ -1,10 +1,15 @@
 import React from "react";
-import {DatePickerProps} from "@mui/x-date-pickers";
+import {CalendarIcon, DatePickerProps} from "@mui/x-date-pickers";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import {TextField, TextFieldProps} from "@mui/material";
+import {IconButton, TextField, TextFieldProps} from "@mui/material";
 
 const Datepicker: React.FC<DatePickerProps<any>> = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
+
+  const toggleOpen = (event: Event) => {
+    event.preventDefault();
+    setIsOpen((p) => !p);
+  };
 
   return (
     <DatePicker
@@ -12,13 +17,15 @@ const Datepicker: React.FC<DatePickerProps<any>> = (props) => {
       open={props.open || isOpen}
       onOpen={props.onOpen ? props.onOpen : () => setIsOpen(true)}
       onClose={props.onClose ? props.onClose : () => setIsOpen(false)}
-      slots={{textField: TextField}}
+      slots={{textField: TextField, openPickerButton: IconButton}}
       slotProps={{
         textField: {
-          onClick: (e) => {
-            e.preventDefault();
-            setIsOpen((p) => !p);
-          }
+          variant: "standard",
+          onClick: toggleOpen as any
+        },
+        openPickerButton: {
+          children: <CalendarIcon />,
+          onClick: toggleOpen as any
         }
       }}
     />

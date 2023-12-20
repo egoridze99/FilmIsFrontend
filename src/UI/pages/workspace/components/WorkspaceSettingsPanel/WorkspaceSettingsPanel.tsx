@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {observer} from "mobx-react-lite";
 import SidePanelHeader from "src/UI/components/SidePanelHeader";
@@ -8,13 +8,15 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent
+  SelectChangeEvent,
+  TextField
 } from "@mui/material";
 import {Cinema} from "src/types/shared.types";
 import moment from "moment";
 import Datepicker from "src/UI/components/Datepicker";
 
 import "./workspaceSettingsPanel.scss";
+import SidePanelContentContainer from "src/UI/components/containers/SidePanelContentContainer";
 
 type WorkspaceSettingsPanelProps = {
   isOpen: boolean;
@@ -28,7 +30,7 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
   toggleIsOpen,
   envModel
 }) => {
-  const handleCinemaChange = (event: SelectChangeEvent<number>) => {
+  const handleCinemaChange = (event: ChangeEvent<HTMLInputElement>) => {
     const cinemaId = event.target.value;
     const cinema = envModel.cinemasAsDict[cinemaId];
 
@@ -39,7 +41,7 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
     envModel.setCinema(cinema as Cinema);
   };
 
-  const handleRoomChange = (event: SelectChangeEvent<number>) => {
+  const handleRoomChange = (event: ChangeEvent<HTMLInputElement>) => {
     const roomId = event.target.value;
     const room = envModel.cinemasAsDict[roomId];
 
@@ -56,14 +58,12 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
     >
       <SidePanelHeader title={"Настройка"} />
 
-      <div className="WorkspaceSettingsPanel__content">
-        <div className="WorkspaceSettingsPanel__content-section">
+      <SidePanelContentContainer>
+        <div className="WorkspaceSettingsPanel__section">
           <FormControl fullWidth>
-            <InputLabel id="WorkspaceSettingsPanel__cinema-selector">
-              Кинотеатр
-            </InputLabel>
-            <Select
-              labelId="WorkspaceSettingsPanel__cinema-selector"
+            <TextField
+              select
+              variant="standard"
               value={envModel?.cinema?.id}
               label="Кинотеатр"
               onChange={handleCinemaChange}
@@ -71,17 +71,15 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
               {envModel?.cinemas?.map((c) => (
                 <MenuItem value={c.id}>{c.name}</MenuItem>
               ))}
-            </Select>
+            </TextField>
           </FormControl>
         </div>
 
-        <div className="WorkspaceSettingsPanel__content-section">
+        <div className="WorkspaceSettingsPanel__section">
           <FormControl fullWidth>
-            <InputLabel id="WorkspaceSettingsPanel__room-selector">
-              Кинозал
-            </InputLabel>
-            <Select
-              labelId="WorkspaceSettingsPanel__room-selector"
+            <TextField
+              select
+              variant="standard"
               value={envModel?.room?.id || -1}
               label="Кинозал"
               onChange={handleRoomChange}
@@ -91,11 +89,11 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
               {envModel?.cinema?.rooms?.map((r) => (
                 <MenuItem value={r.id}>{r.name}</MenuItem>
               ))}
-            </Select>
+            </TextField>
           </FormControl>
         </div>
 
-        <div className="WorkspaceSettingsPanel__content-section">
+        <div className="WorkspaceSettingsPanel__section">
           <Datepicker
             className={"WorkspaceSettingsPanel__datepicker"}
             label={"Дата"}
@@ -107,7 +105,7 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
             }}
           />
         </div>
-      </div>
+      </SidePanelContentContainer>
     </Drawer>
   );
 };

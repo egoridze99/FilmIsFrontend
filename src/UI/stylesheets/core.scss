@@ -6,3 +6,11 @@
 #root {
   background-color: #fafafa;
 }
+
+.full-width-form-control {
+  & > * {
+    &:first-child {
+      width: 100%;
+    }
+  }
+}

@@ -1,12 +1,8 @@
 .WorkspaceSettingsPanel {
   width: 400px;
 
-  &__content {
-    padding: 20px;
-
-    &-section {
-      margin-bottom: 20px;
-    }
+  &__section {
+    margin-bottom: 20px;
   }
 
   &__datepicker {
