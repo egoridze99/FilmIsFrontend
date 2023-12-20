@@ -3,6 +3,7 @@ import {TYPES} from "src/app/app.types";
 import {ScheduleDataClient} from "src/stores/schedule/schedule.dataClient";
 import {ScheduleDataStorage} from "src/stores/schedule/schedule.dataStorage";
 import moment from "moment";
+import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 
 @injectable()
 export class ScheduleDataService {
@@ -34,5 +35,9 @@ export class ScheduleDataService {
     this.dataStorage.setCashierInfo(
       (await this.dataClient.loadCashierInfo(cinemaId, date)) || null
     );
+  }
+
+  async createReservation(data: ReservationCreationBodyType) {
+    return this.dataClient.createReservation(data);
   }
 }

@@ -16,6 +16,7 @@ import {ReservationStatus} from "src/types/schedule/schedule.types";
 import {Drawer} from "@mui/material";
 import ReservationForm from "src/UI/pages/workspace/schedule/components/ReservationForm";
 import {useReservationFormProps} from "src/UI/pages/workspace/schedule/hooks/useReservationFormProps";
+import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 
 const Schedule = () => {
   useCurrentPageTitle();
@@ -27,6 +28,7 @@ const Schedule = () => {
 
   const {schedule, workspaceEnv} = useDomainStore();
   const env = workspaceEnv.envModel;
+
   React.useEffect(() => () => schedule.reset(), []);
   React.useEffect(() => {
     schedule.loadData(env);
@@ -45,6 +47,15 @@ const Schedule = () => {
     openReservationForm: openCreationForm,
     closeReservationForm: closeCreationForm
   } = useReservationFormProps(closeSettings);
+
+  const handleCreateReservation = async (data: ReservationCreationBodyType) => {
+    const success = await schedule.createReservation(data);
+
+    if (success) {
+      schedule.loadData(env);
+      closeCreationForm();
+    }
+  };
 
   const reservations = React.useMemo(() => {
     return showCancelled
@@ -83,6 +94,7 @@ const Schedule = () => {
         <ReservationForm
           cinemas={env?.cinemas || []}
           close={closeCreationForm}
+          save={handleCreateReservation}
         />
       </Drawer>
 

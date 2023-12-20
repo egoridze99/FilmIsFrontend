@@ -3,6 +3,7 @@ import {axios} from "src/axios";
 import moment from "moment";
 import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
 import {DATE_FORMAT} from "src/constants/date";
+import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 
 @injectable()
 export class ScheduleDataClient {
@@ -29,6 +30,12 @@ export class ScheduleDataClient {
         date: moment(date).format(DATE_FORMAT)
       }
     });
+
+    return response.data;
+  }
+
+  async createReservation(data: ReservationCreationBodyType) {
+    const response = await axios.post<Reservation>("/reservation", data);
 
     return response.data;
   }

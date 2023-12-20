@@ -6,6 +6,8 @@ import {computed} from "mobx";
 import {Reservation} from "src/types/schedule/schedule.types";
 import {sortBy} from "ramda";
 import moment from "moment";
+import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
+import {WorkspaceEnvRepository} from "src/stores/workspaceEnv/workspaceEnv.repository";
 
 @injectable()
 export class ScheduleRepository {
@@ -27,6 +29,15 @@ export class ScheduleRepository {
   @computed
   get cashierInfo() {
     return this.dataService.dataStorage.cashierInfo;
+  }
+
+  async createReservation(data: ReservationCreationBodyType): Promise<boolean> {
+    try {
+      await this.dataService.createReservation(data);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   loadData(env: WorkspaceEnvModel | null) {
