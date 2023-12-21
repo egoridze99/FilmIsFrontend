@@ -7,11 +7,13 @@ import CheckoutsTable from "./components/CheckoutsTable";
 type ScheduleReservationCardProps = {
   reservation: Reservation;
   classname?: string;
+  onEdit(reservation: Reservation): void;
 };
 
 const ScheduleReservationCard: React.FC<ScheduleReservationCardProps> = ({
   reservation,
-  classname
+  classname,
+  onEdit
 }) => {
   const checkoutsTable = reservation.checkouts.length ? (
     <CheckoutsTable checkouts={reservation.checkouts} />
@@ -24,6 +26,7 @@ const ScheduleReservationCard: React.FC<ScheduleReservationCardProps> = ({
       cells={reservationCardCells}
       className={classname}
       extraContent={checkoutsTable}
+      onEdit={onEdit}
     />
   );
 };

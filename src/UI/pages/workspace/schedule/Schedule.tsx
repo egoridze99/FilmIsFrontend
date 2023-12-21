@@ -8,19 +8,24 @@ import {useDomainStore} from "src/contexts/store.context";
 import {observer} from "mobx-react-lite";
 import ContentContainer from "src/UI/components/containers/ContentContainer";
 import ScheduleReservationCard from "src/UI/pages/workspace/schedule/components/ScheduleReservationCard";
-
-import "./schedule.scss";
 import CashierInfoBar from "src/UI/pages/workspace/schedule/components/CashierInfoBar";
 import Toolbar from "src/UI/pages/workspace/schedule/components/Toolbar";
-import {ReservationStatus} from "src/types/schedule/schedule.types";
-import {Drawer} from "@mui/material";
+import {
+  Reservation,
+  ReservationStatus
+} from "src/types/schedule/schedule.types";
+import {Drawer, Typography} from "@mui/material";
 import ReservationForm from "src/UI/pages/workspace/schedule/components/ReservationForm";
 import {useReservationFormProps} from "src/UI/pages/workspace/schedule/hooks/useReservationFormProps";
 import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 
+import "./schedule.scss";
+
 const Schedule = () => {
   useCurrentPageTitle();
 
+  const [editingReservation, setEditingReservation] =
+    React.useState<Reservation | null>(null);
   const [showCancelled, toggleShowCancelled] = React.useReducer(
     (prev) => !prev,
     false
@@ -48,6 +53,22 @@ const Schedule = () => {
     closeReservationForm: closeCreationForm
   } = useReservationFormProps(closeSettings);
 
+  const {
+    isReservationFormOpened: isEditFormOpened,
+    openReservationForm: openEditForm,
+    closeReservationForm: closeEditForm
+  } = useReservationFormProps(closeSettings);
+
+  const handleOpenEditForm = (reservation: Reservation) => {
+    setEditingReservation(reservation);
+    openEditForm();
+  };
+
+  const handleCloseEditForm = () => {
+    closeEditForm();
+    setEditingReservation(null);
+  };
+
   const handleCreateReservation = async (data: ReservationCreationBodyType) => {
     const success = await schedule.createReservation(data);
 
@@ -56,6 +77,8 @@ const Schedule = () => {
       closeCreationForm();
     }
   };
+
+  const handleEditReservation = async (data) => {};
 
   const reservations = React.useMemo(() => {
     return showCancelled
@@ -77,12 +100,19 @@ const Schedule = () => {
         }
       />
       <ContentContainer>
-        {reservations.map((reservation) => (
-          <ScheduleReservationCard
-            reservation={reservation}
-            classname="Schedule__reservation"
-          />
-        ))}
+        {reservations.length ? (
+          reservations.map((reservation) => (
+            <ScheduleReservationCard
+              reservation={reservation}
+              classname="Schedule__reservation"
+              onEdit={(reservation) => handleOpenEditForm(reservation)}
+            />
+          ))
+        ) : (
+          <Typography align="center">
+            Кажется на эту дату нет бронирований...
+          </Typography>
+        )}
       </ContentContainer>
 
       <Drawer
@@ -95,6 +125,21 @@ const Schedule = () => {
           cinemas={env?.cinemas || []}
           close={closeCreationForm}
           save={handleCreateReservation}
+        />
+      </Drawer>
+
+      <Drawer
+        open={isEditFormOpened}
+        onClose={handleCloseEditForm}
+        anchor={"right"}
+        classes={{paper: "Schedule__reservation-form"}}
+      >
+        <ReservationForm
+          isEditMode
+          cinemas={env?.cinemas || []}
+          close={handleCloseEditForm}
+          save={handleEditReservation}
+          reservation={editingReservation}
         />
       </Drawer>
 

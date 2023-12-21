@@ -1,8 +1,9 @@
 import React from "react";
 import classNames from "classnames";
-import {Box, Grid} from "@mui/material";
+import {Box, Grid, IconButton} from "@mui/material";
 import {ReservationCardCell} from "src/UI/components/ReservationCard/ReservationCard.types";
 import {CardContainer, CreationInfo, Title, Panel} from "./components";
+import {Edit} from "@mui/icons-material";
 
 import "./reservationCard.scss";
 
@@ -13,6 +14,7 @@ export type ReservationCardProps<T extends object = any> = {
 
   extraContent?: React.ReactNode;
   className?: string;
+  onEdit?: (data: T) => void;
 };
 
 const ReservationCard: React.FC<ReservationCardProps> = ({
@@ -20,10 +22,19 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
   title,
   cells,
   className,
-  extraContent
+  extraContent,
+  onEdit
 }) => {
   return (
     <CardContainer classname={classNames(className)}>
+      {onEdit && (
+        <IconButton
+          onClick={() => onEdit(item)}
+          className="ReservationCard__edit-btn"
+        >
+          <Edit />
+        </IconButton>
+      )}
       <Title>{title}</Title>
       <CreationInfo data={item} />
       <Box flexGrow={1} mt={2}>

@@ -1,2 +1,6 @@
 .ReservationCard {
+  &__edit-btn {
+    position: absolute!important;
+    right: 10px;
+  }
 }

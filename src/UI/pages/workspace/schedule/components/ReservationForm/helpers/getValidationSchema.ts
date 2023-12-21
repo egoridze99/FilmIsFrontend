@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
-export const getValidationSchema = () => {
-  const baseValidators = yup.object().shape({
+export const getValidationSchema = (isEditMode: boolean) => {
+  let shape = {
     room: yup.number().required("Обязательное поле"),
     date: yup.date().required("Обязательное поле"),
     time: yup
@@ -26,7 +26,25 @@ export const getValidationSchema = () => {
       .number()
       .nullable()
       .typeError("Допустимо только числовое значение")
-  });
+  };
 
-  return baseValidators;
+  if (isEditMode) {
+    shape = {
+      ...shape,
+      status: yup.string().required("Обязательное поле"),
+      card: yup.number().typeError("Допустимо только числовое значение"),
+      cash: yup.number().typeError("Допустимо только числовое значение"),
+      checkouts: yup.array().of(
+        yup.object().shape({
+          note: yup.string().required("Обязательное поле"),
+          sum: yup
+            .number()
+            .required("Обязательное поле")
+            .typeError("Обязательное поле")
+        })
+      )
+    } as any;
+  }
+
+  return yup.object().shape(shape);
 };
