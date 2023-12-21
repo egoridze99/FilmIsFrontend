@@ -1,15 +1,12 @@
 import React from "react";
 import {
   Button,
-  Checkbox,
   FormControlLabel,
   FormGroup,
-  Icon,
   IconButton,
   Popover,
   Switch,
-  Tooltip,
-  Typography
+  Tooltip
 } from "@mui/material";
 
 import "./toolbar.scss";

@@ -1,5 +1,5 @@
 import {Paper} from "@mui/material";
-import React, {JSX} from "react";
+import React from "react";
 
 import "./panel.scss";
 import classNames from "classnames";

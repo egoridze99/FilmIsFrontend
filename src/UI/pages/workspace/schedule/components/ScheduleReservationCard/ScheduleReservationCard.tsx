@@ -4,12 +4,12 @@ import {Reservation} from "src/types/schedule/schedule.types";
 import {reservationCardCells} from "src/UI/pages/workspace/schedule/components/ScheduleReservationCard/constants/reservationCardCells";
 import CheckoutsTable from "./components/CheckoutsTable";
 
-type ScheduleReservationCard = {
+type ScheduleReservationCardProps = {
   reservation: Reservation;
   classname?: string;
 };
 
-const ScheduleReservationCard: React.FC<ScheduleReservationCard> = ({
+const ScheduleReservationCard: React.FC<ScheduleReservationCardProps> = ({
   reservation,
   classname
 }) => {

@@ -1,4 +1,4 @@
-import React, {JSX} from "react";
+import React from "react";
 
 import "./contentContainer.scss";
 import {usePageData} from "src/contexts/pageData.context";

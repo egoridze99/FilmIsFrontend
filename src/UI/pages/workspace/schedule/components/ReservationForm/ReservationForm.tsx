@@ -16,7 +16,7 @@ import {getSavableData} from "src/UI/pages/workspace/schedule/components/Reserva
 import "./ReservationForm.scss";
 import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 
-type ReservationForm = {
+type ReservationFormProps = {
   cinemas: Cinema[];
   close(): void;
   save(data: ReservationCreationBodyType): Promise<void>;
@@ -24,7 +24,7 @@ type ReservationForm = {
   isEditMode?: boolean;
 };
 
-const ReservationForm: React.FC<ReservationForm> = ({
+const ReservationForm: React.FC<ReservationFormProps> = ({
   isEditMode = false,
   cinemas,
   close,

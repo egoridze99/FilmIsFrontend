@@ -10,7 +10,6 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "src/app/app.types";
 import {IStorage} from "src/services/types/storage.interface";
 import {AUTHENTICATION_KEY} from "src/constants/storageKeys";
-import {INavigationService} from "src/services/types/navigation.interface";
 import jwtDecode from "jwt-decode";
 import {User} from "src/types/core.types";
 import {axios} from "src/axios";

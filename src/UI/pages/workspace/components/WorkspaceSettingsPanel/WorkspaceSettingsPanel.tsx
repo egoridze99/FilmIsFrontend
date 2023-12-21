@@ -2,15 +2,7 @@ import React, {ChangeEvent} from "react";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {observer} from "mobx-react-lite";
 import SidePanelHeader from "src/UI/components/SidePanelHeader";
-import {
-  Drawer,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField
-} from "@mui/material";
+import {Drawer, FormControl, MenuItem, TextField} from "@mui/material";
 import {Cinema} from "src/types/shared.types";
 import moment from "moment";
 import Datepicker from "src/UI/components/Datepicker";

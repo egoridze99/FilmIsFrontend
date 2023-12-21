@@ -1,7 +1,7 @@
 import React from "react";
 import {CalendarIcon, DatePickerProps} from "@mui/x-date-pickers";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
-import {IconButton, TextField, TextFieldProps} from "@mui/material";
+import {IconButton, TextField} from "@mui/material";
 
 const Datepicker: React.FC<DatePickerProps<any>> = (props) => {
   const [isOpen, setIsOpen] = React.useState(false);
