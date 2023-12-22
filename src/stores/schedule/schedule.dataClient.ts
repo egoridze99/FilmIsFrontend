@@ -1,6 +1,6 @@
 import {injectable} from "inversify";
 import {axios} from "src/axios";
-import moment, {Moment} from "moment";
+import moment from "moment";
 import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
 import {DATE_FORMAT} from "src/constants/date";
 import {

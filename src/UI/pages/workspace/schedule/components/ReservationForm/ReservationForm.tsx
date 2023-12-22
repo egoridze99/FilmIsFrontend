@@ -12,8 +12,6 @@ import {FormikInitialValuesType} from "src/UI/pages/workspace/schedule/component
 import {Moment} from "moment";
 import {LoadingButton} from "@mui/lab";
 import {getSavableData} from "src/UI/pages/workspace/schedule/components/ReservationForm/helpers/getSavableData";
-
-import "./ReservationForm.scss";
 import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 import {
   Reservation,
@@ -21,6 +19,9 @@ import {
 } from "src/types/schedule/schedule.types";
 import {reservationStatusDictionary} from "src/constants/statusDictionaries";
 import CheckoutsSection from "./components/CheckoutsSection";
+import GeneralInputFields from "src/UI/pages/workspace/components/GeneralInputFields";
+
+import "./ReservationForm.scss";
 
 type ReservationFormProps = {
   cinemas: Cinema[];
@@ -130,82 +131,19 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                     />
                   </Box>
 
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      name="time"
-                      label="Время"
-                      placeholder="Время в формате HH:MM"
-                      variant="standard"
-                      required
-                    />
-                  </Box>
-
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      name="duration"
-                      label="Продолжительность"
-                      placeholder="Продолжительность сеанса"
-                      variant="standard"
-                      required
-                    />
-                  </Box>
-
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      name="count"
-                      label="Кол-во гостей"
-                      placeholder="Кол-во гостей"
-                      variant="standard"
-                      required
-                    />
-                  </Box>
-
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      name="guest.name"
-                      label="Имя гостя"
-                      placeholder="Имя гостя"
-                      variant="standard"
-                      required
-                    />
-                  </Box>
-
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      name="guest.tel"
-                      label="Номер телефона гостя"
-                      placeholder="Номер телефона гостя"
-                      variant="standard"
-                      required
-                    />
-                  </Box>
-
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      name="film"
-                      label="Фильм"
-                      placeholder="Фильм"
-                      variant="standard"
-                    />
-                  </Box>
-
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      multiline
-                      name="note"
-                      label="Примечание"
-                      placeholder="Примечание"
-                      variant="standard"
-                      rows={3}
-                    />
-                  </Box>
+                  <GeneralInputFields
+                    fieldsToRender={
+                      [
+                        "time",
+                        "duration",
+                        "count",
+                        "guest.name",
+                        "guest.tel",
+                        "film",
+                        "note"
+                      ] as any
+                    }
+                  />
 
                   <Box className="full-width-form-control" marginY={1}>
                     <Field
