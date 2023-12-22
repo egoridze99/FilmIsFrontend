@@ -1,7 +1,7 @@
 import React from "react";
 import SidePanelHeader from "src/UI/components/SidePanelHeader";
 import SidePanelContentContainer from "src/UI/components/containers/SidePanelContentContainer";
-import {Form, Formik, Field, FieldArray} from "formik";
+import {Form, Formik, Field, FieldArray, useFormik} from "formik";
 import {
   Box,
   Button,
@@ -27,7 +27,7 @@ import {
   ReservationStatus
 } from "src/types/schedule/schedule.types";
 import {reservationStatusDictionary} from "src/constants/statusDictionaries";
-import {Add} from "@mui/icons-material";
+import CheckoutsSection from "./components/CheckoutsSection";
 
 type ReservationFormProps = {
   cinemas: Cinema[];
@@ -45,7 +45,16 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   save,
   reservation
 }) => {
+  const bodyRef = React.useRef<HTMLDivElement | null>(null);
+
   const cinemasAsDict = cinemas.reduce((acc, c) => ({...acc, [c.id]: c}), {});
+
+  const scrollBottom = () => {
+    bodyRef.current?.scroll({
+      top: bodyRef.current?.scrollHeight,
+      behavior: "smooth"
+    });
+  };
 
   const onSubmit = async (data: FormikInitialValuesType) => {
     const savableData = getSavableData(data);
@@ -73,7 +82,11 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
 
             return (
               <Form className="ReservationForm__form">
-                <SidePanelContentContainer className="ReservationForm__body">
+                <SidePanelContentContainer
+                  className="ReservationForm__body"
+                  //@ts-ignore
+                  ref={bodyRef}
+                >
                   <Box className="full-width-form-control">
                     <Field
                       component={TextField}
@@ -266,50 +279,12 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                         <FieldArray
                           name={"checkouts"}
                           render={({push}) => {
-                            const addCheckout = () =>
-                              push({
-                                note: null,
-                                sum: null
-                              });
-
                             return (
-                              <>
-                                <div className="ReservationForm__checkouts-header">
-                                  <Typography variant="h5" fontSize={18}>
-                                    Расходы
-                                  </Typography>
-                                  <IconButton onClick={addCheckout}>
-                                    <Add />
-                                  </IconButton>
-                                </div>
-                                {values.checkouts &&
-                                  Boolean(values.checkouts.length) &&
-                                  values.checkouts.map((checkout, index) => (
-                                    <Box
-                                      marginY={1}
-                                      className="full-width-form-control ReservationForm__checkouts-checkout"
-                                    >
-                                      <Field
-                                        component={TextField}
-                                        name={`checkouts.${index}.note`}
-                                        label="Заметка"
-                                        placeholder="Заметка"
-                                        variant="standard"
-                                        required
-                                      />
-
-                                      <Field
-                                        component={TextField}
-                                        name={`checkouts.${index}.sum`}
-                                        label="Сумма"
-                                        placeholder="Сумма"
-                                        variant="standard"
-                                        multiline
-                                        required
-                                      />
-                                    </Box>
-                                  ))}
-                              </>
+                              <CheckoutsSection
+                                push={push}
+                                checkouts={values.checkouts as any}
+                                scrollBottom={scrollBottom}
+                              />
                             );
                           }}
                         ></FieldArray>
