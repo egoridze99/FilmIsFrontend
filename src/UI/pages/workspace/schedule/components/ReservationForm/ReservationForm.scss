@@ -15,6 +15,26 @@
     overflow: auto;
   }
 
+  &__certificates {
+    position: relative;
+    margin-bottom: 30px!important;
+    &-controls {
+      width: 100%;
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+
+      & > a {
+        color: #007aff;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
   &__footer {
     box-shadow: 0px -1px 4px 1px rgba(167, 167, 167, 0.16);
     padding: 10px;

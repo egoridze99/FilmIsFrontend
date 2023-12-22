@@ -38,6 +38,20 @@ export class ScheduleRepository {
     return this.dataService.dataStorage.cashierInfo;
   }
 
+  async loadCertificate(ident: string) {
+    try {
+      return await this.dataService.loadCertificate(ident);
+    } catch (e) {
+      this.notificationService.addNotification({
+        kind: "error",
+        title: "Произошла ошибка при загрузке сертификата",
+        message: e?.response?.data?.msg || commonErrorText
+      });
+
+      return null;
+    }
+  }
+
   async createReservation(data: ReservationCreationBodyType): Promise<boolean> {
     try {
       await this.dataService.createReservation(data);

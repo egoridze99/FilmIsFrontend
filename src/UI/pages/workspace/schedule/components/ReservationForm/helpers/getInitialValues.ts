@@ -23,7 +23,8 @@ export const getInitialValues = (
       film: null,
       note: null,
       rent: 0,
-      certificate_ident: null
+      certificate_ident: null,
+      certificate: null
     };
   } else {
     const cinema = cinemas.find((c) =>

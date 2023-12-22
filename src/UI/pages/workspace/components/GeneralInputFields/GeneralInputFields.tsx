@@ -16,36 +16,29 @@ enum GeneralFields {
 const generalInputFields = {
   [GeneralFields.time]: {
     label: "Время",
-    placeholder: "Время в формате HH:MM",
     required: true
   },
   [GeneralFields.duration]: {
     label: "Продолжительность",
-    placeholder: "Продолжительность",
     required: true
   },
   [GeneralFields.count]: {
     label: "Кол-во гостей",
-    placeholder: "Кол-во гостей",
     required: true
   },
   [GeneralFields["guest.name"]]: {
     label: "Имя гостя",
-    placeholder: "Имя гостя",
     required: true
   },
   [GeneralFields["guest.tel"]]: {
     label: "Номер телефона гостя",
-    placeholder: "Номер телефона гостя",
     required: true
   },
   [GeneralFields.film]: {
-    label: "Фильм",
-    placeholder: "Фильм"
+    label: "Фильм"
   },
   [GeneralFields.note]: {
     label: "Примечание",
-    placeholder: "Примечание",
     multiline: true,
     rows: 3
   }
@@ -53,8 +46,7 @@ const generalInputFields = {
   GeneralFields,
   {
     multiline?: boolean;
-    label: string;
-    placeholder: string;
+    label?: string;
     rows?: number;
     required?: boolean;
   }
@@ -76,7 +68,6 @@ const GeneralInputFields: React.FC<GeneralInputFieldsProps> = ({
             multiline={generalInputFields[field].multiline}
             name={field}
             label={generalInputFields[field].label}
-            placeholder={generalInputFields[field].placeholder}
             variant="standard"
             rows={generalInputFields[field].rows}
             required={generalInputFields[field].required}

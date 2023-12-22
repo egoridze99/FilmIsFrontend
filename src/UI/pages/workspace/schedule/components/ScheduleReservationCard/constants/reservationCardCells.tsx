@@ -5,6 +5,7 @@ import {
   ReservationStatus
 } from "src/types/schedule/schedule.types";
 import React from "react";
+import {getCertificateNote} from "src/UI/pages/workspace/helpers/getCertificateNote";
 
 export const reservationCardCells = [
   {id: "time", title: "Время", size: 2},
@@ -34,7 +35,20 @@ export const reservationCardCells = [
     title: "Примечание",
     size: 12,
     shouldRender: (key, data) => {
-      return !!data[key];
+      return !!data[key] || !!data.certificate;
+    },
+    render: (key, data) => {
+      let note = "";
+
+      if (data.certificate) {
+        note = getCertificateNote(data.certificate);
+      }
+
+      if (data.note) {
+        note = `${note}; ${data.note}`;
+      }
+
+      return note;
     },
     align: "left"
   },

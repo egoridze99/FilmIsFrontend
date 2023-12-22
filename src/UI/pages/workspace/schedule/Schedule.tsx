@@ -140,6 +140,7 @@ const Schedule = () => {
           cinemas={env?.cinemas || []}
           close={closeCreationForm}
           save={handleCreateReservation}
+          loadCertificate={(ident) => schedule.loadCertificate(ident)}
         />
       </Drawer>
 
@@ -155,6 +156,7 @@ const Schedule = () => {
           close={handleCloseEditForm}
           save={handleEditReservation}
           reservation={editingReservation}
+          loadCertificate={(ident) => schedule.loadCertificate(ident)}
         />
       </Drawer>
 

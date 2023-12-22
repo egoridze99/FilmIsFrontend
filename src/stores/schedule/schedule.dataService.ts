@@ -34,6 +34,10 @@ export class ScheduleDataService {
     );
   }
 
+  async loadCertificate(ident: string) {
+    return this.dataClient.loadCertificate(ident);
+  }
+
   async loadCashierInfo(cinemaId: number, date: Date) {
     this.dataStorage.setCashierInfo(
       (await this.dataClient.loadCashierInfo(cinemaId, date)) || null

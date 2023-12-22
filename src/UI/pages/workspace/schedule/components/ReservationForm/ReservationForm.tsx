@@ -4,7 +4,7 @@ import SidePanelContentContainer from "src/UI/components/containers/SidePanelCon
 import {Form, Formik, Field, FieldArray} from "formik";
 import {Box, Button, Divider, MenuItem} from "@mui/material";
 import {getInitialValues} from "./helpers/getInitialValues";
-import {Cinema} from "src/types/shared.types";
+import {Certificate, Cinema} from "src/types/shared.types";
 import {TextField} from "formik-mui";
 import Datepicker from "src/UI/components/Datepicker";
 import {getValidationSchema} from "./helpers/getValidationSchema";
@@ -20,8 +20,10 @@ import {
 import {reservationStatusDictionary} from "src/constants/statusDictionaries";
 import CheckoutsSection from "./components/CheckoutsSection";
 import GeneralInputFields from "src/UI/pages/workspace/components/GeneralInputFields";
+import {TextField as MUITextField} from "@mui/material";
 
 import "./ReservationForm.scss";
+import {getCertificateNote} from "src/UI/pages/workspace/helpers/getCertificateNote";
 
 type ReservationFormProps = {
   cinemas: Cinema[];
@@ -30,6 +32,7 @@ type ReservationFormProps = {
 
   reservation?: Reservation | null;
   isEditMode?: boolean;
+  loadCertificate?: (ident: string) => Promise<Certificate | null>;
 };
 
 const ReservationForm: React.FC<ReservationFormProps> = ({
@@ -37,7 +40,8 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   cinemas,
   close,
   save,
-  reservation
+  reservation,
+  loadCertificate
 }) => {
   const bodyRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -70,6 +74,30 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
           validateOnMount
         >
           {({values, isValid, setFieldValue, isSubmitting}) => {
+            const searchCertificate = async (
+              e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+            ) => {
+              e.preventDefault();
+              const ident = values.certificate_ident;
+              if (!ident || !loadCertificate) {
+                return;
+              }
+
+              const certificate = await loadCertificate(ident);
+              if (!certificate) {
+                return;
+              }
+              await setFieldValue("certificate", certificate);
+            };
+
+            const removeCertificate = async (
+              e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+            ) => {
+              e.preventDefault();
+              await setFieldValue("certificate", null);
+              await setFieldValue("certificate_ident", "");
+            };
+
             const setDate = (date: Moment) => {
               setFieldValue("date", date.toDate());
             };
@@ -156,7 +184,10 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                     />
                   </Box>
 
-                  <Box className="full-width-form-control" marginY={1}>
+                  <Box
+                    className="full-width-form-control ReservationForm__certificates"
+                    marginY={1}
+                  >
                     <Field
                       component={TextField}
                       name="certificate_ident"
@@ -164,7 +195,41 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                       placeholder="id сертификата"
                       variant="standard"
                     />
+                    <div className="ReservationForm__certificates-controls">
+                      <a href="#" onClick={searchCertificate}>
+                        Поиск
+                      </a>
+                      {values.certificate && (
+                        <a href="#" onClick={removeCertificate}>
+                          Удалить
+                        </a>
+                      )}
+                    </div>
                   </Box>
+
+                  {values.certificate && (
+                    <>
+                      <Box className="full-width-form-control" marginY={1}>
+                        <MUITextField
+                          label="Примечание по сертификату"
+                          variant="standard"
+                          multiline
+                          disabled
+                          value={getCertificateNote(values.certificate)}
+                        />
+                      </Box>
+                      <Box className="full-width-form-control" marginY={1}>
+                        <Field
+                          component={TextField}
+                          name="certificate.sum"
+                          label="Сумма сертификата"
+                          placeholder="Сумма сертификата"
+                          variant="standard"
+                          disabled
+                        />
+                      </Box>
+                    </>
+                  )}
 
                   {reservation && (
                     <>
@@ -223,6 +288,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                     </>
                   )}
                 </SidePanelContentContainer>
+
                 <div className="ReservationForm__footer">
                   <Button onClick={close} variant={"outlined"}>
                     Отмена

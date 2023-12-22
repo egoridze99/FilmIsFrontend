@@ -9,8 +9,7 @@ import {Certificate} from "src/types/shared.types";
 
 export const getSavableData = (
   data: FormikInitialValuesType,
-  isEditMode: boolean,
-  certificate?: Certificate
+  isEditMode: boolean
 ): ReservationCreationBodyType => {
   let savableData = {
     ...data,
@@ -18,7 +17,7 @@ export const getSavableData = (
     duration: parseFloat(data.duration as any),
     count: parseInt(data.count as any),
     rent: parseFloat(data.rent as any),
-    certificate_ident: certificate?.ident || null
+    certificate_ident: data.certificate?.ident || null
   } as unknown as ReservationCreationBodyType;
 
   if (isEditMode) {

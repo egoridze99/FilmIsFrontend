@@ -7,6 +7,7 @@ import {
   ReservationCreationBodyType,
   ReservationEditBodyType
 } from "src/types/schedule/schedule.dataClient.types";
+import {Certificate} from "src/types/shared.types";
 
 @injectable()
 export class ScheduleDataClient {
@@ -22,6 +23,12 @@ export class ScheduleDataClient {
         cinema_id: cinemaId
       }
     });
+
+    return response.data;
+  }
+
+  async loadCertificate(ident: string) {
+    const response = await axios.get<Certificate>(`/certificate/${ident}`);
 
     return response.data;
   }
