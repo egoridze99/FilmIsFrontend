@@ -73,7 +73,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
           validationSchema={getValidationSchema(isEditMode)}
           validateOnMount
         >
-          {({values, isValid, setFieldValue, isSubmitting}) => {
+          {({values, isValid, setFieldValue, isSubmitting, initialValues}) => {
             const searchCertificate = async (
               e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
             ) => {
@@ -194,17 +194,22 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                       label="id сертификата"
                       placeholder="id сертификата"
                       variant="standard"
+                      disabled={
+                        initialValues.status === ReservationStatus.finished
+                      }
                     />
-                    <div className="ReservationForm__certificates-controls">
-                      <a href="#" onClick={searchCertificate}>
-                        Поиск
-                      </a>
-                      {values.certificate && (
-                        <a href="#" onClick={removeCertificate}>
-                          Удалить
+                    {initialValues.status !== ReservationStatus.finished && (
+                      <div className="ReservationForm__certificates-controls">
+                        <a href="#" onClick={searchCertificate}>
+                          Поиск
                         </a>
-                      )}
-                    </div>
+                        {values.certificate && (
+                          <a href="#" onClick={removeCertificate}>
+                            Удалить
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </Box>
 
                   {values.certificate && (

@@ -45,7 +45,7 @@ export const reservationCardCells = [
       }
 
       if (data.note) {
-        note = `${note}; ${data.note}`;
+        note = `${note}${note ? "; " : ""}${data.note}`;
       }
 
       return note;
