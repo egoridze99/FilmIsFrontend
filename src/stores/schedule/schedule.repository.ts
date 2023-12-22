@@ -6,7 +6,10 @@ import {computed} from "mobx";
 import {Reservation} from "src/types/schedule/schedule.types";
 import {sortBy} from "ramda";
 import moment from "moment";
-import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
+import {
+  ReservationCreationBodyType,
+  ReservationEditBodyType
+} from "src/types/schedule/schedule.dataClient.types";
 import {INotificationService} from "src/services/types/notification.interface";
 import {commonErrorText} from "src/constants/notifications";
 
@@ -41,6 +44,28 @@ export class ScheduleRepository {
       this.notificationService.addNotification({
         kind: "success",
         title: "Резерв успешно создан"
+      });
+
+      return true;
+    } catch (e) {
+      this.notificationService.addNotification({
+        kind: "error",
+        title: "Произошла ошибка",
+        message: e?.response?.data?.msg || commonErrorText
+      });
+      return false;
+    }
+  }
+
+  async editReservation(data: ReservationEditBodyType, reservationId: number) {
+    try {
+      const availableItemsFromQueue = await this.dataService.editReservation(
+        data,
+        reservationId
+      );
+      this.notificationService.addNotification({
+        kind: "success",
+        title: "Резерв успешно отредактирован"
       });
 
       return true;

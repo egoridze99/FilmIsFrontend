@@ -17,7 +17,10 @@ import {
 import {Drawer, Typography} from "@mui/material";
 import ReservationForm from "src/UI/pages/workspace/schedule/components/ReservationForm";
 import {useReservationFormProps} from "src/UI/pages/workspace/schedule/hooks/useReservationFormProps";
-import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
+import {
+  ReservationCreationBodyType,
+  ReservationEditBodyType
+} from "src/types/schedule/schedule.dataClient.types";
 
 import "./schedule.scss";
 
@@ -78,7 +81,19 @@ const Schedule = () => {
     }
   };
 
-  const handleEditReservation = async (data) => {};
+  const handleEditReservation = async (data: ReservationEditBodyType) => {
+    const success = await schedule.editReservation(
+      data,
+      editingReservation?.id as number
+    );
+
+    if (success) {
+      schedule.loadData(env);
+      schedule.loadCashierInfo(env);
+
+      closeEditForm();
+    }
+  };
 
   const reservations = React.useMemo(() => {
     return showCancelled

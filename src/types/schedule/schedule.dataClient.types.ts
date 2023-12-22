@@ -1,4 +1,5 @@
 import {Room} from "src/types/shared.types";
+import {ReservationStatus} from "src/types/schedule/schedule.types";
 
 export type ReservationCreationBodyType = {
   room: Room;
@@ -14,4 +15,11 @@ export type ReservationCreationBodyType = {
   rent: number | null;
   note: string | null;
   certificate_ident: string | null;
+};
+
+export type ReservationEditBodyType = ReservationCreationBodyType & {
+  card: number;
+  cash: number;
+  status: ReservationStatus;
+  checkouts: {note: string; sum: number; id?: number}[];
 };

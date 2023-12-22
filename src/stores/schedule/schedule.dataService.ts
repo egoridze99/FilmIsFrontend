@@ -3,7 +3,10 @@ import {TYPES} from "src/app/app.types";
 import {ScheduleDataClient} from "src/stores/schedule/schedule.dataClient";
 import {ScheduleDataStorage} from "src/stores/schedule/schedule.dataStorage";
 import moment from "moment";
-import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
+import {
+  ReservationCreationBodyType,
+  ReservationEditBodyType
+} from "src/types/schedule/schedule.dataClient.types";
 
 @injectable()
 export class ScheduleDataService {
@@ -39,5 +42,9 @@ export class ScheduleDataService {
 
   async createReservation(data: ReservationCreationBodyType) {
     return this.dataClient.createReservation(data);
+  }
+
+  async editReservation(data: ReservationEditBodyType, reservationId: number) {
+    return this.dataClient.editReservation(data, reservationId);
   }
 }

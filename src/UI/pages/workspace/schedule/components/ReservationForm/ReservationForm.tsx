@@ -1,15 +1,8 @@
 import React from "react";
 import SidePanelHeader from "src/UI/components/SidePanelHeader";
 import SidePanelContentContainer from "src/UI/components/containers/SidePanelContentContainer";
-import {Form, Formik, Field, FieldArray, useFormik} from "formik";
-import {
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  MenuItem,
-  Typography
-} from "@mui/material";
+import {Form, Formik, Field, FieldArray} from "formik";
+import {Box, Button, Divider, MenuItem} from "@mui/material";
 import {getInitialValues} from "./helpers/getInitialValues";
 import {Cinema} from "src/types/shared.types";
 import {TextField} from "formik-mui";
@@ -57,7 +50,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   };
 
   const onSubmit = async (data: FormikInitialValuesType) => {
-    const savableData = getSavableData(data);
+    const savableData = getSavableData(data, Boolean(isEditMode));
     await save(savableData);
 
     return true;

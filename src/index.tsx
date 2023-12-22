@@ -31,7 +31,7 @@ const RootElement = observer(() => {
           <Router />
           <Notifications
             notifications={notificationService.notifications}
-            clearNotifications={() => notificationService.clearNotifications}
+            clearNotifications={() => notificationService.clearNotifications()}
             removeNotification={(n) =>
               notificationService.removeNotification(n)
             }
