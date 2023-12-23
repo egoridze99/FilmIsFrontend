@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import "./toolbar.scss";
-import {Tune} from "@mui/icons-material";
+import {FilterAlt, Tune} from "@mui/icons-material";
 import {usePopoverProps} from "src/hooks/usePopoverProps";
 import PopoverContentContainer from "src/UI/components/containers/PopoverContentContainer";
 
@@ -18,12 +18,14 @@ type ToolbarProps = {
   showCancelled: boolean;
   toggleShowCancelled(): void;
   openCreationForm(): void;
+  openSearchPanel(): void;
 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
   showCancelled,
   toggleShowCancelled,
-  openCreationForm
+  openCreationForm,
+  openSearchPanel
 }) => {
   const tunePopoverProps = usePopoverProps("schedule-tune-popover");
 
@@ -38,6 +40,12 @@ const Toolbar: React.FC<ToolbarProps> = ({
           onClick={tunePopoverProps.openPopover}
         >
           <Tune color={"inherit"} style={{color: "#fff"}} />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title={"Поиск среди резервов"} className="ScheduleToolbar__item">
+        <IconButton onClick={openSearchPanel}>
+          <FilterAlt color={"inherit"} style={{color: "#fff"}} />
         </IconButton>
       </Tooltip>
 

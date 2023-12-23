@@ -23,3 +23,12 @@ export type ReservationEditBodyType = ReservationCreationBodyType & {
   status: ReservationStatus;
   checkouts: {note: string; sum: number; id?: number}[];
 };
+
+export type ReservationSearchBodyType = {
+  statuses: ReservationStatus[];
+  rooms: number[];
+  reservation_id: string | null;
+  telephone: string | null;
+  start_date: Date | null;
+  end_date: Date | null;
+};

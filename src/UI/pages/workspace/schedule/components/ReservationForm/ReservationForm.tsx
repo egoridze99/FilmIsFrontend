@@ -24,6 +24,7 @@ import {TextField as MUITextField} from "@mui/material";
 
 import "./ReservationForm.scss";
 import {getCertificateNote} from "src/UI/pages/workspace/helpers/getCertificateNote";
+import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
 
 type ReservationFormProps = {
   cinemas: Cinema[];
@@ -296,21 +297,12 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                   )}
                 </SidePanelContentContainer>
 
-                <div className="ReservationForm__footer">
-                  <Button onClick={close} variant={"outlined"}>
-                    Отмена
-                  </Button>
-                  <LoadingButton
-                    className="ReservationForm__submit-btn"
-                    loading={isSubmitting}
-                    loadingPosition="end"
-                    type="submit"
-                    variant="contained"
-                    disabled={!isValid}
-                  >
-                    Сохранить
-                  </LoadingButton>
-                </div>
+                <PanelFormsFooter
+                  onCancel={close}
+                  isLoading={isSubmitting}
+                  isSubmitButtonDisabled={!isValid}
+                  submitButtonText="Сохранить"
+                />
               </Form>
             );
           }}

@@ -5,8 +5,10 @@ import {ScheduleDataStorage} from "src/stores/schedule/schedule.dataStorage";
 import moment from "moment";
 import {
   ReservationCreationBodyType,
-  ReservationEditBodyType
+  ReservationEditBodyType,
+  ReservationSearchBodyType
 } from "src/types/schedule/schedule.dataClient.types";
+import {Reservation} from "src/types/schedule/schedule.types";
 
 @injectable()
 export class ScheduleDataService {
@@ -26,6 +28,17 @@ export class ScheduleDataService {
       roomId,
       date
     );
+    this.dataStorage.setReservations(
+      reservations.map((reservation) => ({
+        ...reservation,
+        date: moment(new Date(reservation.date)).format("DD-MM-YYYY")
+      }))
+    );
+  }
+
+  async searchReservations(data: ReservationSearchBodyType): Promise<void> {
+    const reservations = await this.dataClient.searchReservations(data);
+
     this.dataStorage.setReservations(
       reservations.map((reservation) => ({
         ...reservation,

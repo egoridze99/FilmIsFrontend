@@ -19,8 +19,11 @@ import ReservationForm from "src/UI/pages/workspace/schedule/components/Reservat
 import {useReservationFormProps} from "src/UI/pages/workspace/schedule/hooks/useReservationFormProps";
 import {
   ReservationCreationBodyType,
-  ReservationEditBodyType
+  ReservationEditBodyType,
+  ReservationSearchBodyType
 } from "src/types/schedule/schedule.dataClient.types";
+import SearchPanel from "./components/SearchPanel";
+import {useSearchPanel} from "src/UI/pages/workspace/schedule/hooks/useSearchPanel";
 
 import "./schedule.scss";
 
@@ -29,16 +32,21 @@ const Schedule = () => {
 
   const [editingReservation, setEditingReservation] =
     React.useState<Reservation | null>(null);
-  const [showCancelled, toggleShowCancelled] = React.useReducer(
-    (prev) => !prev,
-    false
-  );
+  const [showCancelled, setShowCancelled] = React.useState(false);
 
+  const {
+    searchValues,
+    clearSearchValues,
+    setSearchValues,
+    isSearchPanelOpen,
+    setIsSearchPanelOpen
+  } = useSearchPanel();
   const {schedule, workspaceEnv} = useDomainStore();
   const env = workspaceEnv.envModel;
 
   React.useEffect(() => () => schedule.reset(), []);
   React.useEffect(() => {
+    clearSearchValues();
     schedule.loadData(env);
   }, [env?.cinema, env?.room, env?.date]);
   React.useEffect(() => {
@@ -95,6 +103,18 @@ const Schedule = () => {
     }
   };
 
+  const handleSearch = async (values: ReservationSearchBodyType) => {
+    const success = await schedule.searchReservations(values);
+
+    if (success) {
+      if (values.statuses.includes(ReservationStatus.canceled)) {
+        setShowCancelled(true);
+      }
+      setSearchValues(values);
+      setIsSearchPanelOpen(false);
+    }
+  };
+
   const reservations = React.useMemo(() => {
     return showCancelled
       ? schedule.reservations
@@ -109,8 +129,9 @@ const Schedule = () => {
         customContent={
           <Toolbar
             showCancelled={showCancelled}
-            toggleShowCancelled={toggleShowCancelled}
+            toggleShowCancelled={() => setShowCancelled((prev) => !prev)}
             openCreationForm={openCreationForm}
+            openSearchPanel={() => setIsSearchPanelOpen(true)}
           />
         }
       />
@@ -129,6 +150,21 @@ const Schedule = () => {
           </Typography>
         )}
       </ContentContainer>
+
+      <Drawer
+        open={isSearchPanelOpen}
+        onClose={() => setIsSearchPanelOpen(false)}
+        anchor={"right"}
+        classes={{paper: "Schedule__search-panel"}}
+      >
+        <SearchPanel
+          cinemas={env?.cinemas || []}
+          close={() => setIsSearchPanelOpen(false)}
+          search={handleSearch}
+          searchValues={searchValues}
+          onReset={() => schedule.loadData(env)}
+        />
+      </Drawer>
 
       <Drawer
         open={isCreationFormOpened}

@@ -8,7 +8,8 @@ import {sortBy} from "ramda";
 import moment from "moment";
 import {
   ReservationCreationBodyType,
-  ReservationEditBodyType
+  ReservationEditBodyType,
+  ReservationSearchBodyType
 } from "src/types/schedule/schedule.dataClient.types";
 import {INotificationService} from "src/services/types/notification.interface";
 import {commonErrorText} from "src/constants/notifications";
@@ -38,16 +39,21 @@ export class ScheduleRepository {
     return this.dataService.dataStorage.cashierInfo;
   }
 
+  async searchReservations(data: ReservationSearchBodyType): Promise<boolean> {
+    try {
+      await this.dataService.searchReservations(data);
+      return true;
+    } catch (e) {
+      this.showErrorNotification(e);
+      return false;
+    }
+  }
+
   async loadCertificate(ident: string) {
     try {
       return await this.dataService.loadCertificate(ident);
     } catch (e) {
-      this.notificationService.addNotification({
-        kind: "error",
-        title: "Произошла ошибка при загрузке сертификата",
-        message: e?.response?.data?.msg || commonErrorText
-      });
-
+      this.showErrorNotification(e);
       return null;
     }
   }
@@ -62,11 +68,7 @@ export class ScheduleRepository {
 
       return true;
     } catch (e) {
-      this.notificationService.addNotification({
-        kind: "error",
-        title: "Произошла ошибка",
-        message: e?.response?.data?.msg || commonErrorText
-      });
+      this.showErrorNotification(e);
       return false;
     }
   }
@@ -84,11 +86,7 @@ export class ScheduleRepository {
 
       return true;
     } catch (e) {
-      this.notificationService.addNotification({
-        kind: "error",
-        title: "Произошла ошибка",
-        message: e?.response?.data?.msg || commonErrorText
-      });
+      this.showErrorNotification(e);
       return false;
     }
   }
@@ -111,5 +109,13 @@ export class ScheduleRepository {
 
   reset() {
     this.dataService.dataStorage.reset();
+  }
+
+  private showErrorNotification(e: any) {
+    this.notificationService.addNotification({
+      kind: "error",
+      title: "Произошла ошибка",
+      message: e?.response?.data?.msg || commonErrorText
+    });
   }
 }
