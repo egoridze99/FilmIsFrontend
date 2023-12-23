@@ -200,9 +200,11 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                     />
                     {initialValues.status !== ReservationStatus.finished && (
                       <div className="ReservationForm__certificates-controls">
-                        <a href="#" onClick={searchCertificate}>
-                          Поиск
-                        </a>
+                        {!values.certificate && (
+                          <a href="#" onClick={searchCertificate}>
+                            Поиск
+                          </a>
+                        )}
                         {values.certificate && (
                           <a href="#" onClick={removeCertificate}>
                             Удалить
