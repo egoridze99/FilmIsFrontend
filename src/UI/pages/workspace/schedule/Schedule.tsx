@@ -120,14 +120,10 @@ const Schedule = () => {
   const {
     isChangesModalOpen,
     changesHistory,
-    openChangesModal,
-    closeChangesModal
-  } = useChangesHistory();
-
-  const handleLoadEditHistory = async (reservationId: number) => {
-    const changes = await schedule.loadChangesHistory(reservationId);
-    openChangesModal(changes);
-  };
+    loadChangesHistory,
+    closeChangesModal,
+    isChangesLoading
+  } = useChangesHistory((id) => schedule.loadChangesHistory(id));
 
   const reservations = React.useMemo(() => {
     return showCancelled
@@ -156,7 +152,7 @@ const Schedule = () => {
               reservation={reservation}
               classname="Schedule__reservation"
               onEdit={(reservation) => handleOpenEditForm(reservation)}
-              onSeeChangesHistory={async (id) => handleLoadEditHistory(id)}
+              onSeeChangesHistory={async (id) => loadChangesHistory(id)}
             />
           ))
         ) : (
@@ -212,7 +208,10 @@ const Schedule = () => {
       </Drawer>
 
       <Modal open={isChangesModalOpen} onClose={closeChangesModal}>
-        <ChangesHistoryModal changesHistory={changesHistory} />
+        <ChangesHistoryModal
+          changesHistory={changesHistory}
+          isLoading={isChangesLoading}
+        />
       </Modal>
 
       {schedule.cashierInfo && <CashierInfoBar data={schedule.cashierInfo} />}
