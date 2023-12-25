@@ -1,6 +1,10 @@
 .ReservationCard {
-  &__edit-btn {
-    position: absolute!important;
+  &__controls {
+    position: absolute;
     right: 10px;
+    display: flex;
+    & > * {
+     margin-right: 5px;
+    }
   }
 }

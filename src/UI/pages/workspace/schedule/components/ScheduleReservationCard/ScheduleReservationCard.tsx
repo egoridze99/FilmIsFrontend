@@ -8,12 +8,14 @@ type ScheduleReservationCardProps = {
   reservation: Reservation;
   classname?: string;
   onEdit(reservation: Reservation): void;
+  onSeeChangesHistory(reservationId: number): Promise<void>;
 };
 
 const ScheduleReservationCard: React.FC<ScheduleReservationCardProps> = ({
   reservation,
   classname,
-  onEdit
+  onEdit,
+  onSeeChangesHistory
 }) => {
   const checkoutsTable = reservation.checkouts.length ? (
     <CheckoutsTable checkouts={reservation.checkouts} />
@@ -27,6 +29,7 @@ const ScheduleReservationCard: React.FC<ScheduleReservationCardProps> = ({
       className={classname}
       extraContent={checkoutsTable}
       onEdit={onEdit}
+      onSeeChangesHistory={onSeeChangesHistory}
     />
   );
 };

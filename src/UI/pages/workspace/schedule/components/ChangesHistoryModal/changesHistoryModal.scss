@@ -1,0 +1,32 @@
+.ChangesHistoryModal {
+  &__content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    overflow: auto;
+    width: 1280px;
+    padding: 20px;
+    height: 600px;
+    border-radius: 4px;
+  }
+
+  &__header {}
+
+  &__card {
+    padding: 10px 0;
+
+    &-header {
+      padding: 0 10px;
+
+      &-text {
+        margin: 0 0 5px;
+
+        &_bold {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}

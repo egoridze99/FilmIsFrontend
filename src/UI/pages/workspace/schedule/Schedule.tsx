@@ -14,7 +14,7 @@ import {
   Reservation,
   ReservationStatus
 } from "src/types/schedule/schedule.types";
-import {Drawer, Typography} from "@mui/material";
+import {Drawer, Modal, Typography} from "@mui/material";
 import ReservationForm from "src/UI/pages/workspace/schedule/components/ReservationForm";
 import {useReservationFormProps} from "src/UI/pages/workspace/schedule/hooks/useReservationFormProps";
 import {
@@ -26,6 +26,8 @@ import SearchPanel from "./components/SearchPanel";
 import {useSearchPanel} from "src/UI/pages/workspace/schedule/hooks/useSearchPanel";
 
 import "./schedule.scss";
+import {useChangesHistory} from "src/UI/pages/workspace/schedule/hooks/useChangesHistory";
+import ChangesHistoryModal from "./components/ChangesHistoryModal";
 
 const Schedule = () => {
   useCurrentPageTitle();
@@ -115,6 +117,18 @@ const Schedule = () => {
     }
   };
 
+  const {
+    isChangesModalOpen,
+    changesHistory,
+    openChangesModal,
+    closeChangesModal
+  } = useChangesHistory();
+
+  const handleLoadEditHistory = async (reservationId: number) => {
+    const changes = await schedule.loadChangesHistory(reservationId);
+    openChangesModal(changes);
+  };
+
   const reservations = React.useMemo(() => {
     return showCancelled
       ? schedule.reservations
@@ -142,6 +156,7 @@ const Schedule = () => {
               reservation={reservation}
               classname="Schedule__reservation"
               onEdit={(reservation) => handleOpenEditForm(reservation)}
+              onSeeChangesHistory={async (id) => handleLoadEditHistory(id)}
             />
           ))
         ) : (
@@ -195,6 +210,10 @@ const Schedule = () => {
           loadCertificate={(ident) => schedule.loadCertificate(ident)}
         />
       </Drawer>
+
+      <Modal open={isChangesModalOpen} onClose={closeChangesModal}>
+        <ChangesHistoryModal changesHistory={changesHistory} />
+      </Modal>
 
       {schedule.cashierInfo && <CashierInfoBar data={schedule.cashierInfo} />}
     </>

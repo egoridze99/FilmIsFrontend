@@ -9,7 +9,7 @@ import {TextField} from "formik-mui";
 import Datepicker from "src/UI/components/Datepicker";
 import {getValidationSchema} from "./helpers/getValidationSchema";
 import {FormikInitialValuesType} from "src/UI/pages/workspace/schedule/components/ReservationForm/ReservationForm.types";
-import {Moment} from "moment";
+import moment, {Moment} from "moment";
 import {LoadingButton} from "@mui/lab";
 import {getSavableData} from "src/UI/pages/workspace/schedule/components/ReservationForm/helpers/getSavableData";
 import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
@@ -151,7 +151,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                   <Box className="full-width-form-control" marginY={1}>
                     <Field
                       component={Datepicker}
-                      value={values.date}
+                      value={values.date ? moment(values.date) : null}
                       name="date"
                       label="Дата"
                       placeholder="Выберите дату"

@@ -50,6 +50,22 @@ export type CheckoutType = {
   note: string;
 };
 
+export type ChangesItemType = {
+  card: number;
+  cash: number;
+  checkouts: CheckoutType[];
+  count: number;
+  duration: number;
+  film: string;
+  guest_name: string;
+  guest_telephone: string;
+  note: string;
+  room: string;
+  status: string;
+  sum_rent: number;
+  time: string;
+};
+
 export enum ReservationStatus {
   not_allowed = "not_allowed",
   progress = "progress",

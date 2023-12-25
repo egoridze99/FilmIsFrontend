@@ -4,6 +4,7 @@ import moment from "moment";
 import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
 import {DATE_FORMAT} from "src/constants/date";
 import {
+  ChangesResponseType,
   ReservationCreationBodyType,
   ReservationEditBodyType,
   ReservationSearchBodyType
@@ -97,6 +98,14 @@ export class ScheduleDataClient {
         data,
         currentTime
       }
+    );
+
+    return response.data;
+  }
+
+  async getChangesHistory(id: number) {
+    const response = await axios.get<ChangesResponseType[]>(
+      `/reservation/logs/${id}`
     );
 
     return response.data;

@@ -131,6 +131,10 @@ export class ScheduleRepository {
     }
   }
 
+  async loadChangesHistory(reservationId: number) {
+    return this.dataService.getChangesHistory(reservationId);
+  }
+
   loadData(env: WorkspaceEnvModel | null) {
     if (!env) {
       return;

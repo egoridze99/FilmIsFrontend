@@ -1,5 +1,8 @@
 import {Room} from "src/types/shared.types";
-import {ReservationStatus} from "src/types/schedule/schedule.types";
+import {
+  ChangesItemType,
+  ReservationStatus
+} from "src/types/schedule/schedule.types";
 
 export type ReservationCreationBodyType = {
   room: Room;
@@ -31,4 +34,12 @@ export type ReservationSearchBodyType = {
   telephone: string | null;
   start_date: Date | null;
   end_date: Date | null;
+};
+
+export type ChangesResponseType = {
+  author: string;
+  created_at: string;
+  id: number;
+  new: ChangesItemType;
+  old: ChangesItemType;
 };
