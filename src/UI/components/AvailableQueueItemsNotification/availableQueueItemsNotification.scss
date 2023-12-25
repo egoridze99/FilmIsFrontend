@@ -1,0 +1,21 @@
+.AvailableQueueItemsNotification {
+  &__text {
+    margin: 0 0 5px;
+  }
+
+  &__list {
+    margin: 0 0 5px;
+    padding-left: 20px;
+    list-style: disc;
+  }
+
+  &__link {
+    color: #007aff;
+    margin: 0;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

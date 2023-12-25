@@ -11,8 +11,16 @@ import {
   ReservationEditBodyType,
   ReservationSearchBodyType
 } from "src/types/schedule/schedule.dataClient.types";
-import {INotificationService} from "src/services/types/notification.interface";
+import {
+  INotificationService,
+  NotificationType
+} from "src/services/types/notification.interface";
 import {commonErrorText} from "src/constants/notifications";
+import React from "react";
+import AvailableQueueItemsNotification from "src/UI/components/AvailableQueueItemsNotification";
+import {IStorage} from "src/services/types/storage.interface";
+import {INavigationService} from "src/services/types/navigation.interface";
+import {ROUTER_PATHS} from "src/constants/routerPaths";
 
 @injectable()
 export class ScheduleRepository {
@@ -21,6 +29,12 @@ export class ScheduleRepository {
 
   @inject(TYPES.NotificationService)
   private readonly notificationService: INotificationService;
+
+  @inject(TYPES.SessionStorageService)
+  private readonly sessionStorageService: IStorage;
+
+  @inject(TYPES.NavigationService)
+  private readonly navigationService: INavigationService;
 
   @computed
   get reservations(): Reservation[] {
@@ -79,10 +93,36 @@ export class ScheduleRepository {
         data,
         reservationId
       );
-      this.notificationService.addNotification({
-        kind: "success",
-        title: "Резерв успешно отредактирован"
-      });
+
+      if (availableItemsFromQueue.length) {
+        const notification: NotificationType = {
+          kind: "warn",
+          title: "Есть доступные элементы в очереди",
+          message: null,
+          timeout: 15 * 1000
+        };
+        const redirectToQueueTab = (ids: number[]) => {
+          this.notificationService.removeNotification(notification);
+          this.sessionStorageService.setItem("", "");
+          this.navigationService.navigate(ROUTER_PATHS.workspaceQueue);
+        };
+
+        redirectToQueueTab.bind(this);
+
+        notification.message = React.createElement(
+          AvailableQueueItemsNotification,
+          {
+            queueItemsIds: availableItemsFromQueue,
+            redirectToQueueTab
+          }
+        );
+        this.notificationService.addNotification(notification);
+      } else {
+        this.notificationService.addNotification({
+          kind: "success",
+          title: "Резерв успешно отредактирован"
+        });
+      }
 
       return true;
     } catch (e) {
