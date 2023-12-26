@@ -16,7 +16,12 @@ export const TYPES = {
   ScheduleDataClient: Symbol.for("ScheduleDataClient"),
   ScheduleDataService: Symbol.for("ScheduleDataService"),
   ScheduleRepository: Symbol.for("ScheduleRepository"),
-  ScheduleDataStorage: Symbol.for("ScheduleDataStorage"),
+
+  /**
+   * Сертификаты
+   */
+  CertificatesDataClient: Symbol.for("CertificatesDataClient"),
+  CertificatesRepository: Symbol.for("CertificatesRepository"),
 
   /**
    * WorkspaceEnv

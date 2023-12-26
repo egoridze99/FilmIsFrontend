@@ -1,9 +1,10 @@
 import {createContext, useContext} from "react";
-import {schedule, workspaceEnv} from "src/app/app.composition";
+import {certificates, schedule, workspaceEnv} from "src/app/app.composition";
 
 const domainStore = {
   workspaceEnv,
-  schedule
+  schedule,
+  certificates
 };
 
 const domainStoreContext = createContext(domainStore);

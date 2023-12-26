@@ -1,0 +1,10 @@
+.Certificates {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__table {
+    width: 1280px;
+    height: 600px;
+  }
+}

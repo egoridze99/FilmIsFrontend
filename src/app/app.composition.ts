@@ -7,6 +7,8 @@ import {ICommonServices} from "src/services/types/common.interface";
 import {WorkspaceEnvContainer} from "src/app/containers/workspaceEnv.container";
 import {WorkspaceEnvRepository} from "src/stores/workspaceEnv/workspaceEnv.repository";
 import {ScheduleRepository} from "src/stores/schedule/schedule.repository";
+import {CertificatesContainer} from "src/app/containers/certificates.container";
+import {CertificatesRepository} from "src/stores/certificates/certificates.repository";
 
 /**
  * Сервисы
@@ -32,4 +34,13 @@ const scheduleContainer = new ScheduleContainer();
 scheduleContainer.parent = appContainer;
 export const schedule = scheduleContainer.get<ScheduleRepository>(
   TYPES.ScheduleRepository
+);
+
+/**
+ * Сертификаты
+ */
+const certificatesContainer = new CertificatesContainer();
+certificatesContainer.parent = appContainer;
+export const certificates = certificatesContainer.get<CertificatesRepository>(
+  TYPES.CertificatesRepository
 );

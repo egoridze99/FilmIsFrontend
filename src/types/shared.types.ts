@@ -29,8 +29,7 @@ export type GuestInfoData = {
 export type Certificate = {
   id: number;
   ident: string;
-  created_at_as_date: Date;
-  created_at: string;
+  created_at: Date;
   status: CertificateStatusEnum;
   sum: number;
   cash: number;

@@ -6,6 +6,7 @@ import Workspace from "src/UI/pages/workspace";
 import SignIn from "src/UI/pages/sign-in";
 import {GuardsEnum} from "src/types/guards.types";
 import Queue from "src/UI/pages/workspace/queue";
+import Certificates from "src/UI/pages/certificates";
 
 export const ROUTER_CONFIG = {
   ROUTES: [
@@ -28,6 +29,13 @@ export const ROUTER_CONFIG = {
           title: "Очередь"
         }
       ]
+    },
+    {
+      path: ROUTER_PATHS.certificate,
+      component: Certificates,
+      title: "Сертификаты",
+      isProtected: true,
+      guards: [GuardsEnum.AUTHENTICATION_GUARD]
     },
     {
       path: ROUTER_PATHS.admin,

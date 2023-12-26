@@ -1,4 +1,5 @@
 import {ReservationStatus} from "src/types/schedule/schedule.types";
+import {CertificateStatusEnum} from "src/types/shared.types";
 
 export const reservationStatusDictionary: Record<
   ReservationStatus,
@@ -24,4 +25,12 @@ export const reservationStatusDictionary: Record<
     type: ReservationStatus.canceled,
     title: "Гости отменили бронь 😞"
   }
+};
+
+export const certificatesStatusDictionary: Record<
+  CertificateStatusEnum,
+  string
+> = {
+  [CertificateStatusEnum.active]: "Активно",
+  [CertificateStatusEnum.redeemed]: "Погашено"
 };

@@ -2,8 +2,8 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "src/app/app.types";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {ScheduleDataService} from "src/stores/schedule/schedule.dataService";
-import {computed} from "mobx";
-import {Reservation} from "src/types/schedule/schedule.types";
+import {action, computed, makeObservable, observable} from "mobx";
+import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
 import {sortBy} from "ramda";
 import moment from "moment";
 import {
@@ -24,6 +24,12 @@ import {ROUTER_PATHS} from "src/constants/routerPaths";
 
 @injectable()
 export class ScheduleRepository {
+  @observable
+  private _reservations: Reservation[] = [];
+
+  @observable
+  cashierInfo: CashierInfo | null = null;
+
   @inject(TYPES.ScheduleDataService)
   private readonly dataService: ScheduleDataService;
 
@@ -36,6 +42,10 @@ export class ScheduleRepository {
   @inject(TYPES.NavigationService)
   private readonly navigationService: INavigationService;
 
+  constructor() {
+    makeObservable(this);
+  }
+
   @computed
   get reservations(): Reservation[] {
     return sortBy(
@@ -44,18 +54,13 @@ export class ScheduleRepository {
           `${reservation.date} ${reservation.time}`,
           "DD-MM-YYYY hh:mm"
         ).toDate(),
-      this.dataService.dataStorage.reservations
+      this._reservations
     );
-  }
-
-  @computed
-  get cashierInfo() {
-    return this.dataService.dataStorage.cashierInfo;
   }
 
   async searchReservations(data: ReservationSearchBodyType): Promise<boolean> {
     try {
-      await this.dataService.searchReservations(data);
+      this._reservations = await this.dataService.searchReservations(data);
       return true;
     } catch (e) {
       this.showErrorNotification(e);
@@ -135,24 +140,35 @@ export class ScheduleRepository {
     return this.dataService.getChangesHistory(reservationId);
   }
 
-  loadData(env: WorkspaceEnvModel | null) {
+  @action
+  async loadData(env: WorkspaceEnvModel | null) {
     if (!env) {
       return;
     }
 
-    this.dataService.loadReservations(env.cinema.id, env.room?.id, env.date);
+    this._reservations = await this.dataService.loadReservations(
+      env.cinema.id,
+      env.room?.id,
+      env.date
+    );
   }
 
-  loadCashierInfo(env: WorkspaceEnvModel | null) {
+  @action
+  async loadCashierInfo(env: WorkspaceEnvModel | null) {
     if (!env) {
       return;
     }
 
-    this.dataService.loadCashierInfo(env.cinema.id, env.date);
+    this.cashierInfo = await this.dataService.loadCashierInfo(
+      env.cinema.id,
+      env.date
+    );
   }
 
+  @action
   reset() {
-    this.dataService.dataStorage.reset();
+    this.cashierInfo = null;
+    this._reservations = [];
   }
 
   private showErrorNotification(e: any) {

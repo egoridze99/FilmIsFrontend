@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Button,
   FormControlLabel,
   FormGroup,
   IconButton,
@@ -13,6 +12,7 @@ import "./toolbar.scss";
 import {FilterAlt, Tune} from "@mui/icons-material";
 import {usePopoverProps} from "src/hooks/usePopoverProps";
 import PopoverContentContainer from "src/UI/components/containers/PopoverContentContainer";
+import ToolbarButton from "src/UI/components/ToolbarButton";
 
 type ToolbarProps = {
   showCancelled: boolean;
@@ -49,13 +49,13 @@ const Toolbar: React.FC<ToolbarProps> = ({
         </IconButton>
       </Tooltip>
 
-      <Button
+      <ToolbarButton
         onClick={openCreationForm}
         variant={"contained"}
-        className="ScheduleToolbar__create-btn ScheduleToolbar__item"
+        className="ScheduleToolbar__item"
       >
         Добавить резерв
-      </Button>
+      </ToolbarButton>
 
       <Popover
         id={tunePopoverProps.id}
