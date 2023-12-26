@@ -169,7 +169,7 @@ const Schedule = () => {
         classes={{paper: "Schedule__search-panel"}}
       >
         <SearchPanel
-          cinemas={dictionaries.cinemaDictionary?.cinemas || []}
+          cinemaDictionary={dictionaries.cinemaDictionary}
           close={() => setIsSearchPanelOpen(false)}
           search={handleSearch}
           searchValues={searchValues}

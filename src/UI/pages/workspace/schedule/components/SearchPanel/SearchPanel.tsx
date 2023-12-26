@@ -6,7 +6,6 @@ import {TextField} from "formik-mui";
 import {Box, MenuItem, Typography} from "@mui/material";
 import {ReservationStatus} from "src/types/schedule/schedule.types";
 import {reservationStatusDictionary} from "src/constants/statusDictionaries";
-import {Cinema} from "src/types/shared.types";
 import Datepicker from "src/UI/components/Datepicker";
 import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
 import {ReservationSearchBodyType} from "src/types/schedule/schedule.dataClient.types";
@@ -14,6 +13,7 @@ import {ReservationSearchBodyType} from "src/types/schedule/schedule.dataClient.
 import "./searchPanel.scss";
 import {searchPanelDefaultValues} from "src/UI/pages/workspace/schedule/constants/searchPanelDefaultValues";
 import moment from "moment";
+import {CinemaDictionary} from "src/models/dictionaries/cinema.dictionary.model";
 
 const ITEM_HEIGHT = 60;
 const ITEM_PADDING_TOP = 8;
@@ -31,17 +31,17 @@ type SearchPanelProps = {
   close(): void;
   search(values: ReservationSearchBodyType): Promise<void>;
   onReset(): void;
-  cinemas: Cinema[];
+  cinemaDictionary: CinemaDictionary | null;
 };
 
 const SearchPanel: React.FC<SearchPanelProps> = ({
-  cinemas,
+  cinemaDictionary,
   close,
   search,
   searchValues,
   onReset
 }) => {
-  const roomsDict = cinemas.reduce((acc, i) => {
+  const roomsDict = cinemaDictionary?.cinemas.reduce((acc, i) => {
     i.rooms.forEach((r) => {
       acc[r.id] = r;
     });
@@ -57,14 +57,14 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
   return (
     <>
       <SidePanelHeader title="Поиск среди резервов" />
-      <div className="SearchPanel">
+      <div className="ScheduleSearchPanel">
         <Formik initialValues={searchValues} onSubmit={handleSearch}>
           {({values, setFieldValue, isSubmitting, resetForm, submitForm}) => {
             return (
-              <Form className="SearchPanel__form">
-                <SidePanelContentContainer className="SearchPanel__form-body">
+              <Form className="ScheduleSearchPanel__form">
+                <SidePanelContentContainer className="ScheduleSearchPanel__form-body">
                   <p
-                    className="SearchPanel__reset"
+                    className="ScheduleSearchPanel__reset"
                     onClick={() => {
                       resetForm({values: searchPanelDefaultValues});
                       onReset();
@@ -108,13 +108,13 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
                         MenuProps: RoomSelectMenuProps,
                         renderValue: (value: number[]) => {
                           return value
-                            .map((id) => roomsDict[id].name)
+                            .map((id) => roomsDict?.[id]?.name)
                             .join(", ");
                         }
                       }}
                     >
-                      {cinemas
-                        .map((cinema) =>
+                      {cinemaDictionary?.cinemas
+                        ?.map((cinema) =>
                           cinema.rooms.map((room) => (
                             <MenuItem key={room.id} value={room.id}>
                               <div className="SearchPanel__room-select-item">
@@ -128,7 +128,7 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
                             </MenuItem>
                           ))
                         )
-                        .flat()}
+                        ?.flat()}
                     </Field>
                   </Box>
 

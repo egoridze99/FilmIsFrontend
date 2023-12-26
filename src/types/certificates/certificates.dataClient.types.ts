@@ -8,3 +8,5 @@ export type CertificateCreationBodyType = {
   sum: number;
   telephone: string;
 };
+
+export type CertificateSearchBodyType = {ids?: string[]; telephones?: string[]};

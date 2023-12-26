@@ -1,3 +1,32 @@
-.SearchPanel {
+.CertificatesSearchPanel {
   width: 400px;
+  overflow: auto;
+  height: calc(100% - 50px);
+  padding-bottom: 0;
+
+  &__reset {
+    margin: 0;
+    position: absolute;
+    color: #7e7e83;
+    cursor: pointer;
+    font-size: 12px;
+    top: 0;
+
+    &:hover {
+      color: #007aff;
+    }
+  }
+
+  &__form {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    &-body {
+      position: relative;
+      flex: 1;
+      overflow: auto;
+    }
+  }
 }

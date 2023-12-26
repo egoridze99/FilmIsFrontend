@@ -7,7 +7,10 @@ import moment from "moment";
 import {prop, sortBy} from "ramda";
 import {commonErrorText} from "src/constants/notifications";
 import {INotificationService} from "src/services/types/notification.interface";
-import {CertificateCreationBodyType} from "src/types/certificates/certificates.dataClient.types";
+import {
+  CertificateCreationBodyType,
+  CertificateSearchBodyType
+} from "src/types/certificates/certificates.dataClient.types";
 
 @injectable()
 export class CertificatesRepository {
@@ -36,6 +39,23 @@ export class CertificatesRepository {
       );
     } catch (e) {
       this.showErrorNotification(e);
+    }
+  }
+
+  @action
+  async searchCertificates(data: CertificateSearchBodyType) {
+    try {
+      const certificates = await this.dataClient.searchCertificates(data);
+      this.certificates = this.getSortedCertificates(
+        certificates.map((c) => ({
+          ...c,
+          created_at: moment(c.created_at, "DD-MM-YYYY").toDate()
+        }))
+      );
+      return true;
+    } catch (e) {
+      this.showErrorNotification(e);
+      return false;
     }
   }
 

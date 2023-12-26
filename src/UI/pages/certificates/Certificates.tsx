@@ -11,27 +11,54 @@ import SubpagesToolbar from "src/UI/components/SubpagesToolbar";
 import Toolbar from "./components/Toolbar";
 import CreationForm from "src/UI/pages/certificates/components/CreationForm";
 import SearchPanel from "./components/SearchPanel";
+import {
+  CertificateCreationBodyType,
+  CertificateSearchBodyType
+} from "src/types/certificates/certificates.dataClient.types";
+import {useSearch} from "src/UI/pages/certificates/hooks/useSearch";
 
 import "./certificates.scss";
-import {CertificateCreationBodyType} from "src/types/certificates/certificates.dataClient.types";
 
 const Certificates = () => {
   useCurrentPageTitle();
   const {certificates, dictionaries} = useDomainStore();
   const {contentSize} = usePageData();
 
+  const {
+    searchValues,
+    setIsSearchPanelOpen,
+    isSearchPanelOpen,
+    setSearchValues,
+    clearSearchValues
+  } = useSearch();
+
   const [isCreationFormOpen, setIsCreationFormOpen] = React.useState(false);
-  const [isSearchPanelOpen, setIsSearchPanelOpen] = React.useState(false);
 
   const createCertificate = async (data: CertificateCreationBodyType) => {
     const certificate = await certificates.createCertificate(data);
 
     if (certificate) {
       setIsCreationFormOpen(false);
+
+      certificates.searchCertificates({ids: [certificate.ident]});
+      setSearchValues({ids: [certificate.ident]});
+
       return true;
     } else {
       return false;
     }
+  };
+
+  const searchCertificates = async (data: CertificateSearchBodyType) => {
+    const success = await certificates.searchCertificates(data);
+
+    if (success) {
+      setIsSearchPanelOpen(false);
+      setSearchValues(data);
+
+      return true;
+    }
+    return false;
   };
 
   React.useEffect(() => {
@@ -70,7 +97,12 @@ const Certificates = () => {
         anchor={"right"}
         classes={{paper: "Certificates__search-form"}}
       >
-        <SearchPanel />
+        <SearchPanel
+          search={searchCertificates}
+          close={() => setIsSearchPanelOpen(false)}
+          onReset={() => certificates.loadData()}
+          searchValues={searchValues}
+        />
       </Drawer>
       <div className="Certificates" style={{height: contentSize.height}}>
         <Card>
