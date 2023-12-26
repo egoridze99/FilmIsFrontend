@@ -11,6 +11,7 @@ import {observer} from "mobx-react-lite";
 
 import "./workspace.scss";
 import {CinemaDictionary} from "src/models/dictionaries/cinema.dictionary.model";
+import Loader from "src/UI/components/Loader";
 const Workspace = () => {
   const {workspaceEnv, dictionaries} = useDomainStore();
 
@@ -49,11 +50,17 @@ const Workspace = () => {
         envModel={workspaceEnv.envModel as WorkspaceEnvModel}
         cinemaDictionary={dictionaries.cinemaDictionary as CinemaDictionary}
       />
-      <Outlet
-        context={
-          {closeSettings: () => toggleSettingsPanel(false)} as WorkspaceContext
-        }
-      />
+      {dictionaries.loaders.cinemaDictionary ? (
+        <Loader />
+      ) : (
+        <Outlet
+          context={
+            {
+              closeSettings: () => toggleSettingsPanel(false)
+            } as WorkspaceContext
+          }
+        />
+      )}
     </AppLayout>
   );
 };

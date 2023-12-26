@@ -11,11 +11,15 @@ import {
   CertificateCreationBodyType,
   CertificateSearchBodyType
 } from "src/types/certificates/certificates.dataClient.types";
+import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
 
 @injectable()
 export class CertificatesRepository {
   @observable
   certificates: Certificate[] = [];
+
+  @observable
+  isLoading: boolean = false;
 
   @inject(TYPES.CertificatesDataClient)
   private readonly dataClient: CertificatesDataClient;
@@ -30,6 +34,7 @@ export class CertificatesRepository {
   @action
   async loadData() {
     try {
+      this.isLoading = true;
       const certificates = await this.dataClient.loadCertificates();
       this.certificates = this.getSortedCertificates(
         certificates.map((c) => ({
@@ -39,12 +44,15 @@ export class CertificatesRepository {
       );
     } catch (e) {
       this.showErrorNotification(e);
+    } finally {
+      this.isLoading = false;
     }
   }
 
   @action
   async searchCertificates(data: CertificateSearchBodyType) {
     try {
+      this.isLoading = true;
       const certificates = await this.dataClient.searchCertificates(data);
       this.certificates = this.getSortedCertificates(
         certificates.map((c) => ({
@@ -56,6 +64,8 @@ export class CertificatesRepository {
     } catch (e) {
       this.showErrorNotification(e);
       return false;
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -78,10 +88,6 @@ export class CertificatesRepository {
   }
 
   private showErrorNotification(e: any) {
-    this.notificationService.addNotification({
-      kind: "error",
-      title: "Произошла ошибка",
-      message: e?.response?.data?.msg || commonErrorText
-    });
+    this.notificationService.addNotification(getCommonErrorNotification(e));
   }
 }

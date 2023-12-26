@@ -21,6 +21,7 @@ import AvailableQueueItemsNotification from "src/UI/components/AvailableQueueIte
 import {IStorage} from "src/services/types/storage.interface";
 import {INavigationService} from "src/services/types/navigation.interface";
 import {ROUTER_PATHS} from "src/constants/routerPaths";
+import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
 
 @injectable()
 export class ScheduleRepository {
@@ -29,6 +30,8 @@ export class ScheduleRepository {
 
   @observable
   cashierInfo: CashierInfo | null = null;
+
+  @observable isLoading = false;
 
   @inject(TYPES.ScheduleDataService)
   private readonly dataService: ScheduleDataService;
@@ -60,11 +63,14 @@ export class ScheduleRepository {
 
   async searchReservations(data: ReservationSearchBodyType): Promise<boolean> {
     try {
+      this.isLoading = true;
       this._reservations = await this.dataService.searchReservations(data);
       return true;
     } catch (e) {
       this.showErrorNotification(e);
       return false;
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -146,11 +152,18 @@ export class ScheduleRepository {
       return;
     }
 
-    this._reservations = await this.dataService.loadReservations(
-      env.cinema.id,
-      env.room?.id,
-      env.date
-    );
+    try {
+      this.isLoading = true;
+      this._reservations = await this.dataService.loadReservations(
+        env.cinema.id,
+        env.room?.id,
+        env.date
+      );
+    } catch (e) {
+      this.showErrorNotification(e);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   @action
@@ -172,10 +185,6 @@ export class ScheduleRepository {
   }
 
   private showErrorNotification(e: any) {
-    this.notificationService.addNotification({
-      kind: "error",
-      title: "Произошла ошибка",
-      message: e?.response?.data?.msg || commonErrorText
-    });
+    this.notificationService.addNotification(getCommonErrorNotification(e));
   }
 }

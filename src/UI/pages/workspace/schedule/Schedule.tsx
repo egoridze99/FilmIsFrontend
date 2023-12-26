@@ -28,6 +28,7 @@ import {useSearchPanel} from "src/UI/pages/workspace/schedule/hooks/useSearchPan
 import "./schedule.scss";
 import {useChangesHistory} from "src/UI/pages/workspace/schedule/hooks/useChangesHistory";
 import ChangesHistoryModal from "./components/ChangesHistoryModal";
+import Loader from "src/UI/components/Loader";
 
 const Schedule = () => {
   useCurrentPageTitle();
@@ -146,20 +147,25 @@ const Schedule = () => {
         }
       />
       <ContentContainer>
-        {reservations.length ? (
-          reservations.map((reservation) => (
-            <ScheduleReservationCard
-              reservation={reservation}
-              classname="Schedule__reservation"
-              onEdit={(reservation) => handleOpenEditForm(reservation)}
-              onSeeChangesHistory={async (id) => loadChangesHistory(id)}
-            />
-          ))
-        ) : (
-          <Typography align="center">
-            Кажется на эту дату нет бронирований...
-          </Typography>
-        )}
+        {() => {
+          if (schedule.isLoading) {
+            return <Loader />;
+          }
+          return reservations.length ? (
+            reservations.map((reservation) => (
+              <ScheduleReservationCard
+                reservation={reservation}
+                classname="Schedule__reservation"
+                onEdit={(reservation) => handleOpenEditForm(reservation)}
+                onSeeChangesHistory={async (id) => loadChangesHistory(id)}
+              />
+            ))
+          ) : (
+            <Typography align="center">
+              Кажется на эту дату нет бронирований...
+            </Typography>
+          );
+        }}
       </ContentContainer>
 
       <Drawer

@@ -16,6 +16,7 @@ import {
   CertificateSearchBodyType
 } from "src/types/certificates/certificates.dataClient.types";
 import {useSearch} from "src/UI/pages/certificates/hooks/useSearch";
+import Loader from "src/UI/components/Loader";
 
 import "./certificates.scss";
 
@@ -105,20 +106,24 @@ const Certificates = () => {
         />
       </Drawer>
       <div className="Certificates" style={{height: contentSize.height}}>
-        <Card>
-          <div className="Certificates__table">
-            <DataGrid
-              rows={certificates.certificates}
-              columns={columns}
-              disableRowSelectionOnClick
-              initialState={{
-                pagination: {paginationModel: {pageSize: 10}}
-              }}
-              pageSizeOptions={[5, 10, 20]}
-              showCellVerticalBorder
-            />
-          </div>
-        </Card>
+        {certificates.isLoading ? (
+          <Loader />
+        ) : (
+          <Card>
+            <div className="Certificates__table">
+              <DataGrid
+                rows={certificates.certificates}
+                columns={columns}
+                disableRowSelectionOnClick
+                initialState={{
+                  pagination: {paginationModel: {pageSize: 10}}
+                }}
+                pageSizeOptions={[5, 10, 20]}
+                showCellVerticalBorder
+              />
+            </div>
+          </Card>
+        )}
       </div>
     </AppLayout>
   );
