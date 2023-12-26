@@ -9,22 +9,25 @@ import Datepicker from "src/UI/components/Datepicker";
 
 import "./workspaceSettingsPanel.scss";
 import SidePanelContentContainer from "src/UI/components/containers/SidePanelContentContainer";
+import {CinemaDictionary} from "src/models/dictionaries/cinema.dictionary.model";
 
 type WorkspaceSettingsPanelProps = {
   isOpen: boolean;
   toggleIsOpen: () => void;
 
   envModel: WorkspaceEnvModel;
+  cinemaDictionary: CinemaDictionary;
 };
 
 const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
   isOpen,
   toggleIsOpen,
-  envModel
+  envModel,
+  cinemaDictionary
 }) => {
   const handleCinemaChange = (event: ChangeEvent<HTMLInputElement>) => {
     const cinemaId = event.target.value;
-    const cinema = envModel.cinemasAsDict[cinemaId];
+    const cinema = cinemaDictionary.cinemasAsDict[cinemaId];
 
     if (!cinema) {
       return;
@@ -35,7 +38,7 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
 
   const handleRoomChange = (event: ChangeEvent<HTMLInputElement>) => {
     const roomId = event.target.value;
-    const room = envModel.cinemasAsDict[roomId];
+    const room = cinemaDictionary.cinemasAsDict[roomId];
 
     envModel.setRoom(room || null);
   };
@@ -60,7 +63,7 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
               label="Кинотеатр"
               onChange={handleCinemaChange}
             >
-              {envModel?.cinemas?.map((c) => (
+              {cinemaDictionary?.cinemas?.map((c) => (
                 <MenuItem value={c.id}>{c.name}</MenuItem>
               ))}
             </TextField>

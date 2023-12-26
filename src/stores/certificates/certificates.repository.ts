@@ -7,6 +7,7 @@ import moment from "moment";
 import {prop, sortBy} from "ramda";
 import {commonErrorText} from "src/constants/notifications";
 import {INotificationService} from "src/services/types/notification.interface";
+import {CertificateCreationBodyType} from "src/types/certificates/certificates.dataClient.types";
 
 @injectable()
 export class CertificatesRepository {
@@ -35,6 +36,15 @@ export class CertificatesRepository {
       );
     } catch (e) {
       this.showErrorNotification(e);
+    }
+  }
+
+  async createCertificate(data: CertificateCreationBodyType) {
+    try {
+      return this.dataClient.createCertificate(data);
+    } catch (e) {
+      this.showErrorNotification(e);
+      return null;
     }
   }
 

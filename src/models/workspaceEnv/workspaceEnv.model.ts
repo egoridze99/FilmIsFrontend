@@ -18,8 +18,6 @@ import {DATE_FORMAT} from "src/constants/date";
 import {convertArrayToDict} from "src/utils/convertArrayToDict";
 
 export class WorkspaceEnvModel {
-  cinemas: Cinema[];
-
   @observable cinema: Cinema;
   @observable room: Room | null;
   @observable date: Date;
@@ -31,8 +29,6 @@ export class WorkspaceEnvModel {
     cinemas: Cinema[]
   ) {
     makeObservable(this);
-
-    this.cinemas = cinemas;
 
     this.registerReactions();
 
@@ -58,10 +54,6 @@ export class WorkspaceEnvModel {
     } else {
       this.date = new Date();
     }
-  }
-
-  @computed get cinemasAsDict() {
-    return convertArrayToDict(this.cinemas, "id");
   }
 
   @computed get roomsInCurrentCinemaAsDict() {

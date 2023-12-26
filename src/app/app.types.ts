@@ -11,6 +11,14 @@ export const TYPES = {
   CommonServices: Symbol.for("CommonServices"),
 
   /**
+   * Справочники
+   */
+  DictionariesDataClient: Symbol.for("DictionariesDataClient"),
+  DictionariesDataService: Symbol.for("DictionariesDataService"),
+  DictionariesDataStorage: Symbol.for("DictionariesDataStorage"),
+  DictionariesRepository: Symbol.for("DictionariesRepository"),
+
+  /**
    * Расписание сеансов
    */
   ScheduleDataClient: Symbol.for("ScheduleDataClient"),

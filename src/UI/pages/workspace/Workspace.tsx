@@ -10,11 +10,14 @@ import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {observer} from "mobx-react-lite";
 
 import "./workspace.scss";
+import {CinemaDictionary} from "src/models/dictionaries/cinema.dictionary.model";
 const Workspace = () => {
-  const {workspaceEnv} = useDomainStore();
+  const {workspaceEnv, dictionaries} = useDomainStore();
 
   React.useEffect(() => {
-    workspaceEnv.loadData();
+    dictionaries.loadCinemaDictionary().then(() => {
+      workspaceEnv.loadData(dictionaries.cinemaDictionary!.cinemas);
+    });
 
     return () => {
       workspaceEnv.reset();
@@ -44,6 +47,7 @@ const Workspace = () => {
         isOpen={isSettingsPanelOpen}
         toggleIsOpen={toggleSettingsPanel}
         envModel={workspaceEnv.envModel as WorkspaceEnvModel}
+        cinemaDictionary={dictionaries.cinemaDictionary as CinemaDictionary}
       />
       <Outlet
         context={

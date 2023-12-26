@@ -13,17 +13,31 @@ import CreationForm from "src/UI/pages/certificates/components/CreationForm";
 import SearchPanel from "./components/SearchPanel";
 
 import "./certificates.scss";
+import {CertificateCreationBodyType} from "src/types/certificates/certificates.dataClient.types";
 
 const Certificates = () => {
   useCurrentPageTitle();
-  const {certificates} = useDomainStore();
-  const {reduceSize, contentSize} = usePageData();
+  const {certificates, dictionaries} = useDomainStore();
+  const {contentSize} = usePageData();
 
   const [isCreationFormOpen, setIsCreationFormOpen] = React.useState(false);
   const [isSearchPanelOpen, setIsSearchPanelOpen] = React.useState(false);
 
+  const createCertificate = async (data: CertificateCreationBodyType) => {
+    const certificate = await certificates.createCertificate(data);
+
+    if (certificate) {
+      setIsCreationFormOpen(false);
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   React.useEffect(() => {
-    certificates.loadData();
+    dictionaries.loadCinemaDictionary().then(() => {
+      certificates.loadData();
+    });
 
     return () => certificates.reset();
   }, []);
@@ -44,7 +58,11 @@ const Certificates = () => {
         anchor={"right"}
         classes={{paper: "Certificates__creation-form"}}
       >
-        <CreationForm />
+        <CreationForm
+          close={() => setIsCreationFormOpen(false)}
+          cinemas={dictionaries.cinemaDictionary?.cinemas || []}
+          onCreate={createCertificate}
+        />
       </Drawer>
       <Drawer
         open={isSearchPanelOpen}

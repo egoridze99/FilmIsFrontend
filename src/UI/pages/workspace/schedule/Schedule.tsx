@@ -43,7 +43,7 @@ const Schedule = () => {
     isSearchPanelOpen,
     setIsSearchPanelOpen
   } = useSearchPanel();
-  const {schedule, workspaceEnv} = useDomainStore();
+  const {schedule, workspaceEnv, dictionaries} = useDomainStore();
   const env = workspaceEnv.envModel;
 
   React.useEffect(() => () => schedule.reset(), []);
@@ -169,7 +169,7 @@ const Schedule = () => {
         classes={{paper: "Schedule__search-panel"}}
       >
         <SearchPanel
-          cinemas={env?.cinemas || []}
+          cinemas={dictionaries.cinemaDictionary?.cinemas || []}
           close={() => setIsSearchPanelOpen(false)}
           search={handleSearch}
           searchValues={searchValues}
@@ -184,7 +184,7 @@ const Schedule = () => {
         classes={{paper: "Schedule__reservation-form"}}
       >
         <ReservationForm
-          cinemas={env?.cinemas || []}
+          cinemas={dictionaries.cinemaDictionary?.cinemas || []}
           close={closeCreationForm}
           save={handleCreateReservation}
           loadCertificate={(ident) => schedule.loadCertificate(ident)}
@@ -199,7 +199,7 @@ const Schedule = () => {
       >
         <ReservationForm
           isEditMode
-          cinemas={env?.cinemas || []}
+          cinemas={dictionaries.cinemaDictionary?.cinemas || []}
           close={handleCloseEditForm}
           save={handleEditReservation}
           reservation={editingReservation}

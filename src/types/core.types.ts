@@ -12,3 +12,5 @@ export enum Roles {
   admin = "admin",
   operator = "operator"
 }
+
+export type Nullable<T> = {[K in keyof T]: T[K] | null};

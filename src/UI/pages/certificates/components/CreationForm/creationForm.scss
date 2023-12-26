@@ -1,3 +1,18 @@
-.CreationForm {
+.CertificateCreationForm {
   width: 460px;
+  overflow: auto;
+  height: calc(100% - 50px);
+  padding-bottom: 0;
+
+  &__form {
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__body {
+    flex: 1;
+    overflow: auto;
+  }
 }

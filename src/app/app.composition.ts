@@ -9,6 +9,8 @@ import {WorkspaceEnvRepository} from "src/stores/workspaceEnv/workspaceEnv.repos
 import {ScheduleRepository} from "src/stores/schedule/schedule.repository";
 import {CertificatesContainer} from "src/app/containers/certificates.container";
 import {CertificatesRepository} from "src/stores/certificates/certificates.repository";
+import {DictionariesContainer} from "src/app/containers/dictionaries.container";
+import {DictionariesRepository} from "src/stores/dictionary/dictionaries.repository";
 
 /**
  * Сервисы
@@ -16,6 +18,12 @@ import {CertificatesRepository} from "src/stores/certificates/certificates.repos
 const appContainer = new AppContainer();
 export const commonServices = appContainer.get<ICommonServices>(
   TYPES.CommonServices
+);
+
+const dictionariesContainer = new DictionariesContainer();
+dictionariesContainer.parent = appContainer;
+export const dictionaries = dictionariesContainer.get<DictionariesRepository>(
+  TYPES.DictionariesRepository
 );
 
 /**
