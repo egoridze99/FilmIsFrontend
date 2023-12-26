@@ -3,13 +3,14 @@ import {AppLayout} from "src/layouts";
 import {useCurrentPageTitle} from "src/hooks/useCurrentPageTitle";
 import {usePageData} from "src/contexts/pageData.context";
 import {useDomainStore} from "src/contexts/store.context";
-import ContentContainer from "src/UI/components/containers/ContentContainer";
 import {DataGrid} from "@mui/x-data-grid";
 import {columns} from "src/UI/pages/certificates/columns/getColumns";
 import {observer} from "mobx-react-lite";
-import {Card} from "@mui/material";
+import {Card, Drawer} from "@mui/material";
 import SubpagesToolbar from "src/UI/components/SubpagesToolbar";
 import Toolbar from "./components/Toolbar";
+import CreationForm from "src/UI/pages/certificates/components/CreationForm";
+import SearchPanel from "./components/SearchPanel";
 
 import "./certificates.scss";
 
@@ -37,6 +38,22 @@ const Certificates = () => {
           />
         }
       />
+      <Drawer
+        open={isCreationFormOpen}
+        onClose={() => setIsCreationFormOpen(false)}
+        anchor={"right"}
+        classes={{paper: "Certificates__creation-form"}}
+      >
+        <CreationForm />
+      </Drawer>
+      <Drawer
+        open={isSearchPanelOpen}
+        onClose={() => setIsSearchPanelOpen(false)}
+        anchor={"right"}
+        classes={{paper: "Certificates__search-form"}}
+      >
+        <SearchPanel />
+      </Drawer>
       <div className="Certificates" style={{height: contentSize.height}}>
         <Card>
           <div className="Certificates__table">
