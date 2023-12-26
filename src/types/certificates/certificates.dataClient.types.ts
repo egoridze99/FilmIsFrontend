@@ -9,4 +9,7 @@ export type CertificateCreationBodyType = {
   telephone: string;
 };
 
-export type CertificateSearchBodyType = {ids?: string[]; telephones?: string[]};
+export type CertificateSearchBodyType = {
+  ids?: string | null;
+  telephones?: string | null;
+};

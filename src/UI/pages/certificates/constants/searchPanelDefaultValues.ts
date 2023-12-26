@@ -3,4 +3,4 @@ import {CertificateSearchBodyType} from "src/types/certificates/certificates.dat
 export const searchPanelDefaultValues: CertificateSearchBodyType = {
   ids: "",
   telephones: ""
-} as any;
+};

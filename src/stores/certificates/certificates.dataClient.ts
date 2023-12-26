@@ -17,12 +17,14 @@ export class CertificatesDataClient {
   async searchCertificates(data: CertificateSearchBodyType) {
     let url = `/certificate/search?`;
 
-    if (data.ids && data.ids.length) {
-      url += `ids=${JSON.stringify(data.ids)}&`;
+    const ids = data.ids ? data.ids.split(" ") : [];
+    if (ids.length) {
+      url += `ids=${JSON.stringify(ids)}&`;
     }
 
-    if (data.telephones && data.telephones.length) {
-      url += `telephones=${JSON.stringify(data.telephones)}`;
+    const telephones = data.telephones ? data.telephones.split(" ") : [];
+    if (telephones.length) {
+      url += `telephones=${JSON.stringify(telephones)}`;
     }
 
     const response = await axios.get<Certificate[]>(url);

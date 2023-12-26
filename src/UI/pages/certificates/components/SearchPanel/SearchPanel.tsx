@@ -25,10 +25,8 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
 }) => {
   const onSubmit = (values: CertificateSearchBodyType) => {
     return search({
-      ids: values.ids ? (values.ids as any).split(" ") : undefined,
-      telephones: values.telephones
-        ? (values.telephones as any).split(" ")
-        : undefined
+      ids: values.ids || null,
+      telephones: values.telephones || null
     });
   };
 
@@ -37,7 +35,7 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
       <SidePanelHeader title={"Поиск сертификатов"} />
       <div className="CertificatesSearchPanel">
         <Formik initialValues={searchValues} onSubmit={onSubmit}>
-          {({isSubmitting, resetForm, submitForm}) => {
+          {({isSubmitting, resetForm, setFieldValue, values}) => {
             return (
               <Form className="CertificatesSearchPanel__form">
                 <SidePanelContentContainer className="CertificatesSearchPanel__form-body">

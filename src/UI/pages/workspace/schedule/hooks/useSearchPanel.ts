@@ -7,6 +7,20 @@ export const useSearchPanel = () => {
   const [searchValues, setSearchValues] =
     React.useState<ReservationSearchBodyType>(searchPanelDefaultValues);
 
+  const activeSearchItems = React.useMemo(() => {
+    return Object.entries(searchValues).reduce((sum, [field, value]) => {
+      if (Array.isArray(value)) {
+        if (value.length) {
+          return sum + 1;
+        }
+      } else if (Boolean(value)) {
+        return sum + 1;
+      }
+
+      return sum;
+    }, 0);
+  }, [searchValues]);
+
   const clearSearchValues = () => {
     setSearchValues(searchPanelDefaultValues);
   };
@@ -16,6 +30,7 @@ export const useSearchPanel = () => {
     setIsSearchPanelOpen,
     searchValues,
     setSearchValues,
-    clearSearchValues
+    clearSearchValues,
+    activeSearchItems
   };
 };

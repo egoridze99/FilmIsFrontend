@@ -42,7 +42,8 @@ const Schedule = () => {
     clearSearchValues,
     setSearchValues,
     isSearchPanelOpen,
-    setIsSearchPanelOpen
+    setIsSearchPanelOpen,
+    activeSearchItems
   } = useSearchPanel();
   const {schedule, workspaceEnv, dictionaries} = useDomainStore();
   const env = workspaceEnv.envModel;
@@ -132,7 +133,7 @@ const Schedule = () => {
       : schedule.reservations.filter(
           (reservation) => reservation.status !== ReservationStatus.canceled
         );
-  }, [schedule.reservations]);
+  }, [schedule.reservations, showCancelled]);
 
   return (
     <>
@@ -143,6 +144,7 @@ const Schedule = () => {
             toggleShowCancelled={() => setShowCancelled((prev) => !prev)}
             openCreationForm={openCreationForm}
             openSearchPanel={() => setIsSearchPanelOpen(true)}
+            activeSearchItems={activeSearchItems}
           />
         }
       />
@@ -179,7 +181,10 @@ const Schedule = () => {
           close={() => setIsSearchPanelOpen(false)}
           search={handleSearch}
           searchValues={searchValues}
-          onReset={() => schedule.loadData(env)}
+          onReset={() => {
+            schedule.loadData(env);
+            clearSearchValues();
+          }}
         />
       </Drawer>
 

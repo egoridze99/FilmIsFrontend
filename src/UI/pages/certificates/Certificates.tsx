@@ -30,7 +30,8 @@ const Certificates = () => {
     setIsSearchPanelOpen,
     isSearchPanelOpen,
     setSearchValues,
-    clearSearchValues
+    clearSearchValues,
+    activeSearchItems
   } = useSearch();
 
   const [isCreationFormOpen, setIsCreationFormOpen] = React.useState(false);
@@ -41,8 +42,8 @@ const Certificates = () => {
     if (certificate) {
       setIsCreationFormOpen(false);
 
-      certificates.searchCertificates({ids: [certificate.ident]});
-      setSearchValues({ids: [certificate.ident]});
+      certificates.searchCertificates({ids: certificate.ident});
+      setSearchValues({ids: certificate.ident});
 
       return true;
     } else {
@@ -77,6 +78,7 @@ const Certificates = () => {
           <Toolbar
             openCreationPanel={() => setIsCreationFormOpen(true)}
             openSearchPanel={() => setIsSearchPanelOpen(true)}
+            activeSearchItems={activeSearchItems}
           />
         }
       />
@@ -101,7 +103,10 @@ const Certificates = () => {
         <SearchPanel
           search={searchCertificates}
           close={() => setIsSearchPanelOpen(false)}
-          onReset={() => certificates.loadData()}
+          onReset={() => {
+            certificates.loadData();
+            clearSearchValues();
+          }}
           searchValues={searchValues}
         />
       </Drawer>

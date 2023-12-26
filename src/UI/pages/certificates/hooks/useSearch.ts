@@ -7,6 +7,13 @@ export const useSearch = () => {
   const [searchValues, setSearchValues] =
     React.useState<CertificateSearchBodyType>(searchPanelDefaultValues);
 
+  const activeSearchItems = React.useMemo(() => {
+    return Object.values(searchValues).reduce(
+      (acc, i) => (i ? acc + 1 : acc),
+      0
+    );
+  }, [searchValues]);
+
   const clearSearchValues = () => {
     setSearchValues(searchPanelDefaultValues);
   };
@@ -16,6 +23,7 @@ export const useSearch = () => {
     setIsSearchPanelOpen,
     searchValues,
     setSearchValues,
-    clearSearchValues
+    clearSearchValues,
+    activeSearchItems
   };
 };

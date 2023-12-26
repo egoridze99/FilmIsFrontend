@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Badge,
   FormControlLabel,
   FormGroup,
   IconButton,
@@ -19,15 +20,21 @@ type ToolbarProps = {
   toggleShowCancelled(): void;
   openCreationForm(): void;
   openSearchPanel(): void;
+  activeSearchItems: number;
 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
   showCancelled,
   toggleShowCancelled,
   openCreationForm,
-  openSearchPanel
+  openSearchPanel,
+  activeSearchItems
 }) => {
   const tunePopoverProps = usePopoverProps("schedule-tune-popover");
+
+  const activeFilters = React.useMemo(() => {
+    return [showCancelled].reduce((acc, i) => (i ? acc + 1 : acc), 0);
+  }, [showCancelled]);
 
   return (
     <div className="ScheduleToolbar">
@@ -35,18 +42,30 @@ const Toolbar: React.FC<ToolbarProps> = ({
         title={"Управление элементами на странице"}
         className="ScheduleToolbar__item"
       >
-        <IconButton
-          aria-describedby={tunePopoverProps.id}
-          onClick={tunePopoverProps.openPopover}
+        <Badge
+          color="secondary"
+          badgeContent={activeFilters ? activeFilters.toString() : undefined}
         >
-          <Tune color={"inherit"} style={{color: "#fff"}} />
-        </IconButton>
+          <IconButton
+            aria-describedby={tunePopoverProps.id}
+            onClick={tunePopoverProps.openPopover}
+          >
+            <Tune color={"inherit"} style={{color: "#fff"}} />
+          </IconButton>
+        </Badge>
       </Tooltip>
 
       <Tooltip title={"Поиск среди резервов"} className="ScheduleToolbar__item">
-        <IconButton onClick={openSearchPanel}>
-          <FilterAlt color={"inherit"} style={{color: "#fff"}} />
-        </IconButton>
+        <Badge
+          badgeContent={
+            activeSearchItems ? activeSearchItems.toString() : undefined
+          }
+          color="secondary"
+        >
+          <IconButton onClick={openSearchPanel}>
+            <FilterAlt color={"inherit"} style={{color: "#fff"}} />
+          </IconButton>
+        </Badge>
       </Tooltip>
 
       <ToolbarButton

@@ -61,6 +61,7 @@ export class ScheduleRepository {
     );
   }
 
+  @action
   async searchReservations(data: ReservationSearchBodyType): Promise<boolean> {
     try {
       this.isLoading = true;
