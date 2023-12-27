@@ -32,6 +32,13 @@ export const TYPES = {
   CertificatesRepository: Symbol.for("CertificatesRepository"),
 
   /**
+   * Очередь
+   */
+  QueueDataClient: Symbol.for("QueueDataClient"),
+  QueueDataService: Symbol.for("QueueDataService"),
+  QueueRepository: Symbol.for("QueueRepository"),
+
+  /**
    * WorkspaceEnv
    */
   WorkspaceEnvDataClient: Symbol.for("WorkspaceEnvDataClient"),

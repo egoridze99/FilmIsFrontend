@@ -11,6 +11,8 @@ import {CertificatesContainer} from "src/app/containers/certificates.container";
 import {CertificatesRepository} from "src/stores/certificates/certificates.repository";
 import {DictionariesContainer} from "src/app/containers/dictionaries.container";
 import {DictionariesRepository} from "src/stores/dictionary/dictionaries.repository";
+import {QueueContainer} from "src/app/containers/queue.container";
+import {QueueRepository} from "src/stores/queue/queue.repository";
 
 /**
  * Сервисы
@@ -52,3 +54,10 @@ certificatesContainer.parent = appContainer;
 export const certificates = certificatesContainer.get<CertificatesRepository>(
   TYPES.CertificatesRepository
 );
+
+/**
+ * Сертификаты
+ */
+const queueContainer = new QueueContainer();
+queueContainer.parent = appContainer;
+export const queue = queueContainer.get<QueueRepository>(TYPES.QueueRepository);

@@ -1,1 +1,7 @@
-.Queue {}
+.Queue {
+  &__reservation-card {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+}

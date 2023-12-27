@@ -1,6 +1,7 @@
 .ContentContainer {
   overflow: auto;
   padding: 15px;
+  position: relative;
 
   &__content {
     margin: 0 auto;

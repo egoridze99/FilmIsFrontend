@@ -1,5 +1,8 @@
 import {ReservationStatus} from "src/types/schedule/schedule.types";
-import {CertificateStatusEnum} from "src/types/shared.types";
+import {
+  CertificateStatusEnum,
+  QueueItemStatusEnum
+} from "src/types/shared.types";
 
 export const reservationStatusDictionary: Record<
   ReservationStatus,
@@ -33,4 +36,27 @@ export const certificatesStatusDictionary: Record<
 > = {
   [CertificateStatusEnum.active]: "Активно",
   [CertificateStatusEnum.redeemed]: "Погашено"
+};
+
+export const queueStatusDict = {
+  [QueueItemStatusEnum.active]: {
+    type: QueueItemStatusEnum.active,
+    title: "В очереди"
+  },
+  [QueueItemStatusEnum.expired]: {
+    type: QueueItemStatusEnum.expired,
+    title: "Истек срок"
+  },
+  [QueueItemStatusEnum.reserved]: {
+    type: QueueItemStatusEnum.reserved,
+    title: "Перешло в резерв"
+  },
+  [QueueItemStatusEnum.canceled]: {
+    type: QueueItemStatusEnum.canceled,
+    title: "Гости отказались"
+  },
+  [QueueItemStatusEnum.waiting]: {
+    type: QueueItemStatusEnum.waiting,
+    title: "Гости думают"
+  }
 };

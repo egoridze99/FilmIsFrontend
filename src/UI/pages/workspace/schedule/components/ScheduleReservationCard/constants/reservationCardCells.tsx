@@ -38,14 +38,16 @@ export const reservationCardCells = [
       return !!data[key] || !!data.certificate;
     },
     render: (key, data) => {
-      let note = "";
+      let note = "Примечание: ";
+      let certificateNote = "";
 
       if (data.certificate) {
-        note = getCertificateNote(data.certificate);
+        certificateNote = getCertificateNote(data.certificate);
+        note = note + certificateNote;
       }
 
       if (data.note) {
-        note = `${note}${note ? "; " : ""}${data.note}`;
+        note = `${note}${certificateNote ? "; " : ""}${data.note}`;
       }
 
       return note;
