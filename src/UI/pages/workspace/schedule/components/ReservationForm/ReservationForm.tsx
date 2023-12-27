@@ -67,7 +67,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
       <SidePanelHeader
         title={`${isEditMode ? "Редактирование" : "Создание"} резерва`}
       />
-      <div className="ReservationForm">
+      <div className="ReservationForm side-panel-form">
         <Formik
           initialValues={getInitialValues(cinemas, reservation)}
           onSubmit={onSubmit}
@@ -104,9 +104,9 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
             };
 
             return (
-              <Form className="ReservationForm__form">
+              <Form className="side-panel-form__form">
                 <SidePanelContentContainer
-                  className="ReservationForm__body"
+                  className="side-panel-form__body"
                   //@ts-ignore
                   ref={bodyRef}
                 >

@@ -36,7 +36,7 @@ const CreationForm: React.FC<CreationFormProps> = ({
   return (
     <>
       <SidePanelHeader title={"Создание сертификата"} />
-      <div className="CertificateCreationForm">
+      <div className="CertificateCreationForm side-panel-form">
         <Formik
           initialValues={initialValues as CertificateCreationBodyType}
           onSubmit={onSubmit}
@@ -45,8 +45,8 @@ const CreationForm: React.FC<CreationFormProps> = ({
         >
           {({isSubmitting, isValid, errors}) => {
             return (
-              <Form className="CertificateCreationForm__form">
-                <SidePanelContentContainer className="CertificateCreationForm__body">
+              <Form className="side-panel-form__form">
+                <SidePanelContentContainer className="side-panel-form__body">
                   <Box className="full-width-form-control">
                     <Field
                       component={TextField}

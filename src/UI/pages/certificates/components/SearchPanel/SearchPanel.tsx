@@ -9,6 +9,7 @@ import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
 import {searchPanelDefaultValues} from "src/UI/pages/certificates/constants/searchPanelDefaultValues";
 
 import "./searchPanel.scss";
+import {validationSchema} from "src/UI/pages/certificates/components/SearchPanel/helpers/validationSchema";
 
 type SearchPanelProps = {
   searchValues: CertificateSearchBodyType;
@@ -33,14 +34,19 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
   return (
     <>
       <SidePanelHeader title={"Поиск сертификатов"} />
-      <div className="CertificatesSearchPanel">
-        <Formik initialValues={searchValues} onSubmit={onSubmit}>
-          {({isSubmitting, resetForm, setFieldValue, values}) => {
+      <div className="CertificatesSearchPanel side-panel-form">
+        <Formik
+          initialValues={searchValues}
+          onSubmit={onSubmit}
+          validationSchema={validationSchema}
+          validateOnMount
+        >
+          {({isSubmitting, resetForm, isValid}) => {
             return (
-              <Form className="CertificatesSearchPanel__form">
-                <SidePanelContentContainer className="CertificatesSearchPanel__form-body">
+              <Form className="side-panel-form__form">
+                <SidePanelContentContainer className="side-panel-form__body">
                   <p
-                    className="CertificatesSearchPanel__reset"
+                    className="search-panel-reset-button"
                     onClick={() => {
                       resetForm({values: searchPanelDefaultValues});
                       onReset();
@@ -72,6 +78,7 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
                   </Box>
                 </SidePanelContentContainer>
                 <PanelFormsFooter
+                  isSubmitButtonDisabled={!isValid}
                   onCancel={close}
                   isLoading={isSubmitting}
                   submitButtonText="Поиск"

@@ -57,14 +57,14 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
   return (
     <>
       <SidePanelHeader title="Поиск среди резервов" />
-      <div className="ScheduleSearchPanel">
+      <div className="ScheduleSearchPanel side-panel-form">
         <Formik initialValues={searchValues} onSubmit={handleSearch}>
           {({values, setFieldValue, isSubmitting, resetForm, submitForm}) => {
             return (
-              <Form className="ScheduleSearchPanel__form">
-                <SidePanelContentContainer className="ScheduleSearchPanel__form-body">
+              <Form className="side-panel-form__form">
+                <SidePanelContentContainer className="side-panel-form__body">
                   <p
-                    className="ScheduleSearchPanel__reset"
+                    className="search-panel-reset-button"
                     onClick={() => {
                       resetForm({values: searchPanelDefaultValues});
                       onReset();
