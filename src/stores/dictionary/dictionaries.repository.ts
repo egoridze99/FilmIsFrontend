@@ -2,7 +2,6 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "src/app/app.types";
 import {DictionariesDataService} from "src/stores/dictionary/dictionaries.dataService";
 import {action, computed, makeObservable, observable} from "mobx";
-import {commonErrorText} from "src/constants/notifications";
 import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
 import {INotificationService} from "src/services/types/notification.interface";
 

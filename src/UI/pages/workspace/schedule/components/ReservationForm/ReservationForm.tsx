@@ -2,7 +2,7 @@ import React from "react";
 import SidePanelHeader from "src/UI/components/SidePanelHeader";
 import SidePanelContentContainer from "src/UI/components/containers/SidePanelContentContainer";
 import {Form, Formik, Field, FieldArray} from "formik";
-import {Box, Button, Divider, MenuItem} from "@mui/material";
+import {Box, Divider, MenuItem} from "@mui/material";
 import {getInitialValues} from "./helpers/getInitialValues";
 import {Certificate, Cinema} from "src/types/shared.types";
 import {TextField} from "formik-mui";
@@ -10,7 +10,6 @@ import Datepicker from "src/UI/components/Datepicker";
 import {getValidationSchema} from "./helpers/getValidationSchema";
 import {FormikInitialValuesType} from "src/UI/pages/workspace/schedule/components/ReservationForm/ReservationForm.types";
 import moment, {Moment} from "moment";
-import {LoadingButton} from "@mui/lab";
 import {getSavableData} from "src/UI/pages/workspace/schedule/components/ReservationForm/helpers/getSavableData";
 import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 import {

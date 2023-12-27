@@ -15,7 +15,6 @@ import {
   INotificationService,
   NotificationType
 } from "src/services/types/notification.interface";
-import {commonErrorText} from "src/constants/notifications";
 import React from "react";
 import AvailableQueueItemsNotification from "src/UI/components/AvailableQueueItemsNotification";
 import {IStorage} from "src/services/types/storage.interface";

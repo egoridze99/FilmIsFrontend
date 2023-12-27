@@ -5,7 +5,6 @@ import {TYPES} from "src/app/app.types";
 import {CertificatesDataClient} from "src/stores/certificates/certificates.dataClient";
 import moment from "moment";
 import {prop, sortBy} from "ramda";
-import {commonErrorText} from "src/constants/notifications";
 import {INotificationService} from "src/services/types/notification.interface";
 import {
   CertificateCreationBodyType,

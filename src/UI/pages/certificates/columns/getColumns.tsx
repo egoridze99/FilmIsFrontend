@@ -1,4 +1,4 @@
-import {GridColDef, GridColumnGroupingModel} from "@mui/x-data-grid";
+import {GridColDef} from "@mui/x-data-grid";
 import {Certificate} from "src/types/shared.types";
 import moment from "moment";
 import {certificatesStatusDictionary} from "src/constants/statusDictionaries";
