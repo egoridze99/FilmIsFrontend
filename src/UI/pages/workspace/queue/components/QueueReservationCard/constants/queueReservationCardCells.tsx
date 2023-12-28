@@ -38,7 +38,7 @@ export const queueReservationCardCells = [
     size: 2,
     render: (key, data) =>
       data[key] ? (
-        <span style={{color: "#e31235"}}>"Есть другое бронирование"</span>
+        <span style={{color: "#e31235"}}>Есть другое бронирование</span>
       ) : (
         "Нет другого бронирования"
       )

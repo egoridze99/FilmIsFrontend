@@ -3,6 +3,7 @@ import {axios} from "src/axios";
 import {QueueItem} from "src/types/shared.types";
 import moment from "moment/moment";
 import {DATE_FORMAT} from "src/constants/date";
+import {QueueCreationBodyType} from "src/types/queue/queue.dataClient.types";
 
 @injectable()
 export class QueueDataClient {
@@ -14,6 +15,12 @@ export class QueueDataClient {
         date: moment(date).format(DATE_FORMAT)
       }
     });
+
+    return response.data;
+  }
+
+  async createQueueItem(data: QueueCreationBodyType) {
+    const response = await axios.post("/queue", data);
 
     return response.data;
   }

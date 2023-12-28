@@ -155,6 +155,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                       label="Дата"
                       placeholder="Выберите дату"
                       onChange={setDate}
+                      minDate={moment()}
                       required
                     />
                   </Box>

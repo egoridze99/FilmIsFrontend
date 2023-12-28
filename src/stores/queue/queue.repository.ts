@@ -8,6 +8,7 @@ import {INotificationService} from "src/services/types/notification.interface";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {sortWith} from "ramda";
 import moment from "moment";
+import {QueueCreationBodyType} from "src/types/queue/queue.dataClient.types";
 
 @injectable()
 export class QueueRepository {
@@ -48,6 +49,19 @@ export class QueueRepository {
       ],
       this._queue
     );
+  }
+
+  async createQueueItem(data: QueueCreationBodyType) {
+    try {
+      this.isLoading = true;
+      await this.dataService.createQueueItem(data);
+      return true;
+    } catch (e) {
+      this.showErrorNotification(e);
+      return false;
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   @action

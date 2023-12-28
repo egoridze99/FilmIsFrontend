@@ -3,6 +3,8 @@ import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {TYPES} from "src/app/app.types";
 import {QueueDataClient} from "src/stores/queue/queue.dataClient";
 import moment from "moment";
+import {QueueCreationBodyType} from "src/types/queue/queue.dataClient.types";
+import {axios} from "src/axios";
 
 @injectable()
 export class QueueDataService {
@@ -21,5 +23,9 @@ export class QueueDataService {
       date: moment(new Date(i.date)).format("DD-MM-YYYY"),
       created_at: i.created_at.split(" ")[0]
     }));
+  }
+
+  async createQueueItem(data: QueueCreationBodyType) {
+    return this.dataClient.createQueueItem(data);
   }
 }
