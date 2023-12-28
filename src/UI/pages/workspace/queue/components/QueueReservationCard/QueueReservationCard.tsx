@@ -2,11 +2,12 @@ import React from "react";
 import ReservationCard from "src/UI/components/ReservationCard";
 import {queueReservationCardCells} from "./constants/queueReservationCardCells";
 import {QueueItem} from "src/types/shared.types";
+import {Edit} from "@mui/icons-material";
 
 export type QueueReservationCardProps = {
   item: QueueItem;
   classname?: string;
-  onEdit(): void;
+  onEdit(item: QueueItem): void;
 };
 
 const QueueReservationCard: React.FC<QueueReservationCardProps> = ({
@@ -16,11 +17,17 @@ const QueueReservationCard: React.FC<QueueReservationCardProps> = ({
 }) => {
   return (
     <ReservationCard
-      onEdit={onEdit}
       item={item}
       title={item.rooms.map((r) => r.name).join(", ")}
       cells={queueReservationCardCells}
       className={classname}
+      actionButtons={[
+        {
+          tooltip: "Редактирование элемента",
+          onClick: () => onEdit(item),
+          Icon: Edit
+        }
+      ]}
     />
   );
 };

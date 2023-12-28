@@ -7,6 +7,12 @@ import {Edit, History} from "@mui/icons-material";
 
 import "./reservationCard.scss";
 
+export type ActionButton = {
+  tooltip: string;
+  onClick(): void;
+  Icon: React.FC;
+};
+
 export type ReservationCardProps<T extends object = any> = {
   title: React.ReactNode;
   item: T;
@@ -15,8 +21,7 @@ export type ReservationCardProps<T extends object = any> = {
   extraContent?: React.ReactNode;
   className?: string;
 
-  onEdit?: (data: T) => void;
-  onSeeChangesHistory?: (reservationId: number) => Promise<void>;
+  actionButtons?: ActionButton[];
 };
 
 const ReservationCard: React.FC<ReservationCardProps> = ({
@@ -25,27 +30,21 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
   cells,
   className,
   extraContent,
-  onEdit,
-  onSeeChangesHistory
+  actionButtons
 }) => {
   return (
     <CardContainer classname={classNames(className)}>
-      <div className="ReservationCard__controls">
-        {onSeeChangesHistory && (
-          <Tooltip title="Просмотр истории изменений">
-            <IconButton onClick={() => onSeeChangesHistory(item.id)}>
-              <History />
-            </IconButton>
-          </Tooltip>
-        )}
-        {onEdit && (
-          <Tooltip title="Редактирование элемента">
-            <IconButton onClick={() => onEdit(item)}>
-              <Edit />
-            </IconButton>
-          </Tooltip>
-        )}
-      </div>
+      {actionButtons && (
+        <div className="ReservationCard__controls">
+          {actionButtons?.map((btn) => (
+            <Tooltip title={btn.tooltip}>
+              <IconButton onClick={btn.onClick}>
+                <btn.Icon />
+              </IconButton>
+            </Tooltip>
+          ))}
+        </div>
+      )}
       <Title>{title}</Title>
       <CreationInfo data={item} />
       <Box flexGrow={1} mt={2}>

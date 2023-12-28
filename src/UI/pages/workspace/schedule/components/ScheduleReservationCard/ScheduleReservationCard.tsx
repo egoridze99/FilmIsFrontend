@@ -3,6 +3,7 @@ import ReservationCard from "src/UI/components/ReservationCard";
 import {Reservation} from "src/types/schedule/schedule.types";
 import {reservationCardCells} from "src/UI/pages/workspace/schedule/components/ScheduleReservationCard/constants/reservationCardCells";
 import CheckoutsTable from "./components/CheckoutsTable";
+import {Edit, History} from "@mui/icons-material";
 
 type ScheduleReservationCardProps = {
   reservation: Reservation;
@@ -28,8 +29,18 @@ const ScheduleReservationCard: React.FC<ScheduleReservationCardProps> = ({
       cells={reservationCardCells}
       className={classname}
       extraContent={checkoutsTable}
-      onEdit={onEdit}
-      onSeeChangesHistory={onSeeChangesHistory}
+      actionButtons={[
+        {
+          tooltip: "История редактирования элемента",
+          onClick: () => onSeeChangesHistory(reservation.id),
+          Icon: History
+        },
+        {
+          tooltip: "Редактирование элемента",
+          onClick: () => onEdit(reservation),
+          Icon: Edit
+        }
+      ]}
     />
   );
 };

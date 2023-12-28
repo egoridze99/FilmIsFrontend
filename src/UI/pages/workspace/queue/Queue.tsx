@@ -89,7 +89,7 @@ const Queue = () => {
             <QueueReservationCard
               item={i}
               classname="Queue__reservation-card"
-              onEdit={() => openEditingPanel(i)}
+              onEdit={(v) => openEditingPanel(v)}
             />
           ))
         )}
