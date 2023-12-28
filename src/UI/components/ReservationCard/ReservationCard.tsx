@@ -3,7 +3,6 @@ import classNames from "classnames";
 import {Box, Grid, IconButton, Tooltip} from "@mui/material";
 import {ReservationCardCell} from "src/UI/components/ReservationCard/ReservationCard.types";
 import {CardContainer, CreationInfo, Title, Panel} from "./components";
-import {Edit, History} from "@mui/icons-material";
 
 import "./reservationCard.scss";
 
@@ -11,6 +10,7 @@ export type ActionButton = {
   tooltip: string;
   onClick(): void;
   Icon: React.FC;
+  shouldRender?: () => void;
 };
 
 export type ReservationCardProps<T extends object = any> = {
@@ -36,13 +36,15 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
     <CardContainer classname={classNames(className)}>
       {actionButtons && (
         <div className="ReservationCard__controls">
-          {actionButtons?.map((btn) => (
-            <Tooltip title={btn.tooltip}>
-              <IconButton onClick={btn.onClick}>
-                <btn.Icon />
-              </IconButton>
-            </Tooltip>
-          ))}
+          {actionButtons
+            .filter((i) => !i.shouldRender || i.shouldRender())
+            .map((btn) => (
+              <Tooltip title={btn.tooltip}>
+                <IconButton onClick={btn.onClick}>
+                  <btn.Icon />
+                </IconButton>
+              </Tooltip>
+            ))}
         </div>
       )}
       <Title>{title}</Title>

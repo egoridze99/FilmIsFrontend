@@ -36,4 +36,8 @@ export class QueueDataService {
   async editQueueItem(data: QueueEditBodyType, id: number) {
     return this.dataClient.editQueueItem(data, id);
   }
+
+  async closeQueueItem(id: number) {
+    return this.dataClient.closeQueueItem(id);
+  }
 }

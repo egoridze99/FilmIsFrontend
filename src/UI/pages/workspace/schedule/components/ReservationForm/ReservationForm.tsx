@@ -4,7 +4,7 @@ import SidePanelContentContainer from "src/UI/components/containers/SidePanelCon
 import {Form, Formik, Field, FieldArray} from "formik";
 import {Box, Divider, MenuItem} from "@mui/material";
 import {getInitialValues} from "./helpers/getInitialValues";
-import {Certificate, Cinema} from "src/types/shared.types";
+import {Certificate, Cinema, QueueItem} from "src/types/shared.types";
 import {TextField} from "formik-mui";
 import Datepicker from "src/UI/components/Datepicker";
 import {getValidationSchema} from "./helpers/getValidationSchema";
@@ -30,8 +30,9 @@ type ReservationFormProps = {
   close(): void;
   save(data: ReservationCreationBodyType): Promise<void>;
 
-  reservation?: Reservation | null;
+  reservation?: Reservation | QueueItem | null;
   isEditMode?: boolean;
+  isCreationFromScratch?: boolean;
   loadCertificate?: (ident: string) => Promise<Certificate | null>;
 };
 
@@ -41,7 +42,8 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   close,
   save,
   reservation,
-  loadCertificate
+  loadCertificate,
+  isCreationFromScratch
 }) => {
   const bodyRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -68,7 +70,11 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
       />
       <div className="ReservationForm side-panel-form">
         <Formik
-          initialValues={getInitialValues(cinemas, reservation)}
+          initialValues={getInitialValues(
+            cinemas,
+            reservation,
+            isCreationFromScratch
+          )}
           onSubmit={onSubmit}
           validationSchema={getValidationSchema(isEditMode)}
           validateOnMount
@@ -248,7 +254,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                     </>
                   )}
 
-                  {reservation && (
+                  {reservation && isEditMode && (
                     <>
                       <Box className="full-width-form-control" marginY={1}>
                         <Field

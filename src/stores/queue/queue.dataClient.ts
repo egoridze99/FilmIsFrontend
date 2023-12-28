@@ -33,4 +33,10 @@ export class QueueDataClient {
 
     return response.data;
   }
+
+  async closeQueueItem(id: number) {
+    const response = await axios.put(`/queue/close/${id}`);
+
+    return true;
+  }
 }

@@ -18,6 +18,8 @@ import {
   QueueEditBodyType
 } from "src/types/queue/queue.dataClient.types";
 import {QueueItem} from "src/types/shared.types";
+import ReservationForm from "src/UI/pages/workspace/schedule/components/ReservationForm";
+import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 
 const Queue = () => {
   useCurrentPageTitle();
@@ -28,7 +30,12 @@ const Queue = () => {
 
   const [isCreationPanelOpen, setIsCreationPanelOpen] = React.useState(false);
 
-  const {queue, workspaceEnv, dictionaries} = useDomainStore();
+  const [isCreateReservationPanelOpen, setIsCreateReservationPanelOpen] =
+    React.useState(false);
+  const [reservationScratch, setReservationScratch] =
+    React.useState<QueueItem | null>(null);
+
+  const {queue, workspaceEnv, dictionaries, schedule} = useDomainStore();
   const env = workspaceEnv.envModel;
   const {closeSettings} = useOutletContext<WorkspaceContext>();
 
@@ -51,6 +58,26 @@ const Queue = () => {
   const closeEditingPanel = () => {
     setIsEditPanelOpen(false);
     setCurrentEditingItem(null);
+  };
+
+  const openCreateReservationPanel = (item: QueueItem) => {
+    setReservationScratch(item);
+    setIsCreateReservationPanelOpen(true);
+  };
+
+  const closeCreateReservationPanel = () => {
+    setReservationScratch(null);
+    setIsCreateReservationPanelOpen(false);
+  };
+
+  const handleCreateReservation = async (data: ReservationCreationBodyType) => {
+    const success = await schedule.createReservation(data);
+
+    if (success) {
+      await queue.closeQueueItem(reservationScratch?.id as number);
+      queue.loadData(env);
+      closeCreateReservationPanel();
+    }
   };
 
   const handleCreateQueueItem = async (data: QueueCreationBodyType) => {
@@ -90,6 +117,7 @@ const Queue = () => {
               item={i}
               classname="Queue__reservation-card"
               onEdit={(v) => openEditingPanel(v)}
+              onCreateScratch={(v) => openCreateReservationPanel(v)}
             />
           ))
         )}
@@ -118,6 +146,20 @@ const Queue = () => {
           onCreate={handleEditQueueItem}
           isEditMode
           queueItem={currentEditingItem}
+        />
+      </Drawer>
+      <Drawer
+        open={isCreateReservationPanelOpen}
+        onClose={closeCreateReservationPanel}
+        anchor={"right"}
+        classes={{paper: "Queue__queue-form"}}
+      >
+        <ReservationForm
+          close={closeCreateReservationPanel}
+          cinemas={dictionaries.cinemaDictionary?.cinemas || []}
+          save={handleCreateReservation}
+          reservation={reservationScratch}
+          isCreationFromScratch
         />
       </Drawer>
     </>

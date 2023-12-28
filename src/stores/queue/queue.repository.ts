@@ -80,6 +80,19 @@ export class QueueRepository {
     }
   }
 
+  async closeQueueItem(id: number) {
+    try {
+      this.isLoading = true;
+      await this.dataService.closeQueueItem(id);
+      return true;
+    } catch (e) {
+      this.showErrorNotification(e);
+      return false;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
   @action
   async loadData(env: WorkspaceEnvModel | null) {
     if (!env) {
