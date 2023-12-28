@@ -17,7 +17,7 @@ import {
   QueueCreationBodyType,
   QueueEditBodyType
 } from "src/types/queue/queue.dataClient.types";
-import {QueueItem} from "src/types/shared.types";
+import {QueueItem, QueueItemStatusEnum} from "src/types/shared.types";
 import ReservationForm from "src/UI/pages/workspace/schedule/components/ReservationForm";
 import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 
@@ -34,6 +34,8 @@ const Queue = () => {
     React.useState(false);
   const [reservationScratch, setReservationScratch] =
     React.useState<QueueItem | null>(null);
+
+  const [shouldShowReserved, setShouldShowReserved] = React.useState(false);
 
   const {queue, workspaceEnv, dictionaries, schedule} = useDomainStore();
   const env = workspaceEnv.envModel;
@@ -101,18 +103,28 @@ const Queue = () => {
     }
   };
 
+  const queueItems = React.useMemo(() => {
+    return shouldShowReserved
+      ? queue.queue
+      : queue.queue.filter((r) => r.status !== QueueItemStatusEnum.reserved);
+  }, [queue.queue, shouldShowReserved]);
+
   return (
     <>
       <SubpagesToolbar
         customContent={
-          <Toolbar openCreationPanel={() => setIsCreationPanelOpen(true)} />
+          <Toolbar
+            openCreationPanel={() => setIsCreationPanelOpen(true)}
+            shouldShowReserved={shouldShowReserved}
+            toggleShouldShowReserved={() => setShouldShowReserved((p) => !p)}
+          />
         }
       />
       <ContentContainer>
         {queue.isLoading ? (
           <Loader />
-        ) : queue.queue.length ? (
-          queue.queue.map((i) => (
+        ) : queueItems.length ? (
+          queueItems.map((i) => (
             <QueueReservationCard
               item={i}
               classname="Queue__reservation-card"
