@@ -2,8 +2,12 @@ import React from "react";
 import ReservationCard from "src/UI/components/ReservationCard";
 import {queueReservationCardCells} from "./constants/queueReservationCardCells";
 import {QueueItem} from "src/types/shared.types";
-import {Edit, SwapHoriz} from "@mui/icons-material";
+import {Edit, SwapHoriz, Visibility} from "@mui/icons-material";
 import moment from "moment";
+import {usePopoverProps} from "src/hooks/usePopoverProps";
+import PopoverContentContainer from "src/UI/components/containers/PopoverContentContainer";
+import {FormControlLabel, FormGroup, Popover, Switch} from "@mui/material";
+import "./QueueReservationCard.scss";
 
 export type QueueReservationCardProps = {
   item: QueueItem;
@@ -18,27 +22,62 @@ const QueueReservationCard: React.FC<QueueReservationCardProps> = ({
   onEdit,
   onCreateScratch
 }) => {
+  const viewsPopoverProps = usePopoverProps("queue-views-popover");
+
   return (
-    <ReservationCard
-      item={item}
-      title={item.rooms.map((r) => r.name).join(", ")}
-      cells={queueReservationCardCells}
-      className={classname}
-      actionButtons={[
-        {
-          tooltip: "Создать резерв",
-          onClick: () => onCreateScratch(item),
-          Icon: SwapHoriz
-        },
-        {
-          tooltip: "Редактирование элемента",
-          onClick: () => onEdit(item),
-          Icon: Edit
-          // shouldRender: () =>
-          //   moment(item.date, "DD-MM-YYYY").isSameOrAfter(moment())
-        }
-      ]}
-    />
+    <>
+      <ReservationCard
+        item={item}
+        title={item.rooms.map((r) => r.name).join(", ")}
+        cells={queueReservationCardCells}
+        className={classname}
+        actionButtons={[
+          {
+            tooltip: "Создать резерв",
+            onClick: () => onCreateScratch(item),
+            Icon: SwapHoriz,
+            shouldRender: () =>
+              moment(item.date, "DD-MM-YYYY").isSameOrAfter(moment())
+          },
+          {
+            tooltip: "Показать историю просмотров",
+            onClick: (e) => viewsPopoverProps.openPopover(e as any),
+            Icon: Visibility,
+            shouldRender: () => Boolean(item.view_by.length)
+          },
+          {
+            tooltip: "Редактирование элемента",
+            onClick: () => onEdit(item),
+            Icon: Edit,
+            shouldRender: () =>
+              moment(item.date, "DD-MM-YYYY").isSameOrAfter(moment())
+          }
+        ]}
+      />
+      <Popover
+        id={viewsPopoverProps.id}
+        open={viewsPopoverProps.isPopoverOpen}
+        anchorEl={viewsPopoverProps.anchorEl}
+        onClose={viewsPopoverProps.closePopover}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left"
+        }}
+      >
+        <PopoverContentContainer>
+          <ul className="QueueReservationCard__logs">
+            {item.view_by.map((record) => (
+              <li className="QueueReservationCard__logs-item">
+                <p>
+                  {record.user.fullname} при закрытии резерва{" "}
+                  {record.reservation_id} в {record.created_at} (МСК)
+                </p>
+              </li>
+            ))}
+          </ul>
+        </PopoverContentContainer>
+      </Popover>
+    </>
   );
 };
 

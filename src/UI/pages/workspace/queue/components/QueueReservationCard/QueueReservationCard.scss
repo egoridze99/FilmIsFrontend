@@ -1,0 +1,14 @@
+.QueueReservationCard {
+  &__logs {
+    width: 500px;
+    list-style: disc;
+    font-size: 14px;
+    padding: 0 15px;
+
+    & > li {
+      &:not(:last-child) {
+        margin: 0 0 10px 0;
+      }
+    }
+  }
+}

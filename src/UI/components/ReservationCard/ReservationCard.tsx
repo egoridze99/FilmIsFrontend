@@ -8,7 +8,7 @@ import "./reservationCard.scss";
 
 export type ActionButton = {
   tooltip: string;
-  onClick(): void;
+  onClick(e: React.MouseEvent): void;
   Icon: React.FC;
   shouldRender?: () => void;
 };
@@ -40,7 +40,7 @@ const ReservationCard: React.FC<ReservationCardProps> = ({
             .filter((i) => !i.shouldRender || i.shouldRender())
             .map((btn) => (
               <Tooltip title={btn.tooltip}>
-                <IconButton onClick={btn.onClick}>
+                <IconButton onClick={(e) => btn.onClick(e)}>
                   <btn.Icon />
                 </IconButton>
               </Tooltip>
