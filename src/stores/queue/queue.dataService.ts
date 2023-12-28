@@ -7,8 +7,6 @@ import {
   QueueCreationBodyType,
   QueueEditBodyType
 } from "src/types/queue/queue.dataClient.types";
-import {axios} from "src/axios";
-import {QueueItem} from "src/types/shared.types";
 
 @injectable()
 export class QueueDataService {

@@ -25,8 +25,25 @@ export class AuthenticationService implements IAuthenticationService {
   @observable isAuthenticated: boolean = false;
   @observable private jwt: string | null = null;
 
+  private interval: ReturnType<typeof setInterval> | null = null;
+
   constructor() {
     makeObservable(this);
+
+    reaction(
+      () => this.isAuthenticated,
+      async () => {
+        if (this.isAuthenticated && !this.interval) {
+          await axios.get("/reference/is-authenticated");
+          this.interval = setInterval(
+            async () => {
+              await axios.get("/reference/is-authenticated");
+            },
+            60 * 60 * 1000
+          );
+        }
+      }
+    );
 
     reaction(
       () => this.localStorageService,
@@ -82,5 +99,7 @@ export class AuthenticationService implements IAuthenticationService {
     this.localStorageService.removeItem(AUTHENTICATION_KEY);
     this.jwt = null;
     this.isAuthenticated = false;
+    this.interval && clearInterval(this.interval);
+    this.interval = null;
   }
 }

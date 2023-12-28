@@ -32,6 +32,7 @@ axios.interceptors.response.use(
     const isUnAuthorized = error.response.status === 401;
 
     if (!isSignInPage && isUnAuthorized) {
+      sessionStorage.clear();
       localStorage.removeItem(AUTHENTICATION_KEY);
       window.location.replace(ROUTER_PATHS.signIn);
       return;

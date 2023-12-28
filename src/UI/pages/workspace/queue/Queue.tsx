@@ -11,7 +11,7 @@ import Loader from "src/UI/components/Loader";
 import QueueReservationCard from "src/UI/pages/workspace/queue/components/QueueReservationCard";
 import {observer} from "mobx-react-lite";
 import Toolbar from "./components/Toolbar";
-import {Drawer} from "@mui/material";
+import {Drawer, Typography} from "@mui/material";
 import QueueForm from "./components/QueueForm";
 import {
   QueueCreationBodyType,
@@ -111,7 +111,7 @@ const Queue = () => {
       <ContentContainer>
         {queue.isLoading ? (
           <Loader />
-        ) : (
+        ) : queue.queue.length ? (
           queue.queue.map((i) => (
             <QueueReservationCard
               item={i}
@@ -120,6 +120,10 @@ const Queue = () => {
               onCreateScratch={(v) => openCreateReservationPanel(v)}
             />
           ))
+        ) : (
+          <Typography align="center">
+            Кажется на эту дату нет очередей...
+          </Typography>
         )}
       </ContentContainer>
       <Drawer
