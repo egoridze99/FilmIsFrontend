@@ -6,14 +6,17 @@ import {QueueItem} from "src/types/shared.types";
 export type QueueReservationCardProps = {
   item: QueueItem;
   classname?: string;
+  onEdit(): void;
 };
 
 const QueueReservationCard: React.FC<QueueReservationCardProps> = ({
   item,
-  classname
+  classname,
+  onEdit
 }) => {
   return (
     <ReservationCard
+      onEdit={onEdit}
       item={item}
       title={item.rooms.map((r) => r.name).join(", ")}
       cells={queueReservationCardCells}

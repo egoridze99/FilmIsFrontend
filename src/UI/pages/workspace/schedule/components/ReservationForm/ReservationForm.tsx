@@ -74,6 +74,15 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
           validateOnMount
         >
           {({values, isValid, setFieldValue, isSubmitting, initialValues}) => {
+            const currentReservationDate = reservation
+              ? moment(reservation.date, "DD-MM-YYYY")
+              : moment();
+            const minAvailableDate = moment().isSameOrAfter(
+              currentReservationDate
+            )
+              ? currentReservationDate
+              : moment();
+
             const searchCertificate = async (
               e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
             ) => {
@@ -155,7 +164,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                       label="Дата"
                       placeholder="Выберите дату"
                       onChange={setDate}
-                      minDate={moment()}
+                      minDate={minAvailableDate}
                       required
                     />
                   </Box>

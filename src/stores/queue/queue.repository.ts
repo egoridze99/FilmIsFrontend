@@ -8,7 +8,10 @@ import {INotificationService} from "src/services/types/notification.interface";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {sortWith} from "ramda";
 import moment from "moment";
-import {QueueCreationBodyType} from "src/types/queue/queue.dataClient.types";
+import {
+  QueueCreationBodyType,
+  QueueEditBodyType
+} from "src/types/queue/queue.dataClient.types";
 
 @injectable()
 export class QueueRepository {
@@ -55,6 +58,19 @@ export class QueueRepository {
     try {
       this.isLoading = true;
       await this.dataService.createQueueItem(data);
+      return true;
+    } catch (e) {
+      this.showErrorNotification(e);
+      return false;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  async editQueueItem(data: QueueEditBodyType, id: number) {
+    try {
+      this.isLoading = true;
+      await this.dataService.editQueueItem(data, id);
       return true;
     } catch (e) {
       this.showErrorNotification(e);

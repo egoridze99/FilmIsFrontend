@@ -13,10 +13,18 @@ import {observer} from "mobx-react-lite";
 import Toolbar from "./components/Toolbar";
 import {Drawer} from "@mui/material";
 import QueueForm from "./components/QueueForm";
-import {QueueCreationBodyType} from "src/types/queue/queue.dataClient.types";
+import {
+  QueueCreationBodyType,
+  QueueEditBodyType
+} from "src/types/queue/queue.dataClient.types";
+import {QueueItem} from "src/types/shared.types";
 
 const Queue = () => {
   useCurrentPageTitle();
+
+  const [isEditPanelOpen, setIsEditPanelOpen] = React.useState(false);
+  const [currentEditingItem, setCurrentEditingItem] =
+    React.useState<QueueItem | null>(null);
 
   const [isCreationPanelOpen, setIsCreationPanelOpen] = React.useState(false);
 
@@ -35,12 +43,34 @@ const Queue = () => {
     queue.loadData(env);
   }, [env?.cinema, env?.room, env?.date]);
 
+  const openEditingPanel = (item: QueueItem) => {
+    setIsEditPanelOpen(true);
+    setCurrentEditingItem(item);
+  };
+
+  const closeEditingPanel = () => {
+    setIsEditPanelOpen(false);
+    setCurrentEditingItem(null);
+  };
+
   const handleCreateQueueItem = async (data: QueueCreationBodyType) => {
     const success = await queue.createQueueItem(data);
 
     if (success) {
       queue.loadData(env);
       setIsCreationPanelOpen(false);
+    }
+  };
+
+  const handleEditQueueItem = async (data: QueueEditBodyType) => {
+    const success = await queue.editQueueItem(
+      data,
+      currentEditingItem?.id as number
+    );
+
+    if (success) {
+      queue.loadData(env);
+      closeEditingPanel();
     }
   };
 
@@ -59,6 +89,7 @@ const Queue = () => {
             <QueueReservationCard
               item={i}
               classname="Queue__reservation-card"
+              onEdit={() => openEditingPanel(i)}
             />
           ))
         )}
@@ -73,6 +104,20 @@ const Queue = () => {
           close={() => setIsCreationPanelOpen(false)}
           cinemaDictionary={dictionaries.cinemaDictionary}
           onCreate={handleCreateQueueItem}
+        />
+      </Drawer>
+      <Drawer
+        open={isEditPanelOpen}
+        onClose={closeEditingPanel}
+        anchor={"right"}
+        classes={{paper: "Queue__queue-form"}}
+      >
+        <QueueForm
+          close={closeEditingPanel}
+          cinemaDictionary={dictionaries.cinemaDictionary}
+          onCreate={handleEditQueueItem}
+          isEditMode
+          queueItem={currentEditingItem}
         />
       </Drawer>
     </>

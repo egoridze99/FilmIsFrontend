@@ -3,8 +3,12 @@ import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {TYPES} from "src/app/app.types";
 import {QueueDataClient} from "src/stores/queue/queue.dataClient";
 import moment from "moment";
-import {QueueCreationBodyType} from "src/types/queue/queue.dataClient.types";
+import {
+  QueueCreationBodyType,
+  QueueEditBodyType
+} from "src/types/queue/queue.dataClient.types";
 import {axios} from "src/axios";
+import {QueueItem} from "src/types/shared.types";
 
 @injectable()
 export class QueueDataService {
@@ -27,5 +31,9 @@ export class QueueDataService {
 
   async createQueueItem(data: QueueCreationBodyType) {
     return this.dataClient.createQueueItem(data);
+  }
+
+  async editQueueItem(data: QueueEditBodyType, id: number) {
+    return this.dataClient.editQueueItem(data, id);
   }
 }

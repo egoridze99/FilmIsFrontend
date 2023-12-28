@@ -1,4 +1,5 @@
 import {Moment} from "moment/moment";
+import {QueueItemStatusEnum} from "src/types/shared.types";
 
 export type QueueCreationBodyType = {
   contact: string;
@@ -11,4 +12,8 @@ export type QueueCreationBodyType = {
   rooms: number[];
   start_time: string | null;
   telephone: string | null;
+};
+
+export type QueueEditBodyType = QueueCreationBodyType & {
+  status: QueueItemStatusEnum;
 };

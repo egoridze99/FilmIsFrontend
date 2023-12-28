@@ -22,7 +22,7 @@ export type QueueFormProps = {
   onCreate(data: QueueCreationBodyType): Promise<void>;
 
   isEditMode?: boolean;
-  queueItem?: QueueItem;
+  queueItem?: QueueItem | null;
 };
 
 const ITEM_HEIGHT = 60;
@@ -66,12 +66,21 @@ const QueueForm: React.FC<QueueFormProps> = ({
       />
       <div className="QueueForm side-panel-form">
         <Formik
-          initialValues={getInitialValues()}
+          initialValues={getInitialValues(queueItem)}
           onSubmit={onSubmit}
           validationSchema={validationSchema}
           validateOnMount
         >
           {({isValid, isSubmitting, values, setFieldValue}) => {
+            const currentQueueItemDate = queueItem
+              ? moment(queueItem.date, "DD-MM-YYYY")
+              : moment();
+            const minAvailableDate = moment().isSameOrAfter(
+              currentQueueItemDate
+            )
+              ? currentQueueItemDate
+              : moment();
+
             return (
               <Form className="side-panel-form__form">
                 <SidePanelContentContainer className="side-panel-form__body">
@@ -116,7 +125,7 @@ const QueueForm: React.FC<QueueFormProps> = ({
                   <Box className="full-width-form-control" marginY={1}>
                     <Field
                       component={Datepicker}
-                      minDate={moment()}
+                      minDate={minAvailableDate}
                       value={values.date}
                       name="date"
                       label="Дата"

@@ -1,8 +1,9 @@
 import {QueueItem} from "src/types/shared.types";
 import {FormikInitialValues} from "src/UI/pages/workspace/queue/components/QueueForm/QueueForm.types";
+import moment from "moment";
 
 export const getInitialValues = (
-  queueItem?: QueueItem
+  queueItem?: QueueItem | null
 ): FormikInitialValues => {
   if (!queueItem) {
     return {
@@ -19,5 +20,17 @@ export const getInitialValues = (
     } as FormikInitialValues;
   }
 
-  return {} as FormikInitialValues;
+  return {
+    contact: queueItem.contact.name,
+    date: moment(queueItem.date, "DD-MM-YYYY"),
+    duration: queueItem.duration.toString(),
+    end_time: queueItem.end_time,
+    guests_count: queueItem.guests_count.toString(),
+    has_another_reservation: queueItem.has_another_reservation,
+    note: queueItem.note,
+    rooms: queueItem.rooms.map((r) => r.id),
+    start_time: queueItem.start_time,
+    telephone: queueItem.contact.telephone,
+    status: queueItem.status
+  } as FormikInitialValues;
 };

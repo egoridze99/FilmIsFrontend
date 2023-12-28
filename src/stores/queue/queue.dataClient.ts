@@ -3,7 +3,10 @@ import {axios} from "src/axios";
 import {QueueItem} from "src/types/shared.types";
 import moment from "moment/moment";
 import {DATE_FORMAT} from "src/constants/date";
-import {QueueCreationBodyType} from "src/types/queue/queue.dataClient.types";
+import {
+  QueueCreationBodyType,
+  QueueEditBodyType
+} from "src/types/queue/queue.dataClient.types";
 
 @injectable()
 export class QueueDataClient {
@@ -21,6 +24,12 @@ export class QueueDataClient {
 
   async createQueueItem(data: QueueCreationBodyType) {
     const response = await axios.post("/queue", data);
+
+    return response.data;
+  }
+
+  async editQueueItem(data: QueueEditBodyType, id: number) {
+    const response = await axios.put<QueueItem>(`/queue/${id}`, data);
 
     return response.data;
   }
