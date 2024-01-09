@@ -10,8 +10,10 @@ import {sortWith} from "ramda";
 import moment from "moment";
 import {
   QueueCreationBodyType,
-  QueueEditBodyType
+  QueueEditBodyType,
+  QueueSearchBodyType
 } from "src/types/queue/queue.dataClient.types";
+import {ReservationSearchBodyType} from "src/types/schedule/schedule.dataClient.types";
 
 @injectable()
 export class QueueRepository {
@@ -84,6 +86,20 @@ export class QueueRepository {
     try {
       this.isLoading = true;
       await this.dataService.closeQueueItem(id);
+      return true;
+    } catch (e) {
+      this.showErrorNotification(e);
+      return false;
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  @action
+  async searchQueueItems(data: QueueSearchBodyType): Promise<boolean> {
+    try {
+      this.isLoading = true;
+      this._queue = await this.dataService.searchQueueItems(data);
       return true;
     } catch (e) {
       this.showErrorNotification(e);

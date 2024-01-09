@@ -5,8 +5,10 @@ import {QueueDataClient} from "src/stores/queue/queue.dataClient";
 import moment from "moment";
 import {
   QueueCreationBodyType,
-  QueueEditBodyType
+  QueueEditBodyType,
+  QueueSearchBodyType
 } from "src/types/queue/queue.dataClient.types";
+import {QueueItem} from "src/types/shared.types";
 
 @injectable()
 export class QueueDataService {
@@ -33,6 +35,10 @@ export class QueueDataService {
 
   async editQueueItem(data: QueueEditBodyType, id: number) {
     return this.dataClient.editQueueItem(data, id);
+  }
+
+  async searchQueueItems(data: QueueSearchBodyType): Promise<QueueItem[]> {
+    return this.dataClient.searchQueueItems(data);
   }
 
   async closeQueueItem(id: number) {

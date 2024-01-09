@@ -6,15 +6,14 @@ import {TextField} from "formik-mui";
 import {Box, MenuItem, Typography} from "@mui/material";
 import {queueStatusDict} from "src/constants/statusDictionaries";
 import {QueueItemStatusEnum} from "src/types/shared.types";
-
-import "./queueSearchPanel.scss";
 import {searchPanelDefaultValues} from "src/UI/pages/workspace/queue/constants/searchPanelDefaultValues";
 import {CinemaDictionary} from "src/models/dictionaries/cinema.dictionary.model";
 import {QueueSearchBodyType} from "src/types/queue/queue.dataClient.types";
 import Datepicker from "src/UI/components/Datepicker";
-import moment from "moment/moment";
 import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
 import {DATE_FORMAT} from "src/constants/date";
+
+import "./queueSearchPanel.scss";
 
 const ITEM_HEIGHT = 60;
 const ITEM_PADDING_TOP = 8;

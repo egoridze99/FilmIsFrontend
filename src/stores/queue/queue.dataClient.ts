@@ -5,7 +5,8 @@ import moment from "moment/moment";
 import {DATE_FORMAT} from "src/constants/date";
 import {
   QueueCreationBodyType,
-  QueueEditBodyType
+  QueueEditBodyType,
+  QueueSearchBodyType
 } from "src/types/queue/queue.dataClient.types";
 
 @injectable()
@@ -37,5 +38,43 @@ export class QueueDataClient {
   async closeQueueItem(id: number) {
     await axios.put(`/queue/close/${id}`);
     return true;
+  }
+
+  async searchQueueItems(data: QueueSearchBodyType): Promise<QueueItem[]> {
+    let url = `/queue/search?`;
+
+    if (data.status?.length) {
+      url += `status=${JSON.stringify(data.status)}&`;
+    }
+
+    if (data.room?.length) {
+      url += `room=${JSON.stringify(data.room)}&`;
+    }
+
+    if (data.ids) {
+      url += `ids=${JSON.stringify(data.ids.split(" "))}&`;
+    }
+
+    if (data.telephones) {
+      url += `telephones=${JSON.stringify(data.telephones.split(" "))}&`;
+    }
+
+    if (data.start_date) {
+      url += `start_date=${data.start_date}&`;
+    }
+
+    if (data.end_date) {
+      url += `end_date=${data.end_date}&`;
+    }
+
+    if (data.has_another_reservation.length) {
+      url += `has_another_reservation=${JSON.stringify(
+        data.has_another_reservation
+      )}`;
+    }
+
+    const response = await axios.get<QueueItem[]>(url);
+
+    return response.data;
   }
 }

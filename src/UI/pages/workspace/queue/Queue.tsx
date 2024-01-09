@@ -15,14 +15,19 @@ import {Drawer, Typography} from "@mui/material";
 import QueueForm from "./components/QueueForm";
 import {
   QueueCreationBodyType,
-  QueueEditBodyType
+  QueueEditBodyType,
+  QueueSearchBodyType
 } from "src/types/queue/queue.dataClient.types";
 import {QueueItem, QueueItemStatusEnum} from "src/types/shared.types";
 import ReservationForm from "src/UI/pages/workspace/schedule/components/ReservationForm";
-import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
+import {
+  ReservationCreationBodyType,
+  ReservationSearchBodyType
+} from "src/types/schedule/schedule.dataClient.types";
 import {useSearchPanel} from "src/UI/pages/workspace/schedule/hooks/useSearchPanel";
 import QueueSearchPanel from "src/UI/pages/workspace/queue/components/QueueSearchPanel";
 import {searchPanelDefaultValues} from "src/UI/pages/workspace/queue/constants/searchPanelDefaultValues";
+import {ReservationStatus} from "src/types/schedule/schedule.types";
 
 const Queue = () => {
   useCurrentPageTitle();
@@ -117,6 +122,18 @@ const Queue = () => {
     }
   };
 
+  const handleSearch = async (values: QueueSearchBodyType) => {
+    const success = await queue.searchQueueItems(values);
+
+    if (success) {
+      if (values.status?.includes(QueueItemStatusEnum.reserved)) {
+        setShouldShowReserved(true);
+      }
+      setSearchValues(values);
+      setIsSearchPanelOpen(false);
+    }
+  };
+
   const queueItems = React.useMemo(() => {
     return shouldShowReserved
       ? queue.queue
@@ -208,9 +225,7 @@ const Queue = () => {
           }}
           cinemaDictionary={dictionaries.cinemaDictionary}
           searchValues={searchValues}
-          search={async (val) => {
-            console.log(val);
-          }}
+          search={handleSearch}
         />
       </Drawer>
     </>
