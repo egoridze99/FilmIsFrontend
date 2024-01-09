@@ -20,17 +20,17 @@ import {
 } from "src/types/queue/queue.dataClient.types";
 import {QueueItem, QueueItemStatusEnum} from "src/types/shared.types";
 import ReservationForm from "src/UI/pages/workspace/schedule/components/ReservationForm";
-import {
-  ReservationCreationBodyType,
-  ReservationSearchBodyType
-} from "src/types/schedule/schedule.dataClient.types";
+import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 import {useSearchPanel} from "src/UI/pages/workspace/schedule/hooks/useSearchPanel";
 import QueueSearchPanel from "src/UI/pages/workspace/queue/components/QueueSearchPanel";
 import {searchPanelDefaultValues} from "src/UI/pages/workspace/queue/constants/searchPanelDefaultValues";
-import {ReservationStatus} from "src/types/schedule/schedule.types";
+import {useCommonServices} from "src/contexts/commonServices.context";
+import {QUEUE_IDS_TO_SEARCH} from "src/constants/storageKeys";
 
 const Queue = () => {
   useCurrentPageTitle();
+
+  const {sessionStorageService} = useCommonServices();
 
   const [isEditPanelOpen, setIsEditPanelOpen] = React.useState(false);
   const [currentEditingItem, setCurrentEditingItem] =
@@ -70,6 +70,17 @@ const Queue = () => {
     clearSearchValues();
     queue.loadData(env);
   }, [env?.cinema, env?.room, env?.date]);
+
+  React.useEffect(() => {
+    const ids = sessionStorageService.getItem(QUEUE_IDS_TO_SEARCH);
+    if (!ids) {
+      return;
+    }
+
+    setSearchValues({...searchValues, ids: ids.toString()});
+    queue.searchQueueItems({...searchValues, ids: ids.toString()});
+    sessionStorageService.removeItem(QUEUE_IDS_TO_SEARCH);
+  }, []);
 
   const openEditingPanel = (item: QueueItem) => {
     setIsEditPanelOpen(true);

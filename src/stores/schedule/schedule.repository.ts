@@ -21,6 +21,7 @@ import {IStorage} from "src/services/types/storage.interface";
 import {INavigationService} from "src/services/types/navigation.interface";
 import {ROUTER_PATHS} from "src/constants/routerPaths";
 import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
+import {QUEUE_IDS_TO_SEARCH} from "src/constants/storageKeys";
 
 @injectable()
 export class ScheduleRepository {
@@ -107,6 +108,7 @@ export class ScheduleRepository {
 
       if (availableItemsFromQueue.length) {
         const notification: NotificationType = {
+          id: "AVAILABLE_QUEUE_ITEMS",
           kind: "warn",
           title: "Есть доступные элементы в очереди",
           message: null,
@@ -114,7 +116,10 @@ export class ScheduleRepository {
         };
         const redirectToQueueTab = (ids: number[]) => {
           this.notificationService.removeNotification(notification);
-          this.sessionStorageService.setItem("", "");
+          this.sessionStorageService.setItem(
+            QUEUE_IDS_TO_SEARCH,
+            ids.join(" ")
+          );
           this.navigationService.navigate(ROUTER_PATHS.workspaceQueue);
         };
 

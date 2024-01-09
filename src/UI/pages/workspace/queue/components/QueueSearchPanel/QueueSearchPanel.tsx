@@ -14,6 +14,7 @@ import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
 import {DATE_FORMAT} from "src/constants/date";
 
 import "./queueSearchPanel.scss";
+import moment from "moment";
 
 const ITEM_HEIGHT = 60;
 const ITEM_PADDING_TOP = 8;
@@ -165,7 +166,9 @@ const QueueSearchPanel: React.FC<QueueSearchPanelProps> = ({
                   <Box className="full-width-form-control" marginY={1}>
                     <Field
                       component={Datepicker}
-                      value={values.start_date}
+                      value={
+                        values.start_date ? moment(values.start_date) : null
+                      }
                       name="start_date"
                       label="Диапазон дат с"
                       onChange={(val) => setFieldValue("start_date", val)}
@@ -175,7 +178,7 @@ const QueueSearchPanel: React.FC<QueueSearchPanelProps> = ({
                   <Box className="full-width-form-control" marginY={1}>
                     <Field
                       component={Datepicker}
-                      value={values.end_date}
+                      value={values.end_date ? moment(values.end_date) : null}
                       name="end_date"
                       label="Диапазон дат по"
                       onChange={(val) => setFieldValue("end_date", val)}
