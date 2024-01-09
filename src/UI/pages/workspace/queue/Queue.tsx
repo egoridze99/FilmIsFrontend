@@ -20,6 +20,8 @@ import {
 import {QueueItem, QueueItemStatusEnum} from "src/types/shared.types";
 import ReservationForm from "src/UI/pages/workspace/schedule/components/ReservationForm";
 import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
+import {useSearchPanel} from "src/UI/pages/workspace/schedule/hooks/useSearchPanel";
+import QueueSearchPanel from "src/UI/pages/workspace/queue/components/QueueSearchPanel";
 
 const Queue = () => {
   useCurrentPageTitle();
@@ -41,14 +43,25 @@ const Queue = () => {
   const env = workspaceEnv.envModel;
   const {closeSettings} = useOutletContext<WorkspaceContext>();
 
+  const {
+    searchValues,
+    clearSearchValues,
+    setSearchValues,
+    isSearchPanelOpen,
+    setIsSearchPanelOpen,
+    activeSearchItems
+  } = useSearchPanel();
+
   React.useEffect(() => {
     return () => {
+      clearSearchValues();
       queue.reset();
       closeSettings();
     };
   }, []);
 
   React.useEffect(() => {
+    clearSearchValues();
     queue.loadData(env);
   }, [env?.cinema, env?.room, env?.date]);
 
@@ -117,6 +130,8 @@ const Queue = () => {
             openCreationPanel={() => setIsCreationPanelOpen(true)}
             shouldShowReserved={shouldShowReserved}
             toggleShouldShowReserved={() => setShouldShowReserved((p) => !p)}
+            activeSearchItems={activeSearchItems}
+            openSearchPanel={() => setIsSearchPanelOpen(true)}
           />
         }
       />
@@ -177,6 +192,14 @@ const Queue = () => {
           reservation={reservationScratch}
           isCreationFromScratch
         />
+      </Drawer>
+      <Drawer
+        open={isSearchPanelOpen}
+        onClose={() => setIsSearchPanelOpen(false)}
+        anchor={"right"}
+        classes={{paper: "Queue__search-panel"}}
+      >
+        <QueueSearchPanel />
       </Drawer>
     </>
   );

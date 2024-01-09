@@ -9,7 +9,7 @@ import {
   Switch,
   Tooltip
 } from "@mui/material";
-import {Tune} from "@mui/icons-material";
+import {FilterAlt, Tune} from "@mui/icons-material";
 import {usePopoverProps} from "src/hooks/usePopoverProps";
 import PopoverContentContainer from "src/UI/components/containers/PopoverContentContainer";
 
@@ -19,12 +19,16 @@ type ToolbarProps = {
   openCreationPanel(): void;
   shouldShowReserved: boolean;
   toggleShouldShowReserved: () => void;
+  openSearchPanel(): void;
+  activeSearchItems: number;
 };
 
 const Toolbar: React.FC<ToolbarProps> = ({
   openCreationPanel,
   shouldShowReserved,
-  toggleShouldShowReserved
+  toggleShouldShowReserved,
+  openSearchPanel,
+  activeSearchItems
 }) => {
   const tunePopoverProps = usePopoverProps("queue-tune-popover");
 
@@ -50,6 +54,20 @@ const Toolbar: React.FC<ToolbarProps> = ({
           </IconButton>
         </Badge>
       </Tooltip>
+
+      <Tooltip title={"Поиск среди резервов"} className="QueueToolbar__item">
+        <Badge
+          badgeContent={
+            activeSearchItems ? activeSearchItems.toString() : undefined
+          }
+          color="secondary"
+        >
+          <IconButton onClick={openSearchPanel}>
+            <FilterAlt color={"inherit"} style={{color: "#fff"}} />
+          </IconButton>
+        </Badge>
+      </Tooltip>
+
       <ToolbarButton className="QueueToolbar__item" onClick={openCreationPanel}>
         Добавить элемент в очередь
       </ToolbarButton>
