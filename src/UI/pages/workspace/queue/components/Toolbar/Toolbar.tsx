@@ -55,7 +55,7 @@ const Toolbar: React.FC<ToolbarProps> = ({
         </Badge>
       </Tooltip>
 
-      <Tooltip title={"Поиск среди резервов"} className="QueueToolbar__item">
+      <Tooltip title={"Поиск в очереди"} className="QueueToolbar__item">
         <Badge
           badgeContent={
             activeSearchItems ? activeSearchItems.toString() : undefined

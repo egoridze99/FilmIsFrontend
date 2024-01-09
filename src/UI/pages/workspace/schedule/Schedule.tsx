@@ -29,6 +29,7 @@ import "./schedule.scss";
 import {useChangesHistory} from "src/UI/pages/workspace/schedule/hooks/useChangesHistory";
 import ChangesHistoryModal from "./components/ChangesHistoryModal";
 import Loader from "src/UI/components/Loader";
+import {searchPanelDefaultValues} from "src/UI/pages/workspace/schedule/constants/searchPanelDefaultValues";
 
 const Schedule = () => {
   useCurrentPageTitle();
@@ -44,7 +45,7 @@ const Schedule = () => {
     isSearchPanelOpen,
     setIsSearchPanelOpen,
     activeSearchItems
-  } = useSearchPanel();
+  } = useSearchPanel(searchPanelDefaultValues);
   const {schedule, workspaceEnv, dictionaries} = useDomainStore();
   const env = workspaceEnv.envModel;
 

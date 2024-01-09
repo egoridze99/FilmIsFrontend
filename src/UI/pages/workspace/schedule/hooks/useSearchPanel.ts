@@ -1,11 +1,12 @@
 import React from "react";
-import {ReservationSearchBodyType} from "src/types/schedule/schedule.dataClient.types";
-import {searchPanelDefaultValues} from "src/UI/pages/workspace/schedule/constants/searchPanelDefaultValues";
 
-export const useSearchPanel = () => {
+export const useSearchPanel = <T extends object>(
+  searchPanelDefaultValues: T
+) => {
   const [isSearchPanelOpen, setIsSearchPanelOpen] = React.useState(false);
-  const [searchValues, setSearchValues] =
-    React.useState<ReservationSearchBodyType>(searchPanelDefaultValues);
+  const [searchValues, setSearchValues] = React.useState<T>(
+    searchPanelDefaultValues
+  );
 
   const activeSearchItems = React.useMemo(() => {
     return Object.entries(searchValues).reduce((sum, [field, value]) => {

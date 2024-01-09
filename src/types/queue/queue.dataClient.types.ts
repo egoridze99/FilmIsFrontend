@@ -17,3 +17,13 @@ export type QueueCreationBodyType = {
 export type QueueEditBodyType = QueueCreationBodyType & {
   status: QueueItemStatusEnum;
 };
+
+export type QueueSearchBodyType = {
+  status: string[] | null;
+  room: number[] | null;
+  ids: string | null;
+  telephones: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  has_another_reservation: boolean[];
+};

@@ -22,6 +22,7 @@ import ReservationForm from "src/UI/pages/workspace/schedule/components/Reservat
 import {ReservationCreationBodyType} from "src/types/schedule/schedule.dataClient.types";
 import {useSearchPanel} from "src/UI/pages/workspace/schedule/hooks/useSearchPanel";
 import QueueSearchPanel from "src/UI/pages/workspace/queue/components/QueueSearchPanel";
+import {searchPanelDefaultValues} from "src/UI/pages/workspace/queue/constants/searchPanelDefaultValues";
 
 const Queue = () => {
   useCurrentPageTitle();
@@ -50,7 +51,7 @@ const Queue = () => {
     isSearchPanelOpen,
     setIsSearchPanelOpen,
     activeSearchItems
-  } = useSearchPanel();
+  } = useSearchPanel(searchPanelDefaultValues);
 
   React.useEffect(() => {
     return () => {
@@ -199,7 +200,18 @@ const Queue = () => {
         anchor={"right"}
         classes={{paper: "Queue__search-panel"}}
       >
-        <QueueSearchPanel />
+        <QueueSearchPanel
+          close={() => setIsSearchPanelOpen(false)}
+          onReset={() => {
+            queue.loadData(env);
+            clearSearchValues();
+          }}
+          cinemaDictionary={dictionaries.cinemaDictionary}
+          searchValues={searchValues}
+          search={async (val) => {
+            console.log(val);
+          }}
+        />
       </Drawer>
     </>
   );
