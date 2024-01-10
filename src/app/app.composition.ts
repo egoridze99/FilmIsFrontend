@@ -13,6 +13,8 @@ import {DictionariesContainer} from "src/app/containers/dictionaries.container";
 import {DictionariesRepository} from "src/stores/dictionary/dictionaries.repository";
 import {QueueContainer} from "src/app/containers/queue.container";
 import {QueueRepository} from "src/stores/queue/queue.repository";
+import {AdminContainer} from "src/app/containers/admin.container";
+import {AdminRepository} from "src/stores/admin/admin.repository";
 
 /**
  * Сервисы
@@ -61,3 +63,10 @@ export const certificates = certificatesContainer.get<CertificatesRepository>(
 const queueContainer = new QueueContainer();
 queueContainer.parent = appContainer;
 export const queue = queueContainer.get<QueueRepository>(TYPES.QueueRepository);
+
+/**
+ * Админка
+ */
+const adminContainer = new AdminContainer();
+adminContainer.parent = appContainer;
+export const admin = adminContainer.get<AdminRepository>(TYPES.AdminRepository);

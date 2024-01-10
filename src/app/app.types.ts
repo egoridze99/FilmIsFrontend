@@ -39,6 +39,12 @@ export const TYPES = {
   QueueRepository: Symbol.for("QueueRepository"),
 
   /**
+   * Админ
+   */
+  AdminDataClient: Symbol.for("AdminDataClient"),
+  AdminRepository: Symbol.for("AdminRepository"),
+
+  /**
    * WorkspaceEnv
    */
   WorkspaceEnvDataClient: Symbol.for("WorkspaceEnvDataClient"),

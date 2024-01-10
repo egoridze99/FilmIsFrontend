@@ -1,5 +1,6 @@
 import {createContext, useContext} from "react";
 import {
+  admin,
   certificates,
   dictionaries,
   queue,
@@ -12,7 +13,8 @@ const domainStore = {
   dictionaries,
   schedule,
   certificates,
-  queue
+  queue,
+  admin
 };
 
 const domainStoreContext = createContext(domainStore);
