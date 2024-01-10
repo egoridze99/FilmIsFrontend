@@ -84,7 +84,8 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
               ? moment(reservation.date, "DD-MM-YYYY")
               : moment();
             const minAvailableDate = moment().isSameOrAfter(
-              currentReservationDate
+              currentReservationDate,
+              "day"
             )
               ? currentReservationDate
               : moment();

@@ -76,7 +76,8 @@ const QueueForm: React.FC<QueueFormProps> = ({
               ? moment(queueItem.date, "DD-MM-YYYY")
               : moment();
             const minAvailableDate = moment().isSameOrAfter(
-              currentQueueItemDate
+              currentQueueItemDate,
+              "day"
             )
               ? currentQueueItemDate
               : moment();
