@@ -17,6 +17,9 @@ const domainStore = {
   admin
 };
 
+//@ts-ignore
+window.store = domainStore;
+
 const domainStoreContext = createContext(domainStore);
 
 export const useDomainStore = (): typeof domainStore =>

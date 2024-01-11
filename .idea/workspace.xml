@@ -4,20 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a38c772-2728-4e93-b7cd-129899274ec2" name="Changes" comment="Отображение пользователей + удаление">
-      <change afterPath="$PROJECT_DIR$/src/UI/pages/admin/users/components/CreationForm/CreationForm.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/pages/admin/users/components/CreationForm/CreationForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/pages/admin/users/components/CreationForm/helpers/initialValues.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/pages/admin/users/components/CreationForm/helpers/validators.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UI/pages/admin/users/components/CreationForm/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/constants/rolesDictionary.ts" afterDir="false" />
+    <list default="true" id="9a38c772-2728-4e93-b7cd-129899274ec2" name="Changes" comment="Создание пользователя">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/pages/admin/users/Users.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/admin/users/Users.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/pages/admin/users/columns/getColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/admin/users/columns/getColumns.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/pages/admin/users/users.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/admin/users/users.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/admin/admin.dataClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/admin/admin.dataClient.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/admin/admin.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/admin/admin.repository.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/admin/admin.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/admin/admin.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/contexts/store.context.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/contexts/store.context.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/queue/queue.dataService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/queue/queue.dataService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +67,7 @@
       <option name="presentableId" value="Default" />
       <updated>1704980484389</updated>
       <workItem from="1704980485426" duration="2220000" />
-      <workItem from="1704983330493" duration="3396000" />
+      <workItem from="1704983330493" duration="4706000" />
     </task>
     <task id="LOCAL-00001" summary="Исправит высоту контента и скролбар">
       <option name="closed" value="true" />
@@ -103,7 +93,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704988714044</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Создание пользователя">
+      <option name="closed" value="true" />
+      <created>1704990126520</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1704990126520</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,6 +111,7 @@
     <MESSAGE value="Исправит высоту контента и скролбар" />
     <MESSAGE value="Скроет роуты суперпользователя для обычных юзеров" />
     <MESSAGE value="Отображение пользователей + удаление" />
-    <option name="LAST_COMMIT_MESSAGE" value="Отображение пользователей + удаление" />
+    <MESSAGE value="Создание пользователя" />
+    <option name="LAST_COMMIT_MESSAGE" value="Создание пользователя" />
   </component>
 </project>
