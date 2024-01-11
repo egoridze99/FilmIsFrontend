@@ -14,7 +14,7 @@ const CashierInfoBar: React.FC<CashierInfoBarProps> = ({data}) => {
   const {reduceSize} = usePageData();
   React.useEffect(() => {
     reduceSize({height: {CashierInfoBar: 50}});
-    return () => reduceSize({height: {CashierInfoBar: -50}});
+    return () => reduceSize({height: {CashierInfoBar: 0}});
   }, []);
 
   const dataToRender = React.useMemo(() => {

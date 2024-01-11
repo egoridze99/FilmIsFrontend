@@ -20,7 +20,7 @@ const AppToolbar: React.FC<AppToolbarProps> = ({routes, customContent}) => {
   const {reduceSize} = usePageData();
   React.useEffect(() => {
     reduceSize({height: {AppToolbar: 50}});
-    return () => reduceSize({height: {AppToolbar: -50}});
+    return () => reduceSize({height: {AppToolbar: 0}});
   }, []);
 
   return (
