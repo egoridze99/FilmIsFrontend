@@ -3,12 +3,7 @@ import {UserInfo} from "../../../../../types/shared.types";
 import {Roles} from "../../../../../types/core.types";
 import React from "react";
 import {Button} from "@mui/material";
-
-const roles = {
-  [Roles.root]: "Суперадмин",
-  [Roles.admin]: "Администратор",
-  [Roles.operator]: "Оператор"
-};
+import {rolesDictionary} from "../../../../../constants/rolesDictionary";
 
 export const getColumns = (
   removeUser: (id: number) => void
@@ -31,7 +26,7 @@ export const getColumns = (
       headerName: "Роль",
       width: 150,
       sortable: true,
-      valueGetter: (params) => roles[params.row.role]
+      valueGetter: (params) => rolesDictionary[params.row.role]
     },
     {
       field: "login",

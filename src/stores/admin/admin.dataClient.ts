@@ -1,6 +1,6 @@
 import {injectable} from "inversify";
 import {axios} from "src/axios";
-import {AnalyticType} from "src/types/admin/admin.types";
+import {AnalyticType, UserCreationBodyType} from "src/types/admin/admin.types";
 import {UserInfo} from "src/types/shared.types";
 import {Roles} from "src/types/core.types";
 
@@ -34,13 +34,7 @@ export class AdminDataClient {
     return axios.delete(`/user/${id}`);
   }
 
-  createNewUser(data: {
-    login: string;
-    password: string;
-    name: string;
-    surname: string;
-    role: Roles;
-  }) {
+  createNewUser(data: UserCreationBodyType) {
     return axios.post(`/user`, data);
   }
 }
