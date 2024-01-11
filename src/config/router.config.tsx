@@ -39,8 +39,9 @@ export const ROUTER_CONFIG = {
     {
       path: ROUTER_PATHS.admin,
       title: "Панель суперпользователя",
-      guards: [GuardsEnum.AUTHENTICATION_GUARD],
+      guards: [GuardsEnum.AUTHENTICATION_GUARD, GuardsEnum.ROOT_GUARD],
       navigateToNestedPath: ROUTER_PATHS.adminAnalytics,
+      needAdmin: true,
       subpages: [
         {
           path: ROUTER_PATHS.adminAnalytics,

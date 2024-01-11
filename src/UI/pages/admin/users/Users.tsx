@@ -4,6 +4,7 @@ import {useDomainStore} from "src/contexts/store.context";
 import {AppLayout} from "src/layouts";
 import AdminToolbar from "src/UI/pages/admin/components/AdminToolbar";
 import SubpagesToolbar from "src/UI/components/SubpagesToolbar";
+import Loader from "../../../components/Loader";
 
 const Users = () => {
   useCurrentPageTitle();
@@ -19,7 +20,7 @@ const Users = () => {
       }
     >
       <SubpagesToolbar />
-      <div className="">It's users page</div>
+      {admin.isLoading ? <Loader /> : <div className="">It's users page</div>}
     </AppLayout>
   );
 };

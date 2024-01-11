@@ -10,6 +10,8 @@ export type RouteType = {
   isProtected?: boolean;
   guards?: GuardsEnum[];
   navigateToNestedPath?: string;
+  // Исправить
+  needAdmin?: boolean;
 };
 
 export type SubpageType = {
