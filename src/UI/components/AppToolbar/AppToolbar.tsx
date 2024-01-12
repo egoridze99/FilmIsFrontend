@@ -8,6 +8,8 @@ import classNames from "classnames";
 import "src/UI/components/AppToolbar/appToolbar.scss";
 import UserIcon from "src/UI/components/UserIcon";
 import {usePageData} from "src/contexts/pageData.context";
+import {useCommonServices} from "../../../contexts/commonServices.context";
+import {Roles} from "../../../types/core.types";
 
 type AppToolbarProps = {
   routes: RouteType[];
@@ -17,10 +19,12 @@ type AppToolbarProps = {
 const AppToolbar: React.FC<AppToolbarProps> = ({routes, customContent}) => {
   const [page] = useActiveRoute();
 
+  const {authenticationService} = useCommonServices();
+
   const {reduceSize} = usePageData();
   React.useEffect(() => {
     reduceSize({height: {AppToolbar: 50}});
-    return () => reduceSize({height: {AppToolbar: -50}});
+    return () => reduceSize({height: {AppToolbar: 0}});
   }, []);
 
   return (
@@ -34,6 +38,13 @@ const AppToolbar: React.FC<AppToolbarProps> = ({routes, customContent}) => {
             <ul className="AppToolbar__nav-list">
               {routes
                 .filter((route) => !route.hidden)
+                .filter(route => {
+                  if (authenticationService.userData?.role === Roles.root) {
+                    return route
+                  }
+
+                  return !route.needAdmin;
+                })
                 .map((route) => {
                   return (
                     <li

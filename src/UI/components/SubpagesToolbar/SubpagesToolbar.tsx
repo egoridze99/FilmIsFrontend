@@ -17,7 +17,7 @@ const SubpagesToolbar: React.FC<SubpagesToolbarProps> = ({customContent}) => {
   const {reduceSize} = usePageData();
   React.useEffect(() => {
     reduceSize({height: {SubpagesToolbar: 50}});
-    return () => reduceSize({height: {SubpagesToolbar: -50}});
+    return () => reduceSize({height: {SubpagesToolbar: 0}});
   }, []);
 
   return (

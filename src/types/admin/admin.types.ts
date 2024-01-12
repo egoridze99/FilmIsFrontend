@@ -1,3 +1,5 @@
+import {Roles} from "../core.types";
+
 export type AnalyticType = {
   checkout: {area: string; sum: number}[];
   duration: {area: string; sum: number}[];
@@ -7,4 +9,12 @@ export type AnalyticType = {
     cash: number;
     sum: number;
   }[];
+};
+
+export type UserCreationBodyType = {
+  login: string;
+  password: string;
+  name: string;
+  surname: string;
+  role: Roles;
 };

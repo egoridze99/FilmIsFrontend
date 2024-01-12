@@ -1,6 +1,6 @@
 import {inject, injectable} from "inversify";
 import {action, makeObservable, observable} from "mobx";
-import {AnalyticType} from "src/types/admin/admin.types";
+import {AnalyticType, UserCreationBodyType} from "src/types/admin/admin.types";
 import {UserInfo} from "src/types/shared.types";
 import {TYPES} from "src/app/app.types";
 import {AdminDataClient} from "src/stores/admin/admin.dataClient";
@@ -102,13 +102,7 @@ export class AdminRepository {
   }
 
   @action
-  async createNewUser(data: {
-    login: string;
-    password: string;
-    name: string;
-    surname: string;
-    role: Roles;
-  }) {
+  async createNewUser(data: UserCreationBodyType) {
     try {
       this.isLoading = true;
       await this.dataClient.createNewUser(data);
@@ -117,9 +111,11 @@ export class AdminRepository {
         title: "Успешно",
         message: "Пользователь успешно создан"
       });
+      return true;
     } catch (e) {
       console.log(e);
       this.showErrorNotification(e);
+      return false;
     } finally {
       this.isLoading = false;
     }

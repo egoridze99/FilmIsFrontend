@@ -38,7 +38,13 @@ export class QueueDataService {
   }
 
   async searchQueueItems(data: QueueSearchBodyType): Promise<QueueItem[]> {
-    return this.dataClient.searchQueueItems(data);
+    const queue = await this.dataClient.searchQueueItems(data);
+
+    return queue.map((i) => ({
+      ...i,
+      date: moment(new Date(i.date)).format("DD-MM-YYYY"),
+      created_at: i.created_at.split(" ")[0]
+    }));
   }
 
   async closeQueueItem(id: number) {
