@@ -17,7 +17,7 @@ export const validationSchema = yup.object().shape({
     .typeError("Числовое значение"),
   has_another_reservation: yup.boolean().required("Обязательное поле"),
   note: yup.string().nullable(),
-  rooms: yup.array().min(1).required("Обязательное поле"),
+  rooms: yup.array().min(1, "Нужно выбрать как минимум 1 зал").required("Обязательное поле"),
   start_time: yup
     .string()
     .required("Обязательное поле")

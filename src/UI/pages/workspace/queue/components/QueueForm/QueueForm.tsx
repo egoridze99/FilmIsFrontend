@@ -8,7 +8,7 @@ import {TextField, Switch} from "formik-mui";
 import {Box, FormControlLabel, MenuItem, Typography} from "@mui/material";
 import {CinemaDictionary} from "src/models/dictionaries/cinema.dictionary.model";
 import Datepicker from "src/UI/components/Datepicker";
-import moment, {Moment} from "moment/moment";
+import moment from "moment/moment";
 import GeneralInputFields from "src/UI/pages/workspace/components/GeneralInputFields";
 import {QueueItem, QueueItemStatusEnum} from "src/types/shared.types";
 import {queueStatusDict} from "src/constants/statusDictionaries";
