@@ -37,8 +37,9 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
   };
 
   const handleRoomChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const roomId = event.target.value;
-    const room = cinemaDictionary.cinemasAsDict[roomId];
+    const roomId = event.target.value as unknown as number;
+    const cinema = envModel.cinema;
+    const room = cinema.rooms.find((r) => r.id === roomId);
 
     envModel.setRoom(room || null);
   };
