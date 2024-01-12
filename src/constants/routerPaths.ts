@@ -5,7 +5,7 @@ export const ROUTER_PATHS = {
   workspaceSchedule: "/workspace/schedule",
   workspaceQueue: "/workspace/queue",
   certificate: "/certificate",
-  admin: "/administrator",
-  adminAnalytics: "/administrator/analytics",
-  adminUsers: "/administrator/users"
+  admin: "/superuser",
+  adminAnalytics: "/superuser/analytics",
+  adminUsers: "/superuser/users"
 };
