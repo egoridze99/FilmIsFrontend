@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a38c772-2728-4e93-b7cd-129899274ec2" name="Changes" comment="Создание пользователя">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/contexts/store.context.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/contexts/store.context.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stores/queue/queue.dataService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/queue/queue.dataService.ts" afterDir="false" />
+    <list default="true" id="9a38c772-2728-4e93-b7cd-129899274ec2" name="Changes" comment="Исправит переключение комнат">
+      <change beforePath="$PROJECT_DIR$/src/types/schedule/schedule.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/schedule/schedule.types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +32,7 @@
 }</component>
   <component name="ProjectId" id="2aoMTFgVXIsa9DGQcYAEQsRDngM" />
   <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -54,7 +53,7 @@
     "nodejs_package_manager_path": "npm",
     "prettierjs.PrettierConfiguration.Package": "C:\\Users\\Egori\\Desktop\\FilmIsFrontend\\node_modules\\prettier",
     "settings.editor.selected.configurable": "settings.javascript.prettier",
-    "ts.external.directory.path": "C:\\Users\\Egori\\Desktop\\FilmIsFrontend\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "/Users/etelnov/Desktop/frontend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -112,6 +111,7 @@
     <MESSAGE value="Скроет роуты суперпользователя для обычных юзеров" />
     <MESSAGE value="Отображение пользователей + удаление" />
     <MESSAGE value="Создание пользователя" />
-    <option name="LAST_COMMIT_MESSAGE" value="Создание пользователя" />
+    <MESSAGE value="Исправит переключение комнат" />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправит переключение комнат" />
   </component>
 </project>

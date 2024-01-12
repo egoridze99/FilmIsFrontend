@@ -68,8 +68,8 @@ export type ChangesItemType = {
 
 export enum ReservationStatus {
   not_allowed = "not_allowed",
-  progress = "progress",
   waiting = "waiting",
+  progress = "progress",
   finished = "finished",
   canceled = "canceled"
 }
