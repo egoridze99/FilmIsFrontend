@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9a38c772-2728-4e93-b7cd-129899274ec2" name="Changes" comment="Поменяет урлы">
-      <change beforePath="$PROJECT_DIR$/src/constants/routerPaths.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/routerPaths.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/certificates/Certificates.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/certificates/Certificates.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +125,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705052108448</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Поменяет урлы">
+      <option name="closed" value="true" />
+      <created>1705052351042</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1705052351042</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

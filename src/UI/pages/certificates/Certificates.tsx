@@ -6,7 +6,7 @@ import {useDomainStore} from "src/contexts/store.context";
 import {DataGrid} from "@mui/x-data-grid";
 import {columns} from "src/UI/pages/certificates/columns/getColumns";
 import {observer} from "mobx-react-lite";
-import {Card, Drawer} from "@mui/material";
+import {Card, Drawer, Typography} from "@mui/material";
 import SubpagesToolbar from "src/UI/components/SubpagesToolbar";
 import Toolbar from "./components/Toolbar";
 import CreationForm from "src/UI/pages/certificates/components/CreationForm";
@@ -114,7 +114,7 @@ const Certificates = () => {
         {certificates.isLoading ? (
           <Loader />
         ) : (
-          <Card>
+          certificates.certificates ? <Card>
             <div className="Certificates__table">
               <DataGrid
                 rows={certificates.certificates}
@@ -127,7 +127,7 @@ const Certificates = () => {
                 showCellVerticalBorder
               />
             </div>
-          </Card>
+          </Card> : <Typography variant="body1" textAlign="center" marginY={2}>Нет сертификатов</Typography>
         )}
       </div>
     </AppLayout>
