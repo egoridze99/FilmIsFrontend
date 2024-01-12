@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a38c772-2728-4e93-b7cd-129899274ec2" name="Changes" comment="Исправит порядок статусов в поиске резервов">
+    <list default="true" id="9a38c772-2728-4e93-b7cd-129899274ec2" name="Changes" comment="Переведет ошибку на русский в создании очереди">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueForm/QueueForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueForm/QueueForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueForm/helpers/validationSchema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueForm/helpers/validationSchema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants/routerPaths.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants/routerPaths.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +109,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705045372910</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Переведет ошибку на русский в создании очереди">
+      <option name="closed" value="true" />
+      <created>1705045509451</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1705045509451</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,6 +130,7 @@
     <MESSAGE value="Создание пользователя" />
     <MESSAGE value="Исправит переключение комнат" />
     <MESSAGE value="Исправит порядок статусов в поиске резервов" />
-    <option name="LAST_COMMIT_MESSAGE" value="Исправит порядок статусов в поиске резервов" />
+    <MESSAGE value="Переведет ошибку на русский в создании очереди" />
+    <option name="LAST_COMMIT_MESSAGE" value="Переведет ошибку на русский в создании очереди" />
   </component>
 </project>
