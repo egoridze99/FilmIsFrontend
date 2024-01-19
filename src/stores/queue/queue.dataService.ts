@@ -25,7 +25,7 @@ export class QueueDataService {
     return queue.map((i) => ({
       ...i,
       date: moment(new Date(i.date)).format("DD-MM-YYYY"),
-      created_at: i.created_at.split(" ")[0]
+      created_at: i.created_at
     }));
   }
 
@@ -43,7 +43,7 @@ export class QueueDataService {
     return queue.map((i) => ({
       ...i,
       date: moment(new Date(i.date)).format("DD-MM-YYYY"),
-      created_at: i.created_at.split(" ")[0]
+      created_at: i.created_at
     }));
   }
 
