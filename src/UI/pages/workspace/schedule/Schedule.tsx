@@ -155,6 +155,7 @@ const Schedule = () => {
         ) : reservations.length ? (
           reservations.map((reservation) => (
             <ScheduleReservationCard
+              key={reservation.id}
               reservation={reservation}
               classname="Schedule__reservation"
               onEdit={(reservation) => handleOpenEditForm(reservation)}

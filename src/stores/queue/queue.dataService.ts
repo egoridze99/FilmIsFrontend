@@ -15,7 +15,7 @@ export class QueueDataService {
   @inject(TYPES.QueueDataClient)
   private readonly dataClient: QueueDataClient;
 
-  async loadQueue(env: WorkspaceEnvModel) {
+  async loadQueue(env: WorkspaceEnvModel): Promise<QueueItem[]> {
     const queue = await this.dataClient.loadQueue(
       env.cinema.id,
       env.room?.id,
@@ -24,8 +24,13 @@ export class QueueDataService {
 
     return queue.map((i) => ({
       ...i,
-      date: moment(new Date(i.date)).format("DD-MM-YYYY"),
-      created_at: i.created_at
+      start_date: moment.utc(i.start_date),
+      end_date: i.end_date ? moment.utc(i.end_date) : null,
+      created_at: moment.utc(i.created_at),
+      view_by: i.view_by.map((l) => ({
+        ...l,
+        created_at: moment.utc(l.created_at)
+      }))
     }));
   }
 
@@ -42,8 +47,13 @@ export class QueueDataService {
 
     return queue.map((i) => ({
       ...i,
-      date: moment(new Date(i.date)).format("DD-MM-YYYY"),
-      created_at: i.created_at
+      start_date: moment.utc(i.start_date),
+      end_date: i.end_date ? moment.utc(i.end_date) : null,
+      created_at: moment.utc(i.created_at),
+      view_by: i.view_by.map((l) => ({
+        ...l,
+        created_at: moment.utc(l.created_at)
+      }))
     }));
   }
 

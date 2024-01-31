@@ -4,11 +4,43 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a38c772-2728-4e93-b7cd-129899274ec2" name="Changes" comment="gitignore">
+    <list default="true" id="9a38c772-2728-4e93-b7cd-129899274ec2" name="Changes" comment="Отображение времени создания резерва">
+      <change afterPath="$PROJECT_DIR$/src/stores/certificates/certificates.dataService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/FilmIsFrontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FilmIsFrontend.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/components/ReservationCard/components/CreationInfo/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/components/ReservationCard/components/CreationInfo/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/certificates/columns/getColumns.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/certificates/columns/getColumns.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/components/WorkspaceSettingsPanel/WorkspaceSettingsPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/components/WorkspaceSettingsPanel/WorkspaceSettingsPanel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueForm/QueueForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueForm/QueueForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueForm/helpers/getInitialValues.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueForm/helpers/getInitialValues.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueReservationCard/QueueReservationCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueReservationCard/QueueReservationCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueReservationCard/constants/queueReservationCardCells.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueReservationCard/constants/queueReservationCardCells.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueSearchPanel/QueueSearchPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/queue/components/QueueSearchPanel/QueueSearchPanel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/Schedule.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/Schedule.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/ChangesHistoryModal/ChangesHistoryModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/ChangesHistoryModal/ChangesHistoryModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/ReservationForm/ReservationForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/ReservationForm/ReservationForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/ReservationForm/helpers/getInitialValues.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/ReservationForm/helpers/getInitialValues.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/ReservationForm/helpers/getSavableData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/ReservationForm/helpers/getSavableData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/ScheduleReservationCard/constants/reservationCardCells.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/ScheduleReservationCard/constants/reservationCardCells.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/SearchPanel/SearchPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/components/SearchPanel/SearchPanel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/hooks/useChangesHistory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/pages/workspace/schedule/hooks/useChangesHistory.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/containers/certificates.container.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/certificates.container.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/workspaceEnv/workspaceEnv.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/workspaceEnv/workspaceEnv.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/certificates/certificates.dataClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/certificates/certificates.dataClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/certificates/certificates.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/certificates/certificates.repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/queue/queue.dataClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/queue/queue.dataClient.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stores/queue/queue.dataService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/queue/queue.dataService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/queue/queue.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/queue/queue.repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/schedule/helpers/changesHistoryConstants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/schedule/helpers/changesHistoryConstants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/schedule/schedule.dataClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/schedule/schedule.dataClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/schedule/schedule.dataService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/schedule/schedule.dataService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stores/schedule/schedule.repository.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/stores/schedule/schedule.repository.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/certificates/certificates.dataClient.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/certificates/certificates.dataClient.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/queue/queue.dataClient.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/queue/queue.dataClient.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/schedule/schedule.dataClient.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/schedule/schedule.dataClient.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/schedule/schedule.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/schedule/schedule.types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/shared.types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/shared.types.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +103,11 @@
       <workItem from="1704983330493" duration="5485000" />
       <workItem from="1705063339608" duration="2000" />
       <workItem from="1705068887170" duration="342000" />
-      <workItem from="1705658714923" duration="2780000" />
+      <workItem from="1705658714923" duration="2986000" />
+      <workItem from="1706194639839" duration="2009000" />
+      <workItem from="1706263098842" duration="1241000" />
+      <workItem from="1706274293608" duration="14958000" />
+      <workItem from="1706604577742" duration="7145000" />
     </task>
     <task id="LOCAL-00001" summary="Исправит высоту контента и скролбар">
       <option name="closed" value="true" />
@@ -121,7 +157,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705069219532</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Отображение времени создания резерва">
+      <option name="closed" value="true" />
+      <created>1705676920941</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1705676920941</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +178,7 @@
     <MESSAGE value="Создание пользователя" />
     <MESSAGE value="Исправит очередь" />
     <MESSAGE value="gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitignore" />
+    <MESSAGE value="Отображение времени создания резерва" />
+    <option name="LAST_COMMIT_MESSAGE" value="Отображение времени создания резерва" />
   </component>
 </project>

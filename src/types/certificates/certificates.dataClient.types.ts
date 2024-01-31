@@ -1,3 +1,9 @@
+import {Certificate} from "../shared.types";
+
+export type CertificateResponseType = Omit<Certificate, "created_at"> & {
+  created_at: Date;
+};
+
 export type CertificateCreationBodyType = {
   card: number;
   cash: number;

@@ -73,14 +73,13 @@ const QueueForm: React.FC<QueueFormProps> = ({
         >
           {({isValid, isSubmitting, values, setFieldValue}) => {
             const currentQueueItemDate = queueItem
-              ? moment(queueItem.date, "DD-MM-YYYY")
-              : moment();
-            const minAvailableDate = moment().isSameOrAfter(
-              currentQueueItemDate,
-              "day"
-            )
+              ? queueItem.start_date
+              : moment.utc();
+            const minAvailableDate = moment
+              .utc()
+              .isSameOrAfter(currentQueueItemDate, "day")
               ? currentQueueItemDate
-              : moment();
+              : moment.utc();
 
             return (
               <Form className="side-panel-form__form">

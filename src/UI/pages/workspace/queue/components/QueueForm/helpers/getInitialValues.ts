@@ -22,14 +22,14 @@ export const getInitialValues = (
 
   return {
     contact: queueItem.contact.name,
-    date: moment(queueItem.date, "DD-MM-YYYY"),
+    date: queueItem.start_date,
     duration: queueItem.duration.toString(),
-    end_time: queueItem.end_time,
+    end_time: queueItem.end_date?.format("HH:mm") || null,
     guests_count: queueItem.guests_count.toString(),
     has_another_reservation: queueItem.has_another_reservation,
     note: queueItem.note,
     rooms: queueItem.rooms.map((r) => r.id),
-    start_time: queueItem.start_time,
+    start_time: queueItem.start_date.format("HH:mm"),
     telephone: queueItem.contact.telephone,
     status: queueItem.status
   } as FormikInitialValues;

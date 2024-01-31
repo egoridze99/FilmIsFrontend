@@ -6,17 +6,18 @@ import {DATE_FORMAT} from "src/constants/date";
 import {
   QueueCreationBodyType,
   QueueEditBodyType,
+  QueueItemResponseType,
   QueueSearchBodyType
 } from "src/types/queue/queue.dataClient.types";
 
 @injectable()
 export class QueueDataClient {
   async loadQueue(cinemaId: number, roomId: number | undefined, date: Date) {
-    const response = await axios.get<QueueItem[]>("/queue", {
+    const response = await axios.get<QueueItemResponseType[]>("/queue", {
       params: {
         cinema_id: cinemaId,
         room_id: roomId,
-        date: moment(date).format(DATE_FORMAT)
+        date: moment.utc(date).format(DATE_FORMAT)
       }
     });
 
@@ -40,7 +41,9 @@ export class QueueDataClient {
     return true;
   }
 
-  async searchQueueItems(data: QueueSearchBodyType): Promise<QueueItem[]> {
+  async searchQueueItems(
+    data: QueueSearchBodyType
+  ): Promise<QueueItemResponseType[]> {
     let url = `/queue/search?`;
 
     if (data.status?.length) {
@@ -73,7 +76,7 @@ export class QueueDataClient {
       )}`;
     }
 
-    const response = await axios.get<QueueItem[]>(url);
+    const response = await axios.get<QueueItemResponseType[]>(url);
 
     return response.data;
   }

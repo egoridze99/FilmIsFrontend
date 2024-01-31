@@ -1,4 +1,5 @@
 import {Roles} from "src/types/core.types";
+import {Moment} from "moment";
 
 export type Cinema = {
   id: number;
@@ -29,7 +30,7 @@ export type GuestInfoData = {
 export type Certificate = {
   id: number;
   ident: string;
-  created_at: Date;
+  created_at: Moment;
   status: CertificateStatusEnum;
   sum: number;
   cash: number;
@@ -44,24 +45,23 @@ export type Certificate = {
 export type QueueItem = {
   author: UserInfoData;
   contact: GuestInfoData;
-  created_at: string;
-  date: string;
+  created_at: Moment;
+  start_date: Moment;
   duration: number;
-  end_time: string | null;
+  end_date: Moment | null;
   guests_count: number;
   has_another_reservation: boolean;
   id: number;
   note: string;
   reservation_id: number | null;
   rooms: Room[];
-  start_time: string;
   status: QueueItemStatusEnum;
   view_by: QueueViewLog[];
 };
 
 export type QueueViewLog = {
   reservation_id: number;
-  created_at: string;
+  created_at: Moment;
   user: UserInfo;
 };
 

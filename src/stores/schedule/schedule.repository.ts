@@ -5,7 +5,6 @@ import {ScheduleDataService} from "src/stores/schedule/schedule.dataService";
 import {action, computed, makeObservable, observable} from "mobx";
 import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
 import {sortBy} from "ramda";
-import moment from "moment";
 import {
   ReservationCreationBodyType,
   ReservationEditBodyType,
@@ -52,11 +51,7 @@ export class ScheduleRepository {
   @computed
   get reservations(): Reservation[] {
     return sortBy(
-      (reservation) =>
-        moment(
-          `${reservation.date} ${reservation.time}`,
-          "DD-MM-YYYY hh:mm"
-        ).toDate(),
+      (reservation) => reservation.date.toDate(),
       this._reservations
     );
   }

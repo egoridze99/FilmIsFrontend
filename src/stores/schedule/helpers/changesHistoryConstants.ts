@@ -1,6 +1,6 @@
 export const CHECKOUTS_KEY = "checkouts";
 export const keysDictionary = {
-  time: "Время сеанса",
+  date: "Дата сеанса",
   room: "Зал",
   duration: "Продолжительность",
   count: "Кол-во человек",

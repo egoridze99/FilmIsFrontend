@@ -2,15 +2,15 @@ import {inject, injectable} from "inversify";
 import {action, makeObservable, observable} from "mobx";
 import {Certificate} from "src/types/shared.types";
 import {TYPES} from "src/app/app.types";
-import {CertificatesDataClient} from "src/stores/certificates/certificates.dataClient";
-import moment from "moment";
-import {prop, sortBy} from "ramda";
+import {Moment} from "moment";
+import {compose, prop, sortBy} from "ramda";
 import {INotificationService} from "src/services/types/notification.interface";
 import {
   CertificateCreationBodyType,
   CertificateSearchBodyType
 } from "src/types/certificates/certificates.dataClient.types";
 import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
+import {CertificatesDataService} from "./certificates.dataService";
 
 @injectable()
 export class CertificatesRepository {
@@ -20,8 +20,8 @@ export class CertificatesRepository {
   @observable
   isLoading: boolean = false;
 
-  @inject(TYPES.CertificatesDataClient)
-  private readonly dataClient: CertificatesDataClient;
+  @inject(TYPES.CertificatesDataService)
+  private readonly dataService: CertificatesDataService;
 
   @inject(TYPES.NotificationService)
   private readonly notificationService: INotificationService;
@@ -34,13 +34,9 @@ export class CertificatesRepository {
   async loadData() {
     try {
       this.isLoading = true;
-      const certificates = await this.dataClient.loadCertificates();
-      this.certificates = this.getSortedCertificates(
-        certificates.map((c) => ({
-          ...c,
-          created_at: moment(c.created_at, "DD-MM-YYYY").toDate()
-        }))
-      );
+      const certificates = await this.dataService.loadCertificates();
+
+      this.certificates = this.getSortedCertificates(certificates);
     } catch (e) {
       this.showErrorNotification(e);
     } finally {
@@ -52,13 +48,8 @@ export class CertificatesRepository {
   async searchCertificates(data: CertificateSearchBodyType) {
     try {
       this.isLoading = true;
-      const certificates = await this.dataClient.searchCertificates(data);
-      this.certificates = this.getSortedCertificates(
-        certificates.map((c) => ({
-          ...c,
-          created_at: moment(c.created_at, "DD-MM-YYYY").toDate()
-        }))
-      );
+      const certificates = await this.dataService.searchCertificates(data);
+      this.certificates = this.getSortedCertificates(certificates);
       return true;
     } catch (e) {
       this.showErrorNotification(e);
@@ -70,7 +61,7 @@ export class CertificatesRepository {
 
   async createCertificate(data: CertificateCreationBodyType) {
     try {
-      return this.dataClient.createCertificate(data);
+      return this.dataService.createCertificate(data);
     } catch (e) {
       this.showErrorNotification(e);
       return null;
@@ -83,7 +74,12 @@ export class CertificatesRepository {
   }
 
   private getSortedCertificates(data: Certificate[]) {
-    return sortBy(prop("created_at"), data).reverse();
+    return sortBy(
+      compose((item: Moment) => {
+        return item.toDate();
+      }, prop("created_at")),
+      data
+    ).reverse();
   }
 
   private showErrorNotification(e: any) {

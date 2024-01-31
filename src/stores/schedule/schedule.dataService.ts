@@ -1,7 +1,7 @@
 import {inject, injectable} from "inversify";
 import {TYPES} from "src/app/app.types";
 import {ScheduleDataClient} from "src/stores/schedule/schedule.dataClient";
-import moment from "moment";
+import moment, {Moment} from "moment";
 import {
   ReservationCreationBodyType,
   ReservationEditBodyType,
@@ -29,10 +29,15 @@ export class ScheduleDataService {
       roomId,
       date
     );
-    return reservations.map((reservation) => ({
-      ...reservation,
-      date: moment(new Date(reservation.date)).format("DD-MM-YYYY")
-    }));
+    return reservations.map((reservation) => {
+      console.log(moment.utc(reservation.date));
+
+      return {
+        ...reservation,
+        date: moment.utc(reservation.date),
+        created_at: moment.utc(reservation.created_at)
+      };
+    });
   }
 
   async searchReservations(
@@ -42,7 +47,8 @@ export class ScheduleDataService {
 
     return reservations.map((reservation) => ({
       ...reservation,
-      date: moment(new Date(reservation.date)).format("DD-MM-YYYY")
+      date: moment.utc(reservation.date),
+      created_at: moment.utc(reservation.created_at)
     }));
   }
 
@@ -65,7 +71,7 @@ export class ScheduleDataService {
   async getChangesHistory(id: number): Promise<
     {
       author: string;
-      created_at: string;
+      created_at: Moment;
       id: number;
       data: {[key: string]: any};
     }[]
@@ -77,7 +83,7 @@ export class ScheduleDataService {
 
       return {
         author: item.author,
-        created_at: item.created_at,
+        created_at: moment.utc(item.created_at),
         id: item.id,
         data: Object.keys(item.new).reduce((acc, key) => {
           let wasChanged = copy.new[key] !== copy.old[key];

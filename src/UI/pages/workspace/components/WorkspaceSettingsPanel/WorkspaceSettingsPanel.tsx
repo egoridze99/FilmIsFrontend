@@ -93,7 +93,7 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
           <Datepicker
             className={"WorkspaceSettingsPanel__datepicker"}
             label={"Дата"}
-            value={moment(envModel?.date)}
+            value={moment.utc(envModel?.date)}
             onChange={(d) => {
               if (d) {
                 envModel.setDate(d.toDate());

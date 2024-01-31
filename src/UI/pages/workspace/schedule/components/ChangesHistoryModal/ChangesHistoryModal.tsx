@@ -12,12 +12,13 @@ import {
 } from "@mui/material";
 
 import "./changesHistoryModal.scss";
+import {Moment} from "moment";
 
 type ChangesHistoryModalProps = {
   isLoading: boolean;
   changesHistory: {
     author: string;
-    created_at: string;
+    created_at: Moment;
     id: number;
     data: {[key: string]: any};
   }[];
@@ -66,7 +67,7 @@ const ChangesHistoryModal: React.FC<ChangesHistoryModalProps> = ({
                           <span className="ChangesHistoryModal__card-header-text_bold">
                             Когда сделаны изменения
                           </span>
-                          :{record.created_at}
+                          :{record.created_at.format("DD-MM-YYYY HH:mm")}
                         </p>
                       </div>
 

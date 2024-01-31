@@ -7,6 +7,7 @@ import {
   ChangesResponseType,
   ReservationCreationBodyType,
   ReservationEditBodyType,
+  ReservationResponseType,
   ReservationSearchBodyType
 } from "src/types/schedule/schedule.dataClient.types";
 import {Certificate} from "src/types/shared.types";
@@ -17,21 +18,24 @@ export class ScheduleDataClient {
     cinemaId: number,
     roomId: number | undefined,
     date: Date
-  ): Promise<Reservation[]> {
-    const response = await axios.get<Reservation[]>("/reservation", {
-      params: {
-        room_id: roomId,
-        date: moment(date).format(DATE_FORMAT),
-        cinema_id: cinemaId
+  ): Promise<ReservationResponseType[]> {
+    const response = await axios.get<ReservationResponseType[]>(
+      "/reservation",
+      {
+        params: {
+          room_id: roomId,
+          date: moment.utc(date).format(DATE_FORMAT),
+          cinema_id: cinemaId
+        }
       }
-    });
+    );
 
     return response.data;
   }
 
   async searchReservations(
     data: ReservationSearchBodyType
-  ): Promise<Reservation[]> {
+  ): Promise<ReservationResponseType[]> {
     let url = `/reservation/search?`;
     const reservationIds = data.reservation_id
       ? data.reservation_id.split(" ")
@@ -55,14 +59,14 @@ export class ScheduleDataClient {
     }
 
     if (data.start_date) {
-      url += `date_from=${moment(data.start_date).format(DATE_FORMAT)}&`;
+      url += `date_from=${moment.utc(data.start_date).format(DATE_FORMAT)}&`;
     }
 
     if (data.end_date) {
-      url += `date_to=${moment(data.end_date).format(DATE_FORMAT)}`;
+      url += `date_to=${moment.utc(data.end_date).format(DATE_FORMAT)}`;
     }
 
-    const response = await axios.get<Reservation[]>(url);
+    const response = await axios.get<ReservationResponseType[]>(url);
     return response.data;
   }
 
@@ -76,7 +80,7 @@ export class ScheduleDataClient {
     const response = await axios.get<CashierInfo>("/money", {
       params: {
         cinema_id: cinemaId,
-        date: moment(date).format(DATE_FORMAT)
+        date: moment.utc(date).format(DATE_FORMAT)
       }
     });
 
@@ -90,7 +94,7 @@ export class ScheduleDataClient {
   }
 
   async editReservation(data: ReservationEditBodyType, reservationId: number) {
-    const currentTime = moment().format("YYYY-MM-DD hh:mm");
+    const currentTime = moment().format("YYYY-MM-DD HH:mm");
 
     const response = await axios.put<number[]>(
       `/reservation/${reservationId}`,

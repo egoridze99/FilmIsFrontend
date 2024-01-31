@@ -81,14 +81,16 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
         >
           {({values, isValid, setFieldValue, isSubmitting, initialValues}) => {
             const currentReservationDate = reservation
-              ? moment(reservation.date, "DD-MM-YYYY")
-              : moment();
-            const minAvailableDate = moment().isSameOrAfter(
-              currentReservationDate,
-              "day"
-            )
+              ? isCreationFromScratch
+                ? (reservation as QueueItem).start_date
+                : (reservation as Reservation).date
+              : moment.utc();
+
+            const minAvailableDate = moment
+              .utc()
+              .isSameOrAfter(currentReservationDate, "day")
               ? currentReservationDate
-              : moment();
+              : moment.utc();
 
             const searchCertificate = async (
               e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -166,7 +168,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                   <Box className="full-width-form-control" marginY={1}>
                     <Field
                       component={Datepicker}
-                      value={values.date ? moment(values.date) : null}
+                      value={values.date ? moment.utc(values.date) : null}
                       name="date"
                       label="Дата"
                       placeholder="Выберите дату"

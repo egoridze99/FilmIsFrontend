@@ -9,7 +9,9 @@ export const queueReservationCardCells = [
     title: "Время",
     size: 2,
     render: (key, data) =>
-      `Время: ${data.start_time}${data.end_time ? ` - ${data.end_time}` : ""}`
+      `Время: ${data.start_date.format("HH:mm")}${
+        data.end_date ? ` - ${data.end_date.format("HH:mm")}` : ""
+      }`
   },
   {id: "duration", title: "Продолжительность", size: 2},
   {id: "guests_count", title: "Гостей", size: 2},

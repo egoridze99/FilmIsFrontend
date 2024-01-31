@@ -29,6 +29,7 @@ export const TYPES = {
    * Сертификаты
    */
   CertificatesDataClient: Symbol.for("CertificatesDataClient"),
+  CertificatesDataService: Symbol.for("CertificatesDataService"),
   CertificatesRepository: Symbol.for("CertificatesRepository"),
 
   /**

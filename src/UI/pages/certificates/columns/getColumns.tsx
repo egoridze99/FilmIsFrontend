@@ -1,6 +1,5 @@
 import {GridColDef} from "@mui/x-data-grid";
 import {Certificate} from "src/types/shared.types";
-import moment from "moment";
 import {certificatesStatusDictionary} from "src/constants/statusDictionaries";
 
 export const columns = [
@@ -22,7 +21,7 @@ export const columns = [
     headerName: "Дата создания",
     width: 120,
     sortable: true,
-    valueGetter: (p) => moment(p.row.created_at).format("DD-MM-YYYY")
+    valueGetter: (p) => p.row.created_at.format("DD-MM-YYYY")
   },
   {
     field: "status",

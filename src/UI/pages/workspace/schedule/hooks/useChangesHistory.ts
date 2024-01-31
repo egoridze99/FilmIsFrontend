@@ -1,8 +1,9 @@
 import React from "react";
+import {Moment} from "moment";
 
 type ChangesHistoryType = {
   author: string;
-  created_at: string;
+  created_at: Moment;
   id: number;
   data: {[key: string]: any};
 }[];
@@ -23,6 +24,7 @@ export const useChangesHistory = (
     _isOpen.current = true;
 
     const changesHistory = await loadChangesHistory(reservationId);
+
     if (_isOpen.current) {
       setChangesHistory(changesHistory);
     }

@@ -1,5 +1,18 @@
-import {Moment} from "moment/moment";
-import {QueueItemStatusEnum} from "src/types/shared.types";
+import {
+  QueueItem,
+  QueueItemStatusEnum,
+  QueueViewLog
+} from "src/types/shared.types";
+
+export type QueueItemResponseType = Omit<
+  QueueItem,
+  "created_at" | "start_date" | "end_date" | "view_by"
+> & {
+  created_at: Date;
+  start_date: Date;
+  end_date: Date | null;
+  view_by: Array<Omit<QueueViewLog, "created_at"> & {created_at: Date}>;
+};
 
 export type QueueCreationBodyType = {
   contact: string;

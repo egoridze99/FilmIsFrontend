@@ -6,7 +6,7 @@ import {Edit, SwapHoriz, Visibility} from "@mui/icons-material";
 import moment from "moment";
 import {usePopoverProps} from "src/hooks/usePopoverProps";
 import PopoverContentContainer from "src/UI/components/containers/PopoverContentContainer";
-import {FormControlLabel, FormGroup, Popover, Switch} from "@mui/material";
+import {Popover} from "@mui/material";
 import "./QueueReservationCard.scss";
 
 export type QueueReservationCardProps = {
@@ -37,7 +37,7 @@ const QueueReservationCard: React.FC<QueueReservationCardProps> = ({
             onClick: () => onCreateScratch(item),
             Icon: SwapHoriz,
             shouldRender: () =>
-              moment(item.date, "DD-MM-YYYY").isSameOrAfter(moment(), "day")
+              item.start_date.isSameOrAfter(moment.utc(), "day")
           },
           {
             tooltip: "Показать историю просмотров",
@@ -50,7 +50,7 @@ const QueueReservationCard: React.FC<QueueReservationCardProps> = ({
             onClick: () => onEdit(item),
             Icon: Edit,
             shouldRender: () =>
-              moment(item.date, "DD-MM-YYYY").isSameOrAfter(moment(), "day")
+              item.start_date.isSameOrAfter(moment.utc(), "day")
           }
         ]}
       />
@@ -69,8 +69,11 @@ const QueueReservationCard: React.FC<QueueReservationCardProps> = ({
             {item.view_by.map((record) => (
               <li className="QueueReservationCard__logs-item">
                 <p>
-                  {record.user.fullname} при закрытии резерва{" "}
-                  {record.reservation_id} в {record.created_at} (МСК)
+                  <>
+                    {record.user.fullname} при закрытии резерва{" "}
+                    {record.reservation_id} в{" "}
+                    {record.created_at.format("HH:mm")} (МСК)
+                  </>
                 </p>
               </li>
             ))}

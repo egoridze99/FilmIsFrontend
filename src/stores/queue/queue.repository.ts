@@ -7,13 +7,11 @@ import {QueueDataService} from "src/stores/queue/queue.dataService";
 import {INotificationService} from "src/services/types/notification.interface";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {sortWith} from "ramda";
-import moment from "moment";
 import {
   QueueCreationBodyType,
   QueueEditBodyType,
   QueueSearchBodyType
 } from "src/types/queue/queue.dataClient.types";
-import {ReservationSearchBodyType} from "src/types/schedule/schedule.dataClient.types";
 
 @injectable()
 export class QueueRepository {
@@ -36,20 +34,10 @@ export class QueueRepository {
     return sortWith(
       [
         (a: QueueItem, b: QueueItem) => {
-          const firstDate = moment(
-            `${a.date} ${a.start_time}`,
-            "DD-MM-YYYY hh:mm"
-          );
-
-          const secondDate = moment(
-            `${b.date} ${b.start_time}`,
-            "DD-MM-YYYY hh:mm"
-          );
-
-          if (firstDate.isSame(secondDate)) {
+          if (a.start_date.isSame(b.start_date)) {
             return 0;
           }
-          return secondDate.isAfter(firstDate) ? -1 : 1;
+          return b.start_date.isAfter(a.start_date) ? -1 : 1;
         }
       ],
       this._queue

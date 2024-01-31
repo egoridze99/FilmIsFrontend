@@ -35,8 +35,8 @@ export const getInitialValues = (
     return {
       cinema: null,
       room: null,
-      date: moment(reservation.date, "DD-MM-YYYY"),
-      time: reservation.start_time,
+      date: reservation.start_date,
+      time: reservation.start_date.format("HH:mm"),
       duration: reservation.duration,
       count: reservation.guests_count,
       guest: {
@@ -60,7 +60,8 @@ export const getInitialValues = (
     ...clone(reservation),
     cinema: cinema.id,
     room: reservation.room.id,
-    date: moment(reservation.date, "DD-MM-YYYY"),
+    date: moment.utc(reservation.date, "DD-MM-YYYY"),
+    time: moment.utc(reservation.date, "DD-MM-YYYY").format("HH:mm"),
     certificate_ident: reservation.certificate?.ident,
     rent: reservation.rent || 0,
     card: reservation.card || 0,

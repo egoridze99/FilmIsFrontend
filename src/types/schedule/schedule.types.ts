@@ -1,4 +1,5 @@
 import {Certificate, Room, UserStatus, Cinema} from "src/types/shared.types";
+import {Moment} from "moment";
 
 export type CashierInfo = {
   id: number;
@@ -16,8 +17,7 @@ export type CashierInfo = {
 export type Reservation = {
   id: number;
 
-  date: string;
-  time: string;
+  date: Moment;
   duration: number;
 
   count: number; // Кол-во человек
@@ -40,7 +40,7 @@ export type Reservation = {
   rent: number;
   certificate: Certificate | null;
 
-  created_at: string;
+  created_at: Moment;
   checkouts: CheckoutType[];
 };
 

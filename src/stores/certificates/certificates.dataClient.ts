@@ -1,15 +1,15 @@
 import {injectable} from "inversify";
 import {axios} from "src/axios";
-import {Certificate} from "src/types/shared.types";
 import {
   CertificateCreationBodyType,
+  CertificateResponseType,
   CertificateSearchBodyType
 } from "src/types/certificates/certificates.dataClient.types";
 
 @injectable()
 export class CertificatesDataClient {
   async loadCertificates() {
-    const response = await axios.get<Certificate[]>("/certificate");
+    const response = await axios.get<CertificateResponseType[]>("/certificate");
 
     return response.data;
   }
@@ -27,12 +27,15 @@ export class CertificatesDataClient {
       url += `telephones=${JSON.stringify(telephones)}`;
     }
 
-    const response = await axios.get<Certificate[]>(url);
+    const response = await axios.get<CertificateResponseType[]>(url);
     return response.data;
   }
 
   async createCertificate(data: CertificateCreationBodyType) {
-    const response = await axios.post<Certificate>("/certificate", data);
+    const response = await axios.post<CertificateResponseType>(
+      "/certificate",
+      data
+    );
 
     return response.data;
   }
