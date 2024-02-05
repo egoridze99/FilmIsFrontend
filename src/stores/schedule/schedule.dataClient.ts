@@ -24,7 +24,7 @@ export class ScheduleDataClient {
       {
         params: {
           room_id: roomId,
-          date: moment.utc(date).format(DATE_FORMAT),
+          date: moment(date).format(DATE_FORMAT),
           cinema_id: cinemaId
         }
       }
@@ -59,11 +59,11 @@ export class ScheduleDataClient {
     }
 
     if (data.start_date) {
-      url += `date_from=${moment.utc(data.start_date).format(DATE_FORMAT)}&`;
+      url += `date_from=${moment(data.start_date).format(DATE_FORMAT)}&`;
     }
 
     if (data.end_date) {
-      url += `date_to=${moment.utc(data.end_date).format(DATE_FORMAT)}`;
+      url += `date_to=${moment(data.end_date).format(DATE_FORMAT)}`;
     }
 
     const response = await axios.get<ReservationResponseType[]>(url);
@@ -80,7 +80,7 @@ export class ScheduleDataClient {
     const response = await axios.get<CashierInfo>("/money", {
       params: {
         cinema_id: cinemaId,
-        date: moment.utc(date).format(DATE_FORMAT)
+        date: moment(date).format(DATE_FORMAT)
       }
     });
 

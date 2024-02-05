@@ -50,7 +50,7 @@ export class WorkspaceEnvModel {
 
     const currentDate = storage.getItem(CURRENT_DATE);
     if (currentDate) {
-      this.date = moment.utc(currentDate, DATE_FORMAT).toDate();
+      this.date = moment(currentDate, DATE_FORMAT).toDate();
     } else {
       this.date = new Date();
     }
@@ -110,7 +110,7 @@ export class WorkspaceEnvModel {
         () => {
           this.storage.setItem(
             CURRENT_DATE,
-            moment.utc(this.date).format(DATE_FORMAT)
+            moment(this.date).format(DATE_FORMAT)
           );
         }
       )

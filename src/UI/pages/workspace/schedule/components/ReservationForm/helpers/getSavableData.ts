@@ -12,7 +12,7 @@ export const getSavableData = (
 ): ReservationCreationBodyType => {
   let savableData = {
     ...data,
-    date: moment.utc(data.date).format(DATE_FORMAT),
+    date: moment(data.date).format(DATE_FORMAT),
     duration: parseFloat(data.duration as any),
     count: parseInt(data.count as any),
     rent: parseFloat(data.rent as any),
@@ -34,6 +34,5 @@ export const getSavableData = (
     } as ReservationEditBodyType;
   }
 
-  console.log(savableData);
   return savableData;
 };

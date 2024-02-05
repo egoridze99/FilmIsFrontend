@@ -158,7 +158,7 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
                     <Field
                       component={Datepicker}
                       value={
-                        values.start_date ? moment.utc(values.start_date) : null
+                        values.start_date ? moment(values.start_date) : null
                       }
                       name="start_date"
                       label="Диапазон дат с"
@@ -172,7 +172,7 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
                     <Field
                       component={Datepicker}
                       value={
-                        values.end_date ? moment.utc(values.end_date) : null
+                        values.end_date ? moment(values.end_date) : null
                       }
                       name="end_date"
                       label="Диапазон дат по"

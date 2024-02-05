@@ -17,7 +17,7 @@ export class QueueDataClient {
       params: {
         cinema_id: cinemaId,
         room_id: roomId,
-        date: moment.utc(date).format(DATE_FORMAT)
+        date: moment(date).format(DATE_FORMAT)
       }
     });
 

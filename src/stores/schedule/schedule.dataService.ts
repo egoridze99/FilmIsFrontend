@@ -30,8 +30,6 @@ export class ScheduleDataService {
       date
     );
     return reservations.map((reservation) => {
-      console.log(moment.utc(reservation.date));
-
       return {
         ...reservation,
         date: moment.utc(reservation.date),

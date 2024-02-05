@@ -14,8 +14,7 @@ export const reservationCardCells = [
     title: "Время",
     size: 2,
     render: (key, data) => {
-      return `Время: ${data.date.format("HH:mm")} - ${moment
-        .utc(data.date)
+      return `Время: ${data.date.format("HH:mm")} - ${data.date
         .add(data.duration, "h")
         .format("HH:mm")}`;
     }
