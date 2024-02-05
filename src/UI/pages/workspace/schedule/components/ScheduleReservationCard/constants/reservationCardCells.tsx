@@ -6,7 +6,6 @@ import {
 } from "src/types/schedule/schedule.types";
 import React from "react";
 import {getCertificateNote} from "src/UI/pages/workspace/helpers/getCertificateNote";
-import moment from "moment";
 
 export const reservationCardCells = [
   {
@@ -14,7 +13,7 @@ export const reservationCardCells = [
     title: "Время",
     size: 2,
     render: (key, data) => {
-      return `Время: ${data.date.format("HH:mm")} - ${data.date
+      return `Время: ${data.date.format("HH:mm")} - ${data.date.clone()
         .add(data.duration, "h")
         .format("HH:mm")}`;
     }
