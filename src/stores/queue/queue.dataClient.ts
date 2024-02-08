@@ -9,15 +9,16 @@ import {
   QueueItemResponseType,
   QueueSearchBodyType
 } from "src/types/queue/queue.dataClient.types";
+import {Moment} from "moment";
 
 @injectable()
 export class QueueDataClient {
-  async loadQueue(cinemaId: number, roomId: number | undefined, date: Date) {
+  async loadQueue(cinemaId: number, roomId: number | undefined, date: Moment) {
     const response = await axios.get<QueueItemResponseType[]>("/queue", {
       params: {
         cinema_id: cinemaId,
         room_id: roomId,
-        date: moment(date).format(DATE_FORMAT)
+        date: date.format(DATE_FORMAT)
       }
     });
 

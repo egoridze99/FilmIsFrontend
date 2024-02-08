@@ -13,6 +13,7 @@ import {
 } from "src/types/schedule/schedule.types";
 import {reservationStatusDictionary} from "src/constants/statusDictionaries";
 import {CHECKOUTS_KEY, keysDictionary} from "./helpers/changesHistoryConstants";
+import {DATETIME_FORMAT} from "../../constants/date";
 
 @injectable()
 export class ScheduleDataService {
@@ -22,7 +23,7 @@ export class ScheduleDataService {
   async loadReservations(
     cinemaId: number,
     roomId: number | undefined,
-    date: Date
+    date: Moment
   ): Promise<Reservation[]> {
     const reservations = await this.dataClient.loadReservations(
       cinemaId,
@@ -32,8 +33,8 @@ export class ScheduleDataService {
     return reservations.map((reservation) => {
       return {
         ...reservation,
-        date: moment.utc(reservation.date),
-        created_at: moment.utc(reservation.created_at)
+        date: moment(reservation.date, DATETIME_FORMAT),
+        created_at: moment(reservation.created_at, DATETIME_FORMAT)
       };
     });
   }
@@ -45,8 +46,8 @@ export class ScheduleDataService {
 
     return reservations.map((reservation) => ({
       ...reservation,
-      date: moment.utc(reservation.date),
-      created_at: moment.utc(reservation.created_at)
+      date: moment(reservation.date, DATETIME_FORMAT),
+      created_at: moment(reservation.created_at, DATETIME_FORMAT)
     }));
   }
 
@@ -54,7 +55,7 @@ export class ScheduleDataService {
     return this.dataClient.loadCertificate(ident);
   }
 
-  async loadCashierInfo(cinemaId: number, date: Date) {
+  async loadCashierInfo(cinemaId: number, date: Moment) {
     return (await this.dataClient.loadCashierInfo(cinemaId, date)) || null;
   }
 
@@ -81,7 +82,7 @@ export class ScheduleDataService {
 
       return {
         author: item.author,
-        created_at: moment.utc(item.created_at),
+        created_at: moment(item.created_at, DATETIME_FORMAT),
         id: item.id,
         data: Object.keys(item.new).reduce((acc, key) => {
           let wasChanged = copy.new[key] !== copy.old[key];

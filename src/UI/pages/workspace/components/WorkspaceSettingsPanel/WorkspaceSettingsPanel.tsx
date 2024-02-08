@@ -4,7 +4,6 @@ import {observer} from "mobx-react-lite";
 import SidePanelHeader from "src/UI/components/SidePanelHeader";
 import {Drawer, FormControl, MenuItem, TextField} from "@mui/material";
 import {Cinema} from "src/types/shared.types";
-import moment from "moment";
 import Datepicker from "src/UI/components/Datepicker";
 
 import "./workspaceSettingsPanel.scss";
@@ -93,10 +92,10 @@ const WorkspaceSettingsPanel: React.FC<WorkspaceSettingsPanelProps> = ({
           <Datepicker
             className={"WorkspaceSettingsPanel__datepicker"}
             label={"Дата"}
-            value={moment(envModel?.date)}
+            value={envModel?.date}
             onChange={(d) => {
               if (d) {
-                envModel.setDate(d.toDate());
+                envModel.setDate(d);
               }
             }}
           />

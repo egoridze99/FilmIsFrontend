@@ -1,5 +1,6 @@
 import {Roles} from "src/types/core.types";
 import {Moment} from "moment";
+import {DATETIME_FORMAT} from "../constants/date";
 
 export type Cinema = {
   id: number;
@@ -64,6 +65,8 @@ export type QueueViewLog = {
   created_at: Moment;
   user: UserInfo;
 };
+
+export type DateTimeType = typeof DATETIME_FORMAT;
 
 export type UserInfo = {
   id: number;

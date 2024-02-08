@@ -1,7 +1,7 @@
-import {Certificate} from "../shared.types";
+import {Certificate, DateTimeType} from "../shared.types";
 
 export type CertificateResponseType = Omit<Certificate, "created_at"> & {
-  created_at: Date;
+  created_at: DateTimeType;
 };
 
 export type CertificateCreationBodyType = {

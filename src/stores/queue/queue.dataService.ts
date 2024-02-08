@@ -9,6 +9,7 @@ import {
   QueueSearchBodyType
 } from "src/types/queue/queue.dataClient.types";
 import {QueueItem} from "src/types/shared.types";
+import {DATETIME_FORMAT} from "../../constants/date";
 
 @injectable()
 export class QueueDataService {
@@ -24,12 +25,12 @@ export class QueueDataService {
 
     return queue.map((i) => ({
       ...i,
-      start_date: moment.utc(i.start_date),
-      end_date: i.end_date ? moment.utc(i.end_date) : null,
-      created_at: moment.utc(i.created_at),
+      start_date: moment(i.start_date, DATETIME_FORMAT),
+      end_date: i.end_date ? moment(i.end_date, DATETIME_FORMAT) : null,
+      created_at: moment(i.created_at, DATETIME_FORMAT),
       view_by: i.view_by.map((l) => ({
         ...l,
-        created_at: moment.utc(l.created_at)
+        created_at: moment(l.created_at, DATETIME_FORMAT)
       }))
     }));
   }
@@ -47,12 +48,12 @@ export class QueueDataService {
 
     return queue.map((i) => ({
       ...i,
-      start_date: moment.utc(i.start_date),
-      end_date: i.end_date ? moment.utc(i.end_date) : null,
-      created_at: moment.utc(i.created_at),
+      start_date: moment(i.start_date, DATETIME_FORMAT),
+      end_date: i.end_date ? moment(i.end_date, DATETIME_FORMAT) : null,
+      created_at: moment(i.created_at, DATETIME_FORMAT),
       view_by: i.view_by.map((l) => ({
         ...l,
-        created_at: moment.utc(l.created_at)
+        created_at: moment(l.created_at, DATETIME_FORMAT)
       }))
     }));
   }

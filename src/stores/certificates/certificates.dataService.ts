@@ -8,6 +8,7 @@ import {
 } from "../../types/certificates/certificates.dataClient.types";
 import {Certificate} from "../../types/shared.types";
 import moment from "moment";
+import {DATETIME_FORMAT} from "../../constants/date";
 
 @injectable()
 export class CertificatesDataService {
@@ -35,6 +36,9 @@ export class CertificatesDataService {
   private getCertificateWithMomentCreatedAt(
     certificate: CertificateResponseType
   ): Certificate {
-    return {...certificate, created_at: moment.utc(certificate.created_at)};
+    return {
+      ...certificate,
+      created_at: moment(certificate.created_at, DATETIME_FORMAT)
+    };
   }
 }

@@ -1,4 +1,5 @@
 import {
+  DateTimeType,
   QueueItem,
   QueueItemStatusEnum,
   QueueViewLog
@@ -8,10 +9,10 @@ export type QueueItemResponseType = Omit<
   QueueItem,
   "created_at" | "start_date" | "end_date" | "view_by"
 > & {
-  created_at: Date;
-  start_date: Date;
-  end_date: Date | null;
-  view_by: Array<Omit<QueueViewLog, "created_at"> & {created_at: Date}>;
+  created_at: DateTimeType;
+  start_date: DateTimeType;
+  end_date: DateTimeType | null;
+  view_by: Array<Omit<QueueViewLog, "created_at"> & {created_at: DateTimeType}>;
 };
 
 export type QueueCreationBodyType = {

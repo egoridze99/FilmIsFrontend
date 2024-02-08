@@ -13,14 +13,14 @@ import {
   CURRENT_DATE,
   CURRENT_ROOM_ID
 } from "src/constants/storageKeys";
-import moment from "moment";
+import moment, {Moment} from "moment";
 import {DATE_FORMAT} from "src/constants/date";
 import {convertArrayToDict} from "src/utils/convertArrayToDict";
 
 export class WorkspaceEnvModel {
   @observable cinema: Cinema;
   @observable room: Room | null;
-  @observable date: Date;
+  @observable date: Moment;
 
   reactionDisposers: IReactionDisposer[] = [];
 
@@ -50,9 +50,9 @@ export class WorkspaceEnvModel {
 
     const currentDate = storage.getItem(CURRENT_DATE);
     if (currentDate) {
-      this.date = moment(currentDate, DATE_FORMAT).toDate();
+      this.date = moment(currentDate, DATE_FORMAT);
     } else {
-      this.date = new Date();
+      this.date = moment();
     }
   }
 
@@ -69,7 +69,7 @@ export class WorkspaceEnvModel {
     this.room = room;
   }
 
-  @action setDate(date: Date) {
+  @action setDate(date: Moment) {
     this.date = date;
   }
 

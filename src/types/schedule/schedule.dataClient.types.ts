@@ -1,4 +1,4 @@
-import {Room} from "src/types/shared.types";
+import {DateTimeType, Room} from "src/types/shared.types";
 import {
   ChangesItemType,
   Reservation,
@@ -8,7 +8,7 @@ import {
 export type ReservationResponseType = Omit<
   Reservation,
   "date" | "created_at"
-> & {date: Date; created_at: Date};
+> & {date: DateTimeType; created_at: DateTimeType};
 
 export type ReservationCreationBodyType = {
   room: Room;
@@ -38,13 +38,13 @@ export type ReservationSearchBodyType = {
   rooms: number[];
   reservation_id: string | null;
   telephone: string | null;
-  start_date: Date | null;
-  end_date: Date | null;
+  start_date: DateTimeType | null;
+  end_date: DateTimeType | null;
 };
 
 export type ChangesResponseType = {
   author: string;
-  created_at: Date;
+  created_at: DateTimeType;
   id: number;
   new: ChangesItemType;
   old: ChangesItemType;
