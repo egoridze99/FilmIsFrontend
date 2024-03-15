@@ -15,6 +15,8 @@ import {QueueContainer} from "src/app/containers/queue.container";
 import {QueueRepository} from "src/stores/queue/queue.repository";
 import {AdminContainer} from "src/app/containers/admin.container";
 import {AdminRepository} from "src/stores/admin/admin.repository";
+import {CustomerContainer} from "src/app/containers/customer.container";
+import {CustomerService} from "src/services/customer.service";
 
 /**
  * Сервисы
@@ -28,6 +30,16 @@ const dictionariesContainer = new DictionariesContainer();
 dictionariesContainer.parent = appContainer;
 export const dictionaries = dictionariesContainer.get<DictionariesRepository>(
   TYPES.DictionariesRepository
+);
+
+/**
+ * Бизнесовые сервисы
+ */
+export const customerServiceContainer = new CustomerContainer();
+customerServiceContainer.parent = appContainer;
+
+export const customerService = customerServiceContainer.get<CustomerService>(
+  TYPES.CustomerService
 );
 
 /**

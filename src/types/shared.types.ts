@@ -1,6 +1,7 @@
 import {Roles} from "src/types/core.types";
 import {Moment} from "moment";
 import {DATETIME_FORMAT} from "../constants/date";
+import {number} from "yup";
 
 export type Cinema = {
   id: number;
@@ -74,6 +75,12 @@ export type UserInfo = {
   role: Roles;
   status: UserStatus;
   fullname: string;
+};
+
+export type Customer = {
+  id: number;
+  name: string;
+  telephone: string;
 };
 
 export enum CertificateStatusEnum {

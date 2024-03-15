@@ -3,12 +3,10 @@ import {Field} from "formik";
 import {TextField} from "formik-mui";
 import {Box} from "@mui/material";
 
-enum GeneralFields {
+export enum GeneralFields {
   time = "time",
   duration = "duration",
   count = "count",
-  "guest.name" = "guest.name",
-  "guest.tel" = "guest.tel",
   film = "film",
   note = "note"
 }
@@ -26,14 +24,6 @@ const generalInputFields = {
     label: "Кол-во гостей",
     required: true
   },
-  [GeneralFields["guest.name"]]: {
-    label: "Имя гостя",
-    required: true
-  },
-  [GeneralFields["guest.tel"]]: {
-    label: "Номер телефона гостя",
-    required: true
-  },
   [GeneralFields.film]: {
     label: "Фильм"
   },
@@ -49,11 +39,12 @@ const generalInputFields = {
     label?: string;
     rows?: number;
     required?: boolean;
+    render?: () => React.ReactNode;
   }
 >;
 
 type GeneralInputFieldsProps = {
-  fieldsToRender: GeneralFields[];
+  fieldsToRender: Array<GeneralFields>;
 };
 
 const GeneralInputFields: React.FC<GeneralInputFieldsProps> = ({

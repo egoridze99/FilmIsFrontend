@@ -26,10 +26,12 @@ import QueueSearchPanel from "src/UI/pages/workspace/queue/components/QueueSearc
 import {searchPanelDefaultValues} from "src/UI/pages/workspace/queue/constants/searchPanelDefaultValues";
 import {useCommonServices} from "src/contexts/commonServices.context";
 import {QUEUE_IDS_TO_SEARCH} from "src/constants/storageKeys";
+import {useCustomerService} from "src/contexts/services/customer.service.context";
 
 const Queue = () => {
   useCurrentPageTitle();
 
+  const customerService = useCustomerService();
   const {sessionStorageService} = useCommonServices();
 
   const [isEditPanelOpen, setIsEditPanelOpen] = React.useState(false);
@@ -220,6 +222,7 @@ const Queue = () => {
           save={handleCreateReservation}
           reservation={reservationScratch}
           isCreationFromScratch
+          customerService={customerService}
         />
       </Drawer>
       <Drawer

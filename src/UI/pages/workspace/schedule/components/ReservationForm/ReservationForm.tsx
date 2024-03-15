@@ -24,6 +24,9 @@ import {TextField as MUITextField} from "@mui/material";
 import "./ReservationForm.scss";
 import {getCertificateNote} from "src/UI/pages/workspace/helpers/getCertificateNote";
 import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
+import {GeneralFields} from "src/UI/pages/workspace/components/GeneralInputFields/GeneralInputFields";
+import UserAutocomplete from "src/UI/components/UserAutocomplete";
+import {CustomerService} from "src/services/customer.service";
 
 type ReservationFormProps = {
   cinemas: Cinema[];
@@ -34,6 +37,8 @@ type ReservationFormProps = {
   isEditMode?: boolean;
   isCreationFromScratch?: boolean;
   loadCertificate?: (ident: string) => Promise<Certificate | null>;
+
+  customerService: CustomerService;
 };
 
 const ReservationForm: React.FC<ReservationFormProps> = ({
@@ -43,7 +48,8 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   save,
   reservation,
   loadCertificate,
-  isCreationFromScratch
+  isCreationFromScratch,
+  customerService
 }) => {
   const bodyRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -86,8 +92,10 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                 : (reservation as Reservation).date
               : moment();
 
-            const minAvailableDate = moment()
-              .isSameOrAfter(currentReservationDate, "day")
+            const minAvailableDate = moment().isSameOrAfter(
+              currentReservationDate,
+              "day"
+            )
               ? currentReservationDate
               : moment();
 
@@ -179,16 +187,19 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
 
                   <GeneralInputFields
                     fieldsToRender={
-                      [
-                        "time",
-                        "duration",
-                        "count",
-                        "guest.name",
-                        "guest.tel",
-                        "film",
-                        "note"
-                      ] as any
+                      ["time", "duration", "count"] as GeneralFields[]
                     }
+                  />
+
+                  <UserAutocomplete
+                    name="guest"
+                    label="Выбор гостя"
+                    required={true}
+                    customerService={customerService}
+                  />
+
+                  <GeneralInputFields
+                    fieldsToRender={["film", "note"] as GeneralFields[]}
                   />
 
                   <Box className="full-width-form-control" marginY={1}>

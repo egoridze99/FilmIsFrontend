@@ -30,6 +30,7 @@ import {useChangesHistory} from "src/UI/pages/workspace/schedule/hooks/useChange
 import ChangesHistoryModal from "./components/ChangesHistoryModal";
 import Loader from "src/UI/components/Loader";
 import {searchPanelDefaultValues} from "src/UI/pages/workspace/schedule/constants/searchPanelDefaultValues";
+import {useCustomerService} from "src/contexts/services/customer.service.context";
 
 const Schedule = () => {
   useCurrentPageTitle();
@@ -46,6 +47,7 @@ const Schedule = () => {
     setIsSearchPanelOpen,
     activeSearchItems
   } = useSearchPanel(searchPanelDefaultValues);
+  const customerService = useCustomerService();
   const {schedule, workspaceEnv, dictionaries} = useDomainStore();
   const env = workspaceEnv.envModel;
 
@@ -198,6 +200,7 @@ const Schedule = () => {
           close={closeCreationForm}
           save={handleCreateReservation}
           loadCertificate={(ident) => schedule.loadCertificate(ident)}
+          customerService={customerService}
         />
       </Drawer>
 
@@ -214,6 +217,7 @@ const Schedule = () => {
           save={handleEditReservation}
           reservation={editingReservation}
           loadCertificate={(ident) => schedule.loadCertificate(ident)}
+          customerService={customerService}
         />
       </Drawer>
 
