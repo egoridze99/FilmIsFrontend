@@ -12,6 +12,7 @@ export const getSavableData = (
 ): ReservationCreationBodyType => {
   let savableData = {
     ...data,
+    guest: data.guest?.id,
     date: moment(data.date).format(DATE_FORMAT),
     duration: parseFloat(data.duration as any),
     count: parseInt(data.count as any),

@@ -20,7 +20,7 @@ export const getValidationSchema = (isEditMode: boolean) => {
       .moreThan(0),
     guest: yup.object().shape({
       name: yup.string().required("Обязательное поле"),
-      tel: yup.string().required("Обязательное поле")
+      telephone: yup.string().required("Обязательное поле")
     }),
     rent: yup
       .number()

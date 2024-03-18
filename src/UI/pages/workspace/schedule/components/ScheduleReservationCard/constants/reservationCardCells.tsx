@@ -13,7 +13,8 @@ export const reservationCardCells = [
     title: "Время",
     size: 2,
     render: (key, data) => {
-      return `Время: ${data.date.format("HH:mm")} - ${data.date.clone()
+      return `Время: ${data.date.format("HH:mm")} - ${data.date
+        .clone()
         .add(data.duration, "h")
         .format("HH:mm")}`;
     }
@@ -28,7 +29,7 @@ export const reservationCardCells = [
         style={{display: "flex", flexDirection: "column", alignItems: "center"}}
       >
         <div>{(data[key] as Reservation["guest"]).name}</div>
-        <div>{(data[key] as Reservation["guest"]).tel}</div>
+        <div>{(data[key] as Reservation["guest"]).telephone}</div>
       </div>
     )
   },

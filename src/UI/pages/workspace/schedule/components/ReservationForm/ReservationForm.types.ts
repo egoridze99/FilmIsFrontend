@@ -10,9 +10,10 @@ export type FormikInitialValuesType = {
   duration: number | null;
   count: number | null;
   guest: {
-    name: string | null;
-    tel: string | null;
-  };
+    id: number;
+    name: string;
+    telephone: string;
+  } | null;
   film: string | null;
   note: string | null;
   rent: number | null;

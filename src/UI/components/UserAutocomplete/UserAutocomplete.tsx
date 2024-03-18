@@ -3,7 +3,7 @@ import React from "react";
 import "./userAutocomplete.scss";
 import {Field, useFormikContext} from "formik";
 import {Autocomplete} from "formik-mui";
-import {CircularProgress, debounce, TextField} from "@mui/material";
+import {CircularProgress, TextField} from "@mui/material";
 import {CustomerService} from "src/services/customer.service";
 import {Customer} from "src/types/shared.types";
 import {useLoadOptions} from "src/UI/components/UserAutocomplete/hooks/useLoadOptions";
@@ -39,6 +39,9 @@ const UserAutocomplete: React.FC<UserAutocompleteProps> = ({
 
   return (
     <Field
+      onChange={(_, val: Customer) => {
+        formikContext.setFieldValue(name, val);
+      }}
       options={options}
       component={Autocomplete}
       filterOptions={(x) => x}
@@ -52,7 +55,7 @@ const UserAutocomplete: React.FC<UserAutocompleteProps> = ({
           {option.name} {option.telephone}
         </li>
       )}
-      onInputChange={(event, newInputValue) => {
+      onInputChange={(_, newInputValue: string) => {
         setSearchValue(newInputValue);
       }}
       name={name}

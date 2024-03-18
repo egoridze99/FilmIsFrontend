@@ -23,8 +23,9 @@ export type Reservation = {
   count: number; // Кол-во человек
   room: Room;
   guest: {
+    id: number;
     name: string;
-    tel: string;
+    telephone: string;
   };
 
   film: string;

@@ -16,10 +16,7 @@ export type ReservationCreationBodyType = {
   time: string;
   duration: number;
   count: number;
-  guest: {
-    name: string;
-    tel: string;
-  };
+  guest: number;
   film: string | null;
   rent: number | null;
   note: string | null;

@@ -26,14 +26,14 @@ export const useLoadOptions = (
   );
 
   React.useEffect(() => {
-    loadCustomers(searchValue);
-  }, [searchValue, loadCustomers]);
-
-  React.useEffect(() => {
     if (initialValue) {
       setSearchValue(initialValue.telephone);
     }
   }, []);
+
+  React.useEffect(() => {
+    loadCustomers(searchValue);
+  }, [searchValue, loadCustomers]);
 
   return {
     isLoading,
