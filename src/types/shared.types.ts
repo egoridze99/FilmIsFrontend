@@ -77,12 +77,6 @@ export type UserInfo = {
   fullname: string;
 };
 
-export type Customer = {
-  id: number;
-  name: string;
-  telephone: string;
-};
-
 export enum CertificateStatusEnum {
   active = "active",
   redeemed = "redeemed"

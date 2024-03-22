@@ -11,7 +11,7 @@ import {TextField} from "formik-mui";
 import {Box, MenuItem} from "@mui/material";
 import {Roles} from "../../../../../../types/core.types";
 import {rolesDictionary} from "../../../../../../constants/rolesDictionary";
-import PanelFormsFooter from "../../../../../components/PanelFormsFooter";
+import FormFooter from "../../../../../components/FormFooter";
 
 export type UserCreationForm = {
   close(): void;
@@ -98,7 +98,7 @@ const UserCreationForm: React.FC<UserCreationForm> = ({close, submit}) => {
                   </Box>
                 </SidePanelContentContainer>
 
-                <PanelFormsFooter
+                <FormFooter
                   onCancel={close}
                   isLoading={isSubmitting}
                   isSubmitButtonDisabled={!isValid}

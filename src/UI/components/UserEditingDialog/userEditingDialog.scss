@@ -1,0 +1,13 @@
+.UserEditingDialog {
+  &__content {
+    width: 500px;
+
+    padding-bottom: 60px!important;
+  }
+
+  &__footer {
+    position: absolute!important;
+    left: 0;
+    right: 0;
+  }
+}

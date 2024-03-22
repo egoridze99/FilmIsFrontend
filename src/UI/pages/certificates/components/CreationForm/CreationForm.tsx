@@ -6,7 +6,7 @@ import {CertificateCreationBodyType} from "src/types/certificates/certificates.d
 import {Field, Form, Formik} from "formik";
 import {initialValues} from "src/UI/pages/certificates/components/CreationForm/helpers/initialValues";
 import SidePanelContentContainer from "src/UI/components/containers/SidePanelContentContainer";
-import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
+import FormFooter from "src/UI/components/FormFooter";
 import {TextField} from "formik-mui";
 import {Box, MenuItem} from "@mui/material";
 import {Cinema} from "src/types/shared.types";
@@ -141,7 +141,7 @@ const CreationForm: React.FC<CreationFormProps> = ({
                     />
                   </Box>
                 </SidePanelContentContainer>
-                <PanelFormsFooter
+                <FormFooter
                   onCancel={close}
                   isLoading={isSubmitting}
                   isSubmitButtonDisabled={!isValid}

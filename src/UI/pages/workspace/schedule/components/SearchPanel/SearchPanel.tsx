@@ -7,7 +7,7 @@ import {Box, MenuItem, Typography} from "@mui/material";
 import {ReservationStatus} from "src/types/schedule/schedule.types";
 import {reservationStatusDictionary} from "src/constants/statusDictionaries";
 import Datepicker from "src/UI/components/Datepicker";
-import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
+import FormFooter from "src/UI/components/FormFooter";
 import {ReservationSearchBodyType} from "src/types/schedule/schedule.dataClient.types";
 
 import "./searchPanel.scss";
@@ -171,9 +171,7 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
                   <Box className="full-width-form-control" marginY={1}>
                     <Field
                       component={Datepicker}
-                      value={
-                        values.end_date ? moment(values.end_date) : null
-                      }
+                      value={values.end_date ? moment(values.end_date) : null}
                       name="end_date"
                       label="Диапазон дат по"
                       onChange={(val) =>
@@ -182,7 +180,7 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
                     />
                   </Box>
                 </SidePanelContentContainer>
-                <PanelFormsFooter
+                <FormFooter
                   onCancel={close}
                   isLoading={isSubmitting}
                   submitButtonText="Поиск"

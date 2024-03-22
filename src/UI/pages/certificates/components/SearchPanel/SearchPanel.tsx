@@ -5,7 +5,7 @@ import {Field, Form, Formik} from "formik";
 import SidePanelContentContainer from "src/UI/components/containers/SidePanelContentContainer";
 import {Box} from "@mui/material";
 import {TextField} from "formik-mui";
-import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
+import FormFooter from "src/UI/components/FormFooter";
 import {searchPanelDefaultValues} from "src/UI/pages/certificates/constants/searchPanelDefaultValues";
 
 import "./searchPanel.scss";
@@ -77,7 +77,7 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
                     />
                   </Box>
                 </SidePanelContentContainer>
-                <PanelFormsFooter
+                <FormFooter
                   isSubmitButtonDisabled={!isValid}
                   onCancel={close}
                   isLoading={isSubmitting}

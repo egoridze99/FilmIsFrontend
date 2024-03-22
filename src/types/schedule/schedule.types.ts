@@ -1,4 +1,5 @@
 import {Certificate, Room, UserStatus, Cinema} from "src/types/shared.types";
+import {Customer} from "src/types/customer.types";
 import {Moment} from "moment";
 
 export type CashierInfo = {
@@ -22,11 +23,7 @@ export type Reservation = {
 
   count: number; // Кол-во человек
   room: Room;
-  guest: {
-    id: number;
-    name: string;
-    telephone: string;
-  };
+  guest: Customer;
 
   film: string;
   note: string;

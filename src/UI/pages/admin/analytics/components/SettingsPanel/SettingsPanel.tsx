@@ -5,7 +5,7 @@ import SidePanelContentContainer from "src/UI/components/containers/SidePanelCon
 import Datepicker from "src/UI/components/Datepicker";
 import {Box, MenuItem} from "@mui/material";
 import {TextField} from "formik-mui";
-import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
+import FormFooter from "src/UI/components/FormFooter";
 import {Moment} from "moment";
 import {DATE_FORMAT} from "src/constants/date";
 
@@ -94,7 +94,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     </Field>
                   </Box>
                 </SidePanelContentContainer>
-                <PanelFormsFooter
+                <FormFooter
                   onCancel={close}
                   isLoading={isSubmitting}
                   submitButtonText="Применить"

@@ -2,9 +2,12 @@ import React from "react";
 import {Button} from "@mui/material";
 import {LoadingButton} from "@mui/lab";
 
-import "./panelFormsFooter.scss";
+import "./formFooter.scss";
+import classNames from "classnames";
 
 type PanelFormsFooterProps = {
+  className?: string;
+
   onCancel(): void;
 
   isLoading?: boolean;
@@ -13,7 +16,8 @@ type PanelFormsFooterProps = {
   submitButtonText?: string;
 };
 
-const PanelFormsFooter: React.FC<PanelFormsFooterProps> = ({
+const FormFooter: React.FC<PanelFormsFooterProps> = ({
+  className,
   onCancel,
   isSubmitButtonDisabled,
   cancelButtonText = "Отмена",
@@ -21,12 +25,12 @@ const PanelFormsFooter: React.FC<PanelFormsFooterProps> = ({
   isLoading
 }) => {
   return (
-    <div className="PanelFormsFooter">
+    <div className={classNames("FormFooter", className)}>
       <Button onClick={onCancel} variant={"outlined"}>
         {cancelButtonText}
       </Button>
       <LoadingButton
-        className="PanelFormsFooter__submit-btn"
+        className="FormFooter__submit-btn"
         loading={isLoading}
         loadingPosition="end"
         type="submit"
@@ -39,4 +43,4 @@ const PanelFormsFooter: React.FC<PanelFormsFooterProps> = ({
   );
 };
 
-export default PanelFormsFooter;
+export default FormFooter;

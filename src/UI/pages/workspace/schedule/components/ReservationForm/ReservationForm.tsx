@@ -23,7 +23,7 @@ import {TextField as MUITextField} from "@mui/material";
 
 import "./ReservationForm.scss";
 import {getCertificateNote} from "src/UI/pages/workspace/helpers/getCertificateNote";
-import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
+import FormFooter from "src/UI/components/FormFooter";
 import {GeneralFields} from "src/UI/pages/workspace/components/GeneralInputFields/GeneralInputFields";
 import UserAutocomplete from "src/UI/components/UserAutocomplete";
 import {CustomerService} from "src/services/customer.service";
@@ -325,7 +325,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                   )}
                 </SidePanelContentContainer>
 
-                <PanelFormsFooter
+                <FormFooter
                   onCancel={close}
                   isLoading={isSubmitting}
                   isSubmitButtonDisabled={!isValid}

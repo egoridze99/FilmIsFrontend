@@ -3,7 +3,7 @@ import SidePanelHeader from "src/UI/components/SidePanelHeader";
 import {Field, Form, Formik} from "formik";
 import {getInitialValues} from "src/UI/pages/workspace/queue/components/QueueForm/helpers/getInitialValues";
 import SidePanelContentContainer from "src/UI/components/containers/SidePanelContentContainer";
-import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
+import FormFooter from "src/UI/components/FormFooter";
 import {TextField, Switch} from "formik-mui";
 import {Box, FormControlLabel, MenuItem, Typography} from "@mui/material";
 import {CinemaDictionary} from "src/models/dictionaries/cinema.dictionary.model";
@@ -75,9 +75,10 @@ const QueueForm: React.FC<QueueFormProps> = ({
             const currentQueueItemDate = queueItem
               ? queueItem.start_date
               : moment();
-            const minAvailableDate = moment
-              ()
-              .isSameOrAfter(currentQueueItemDate, "day")
+            const minAvailableDate = moment().isSameOrAfter(
+              currentQueueItemDate,
+              "day"
+            )
               ? currentQueueItemDate
               : moment();
 
@@ -222,7 +223,7 @@ const QueueForm: React.FC<QueueFormProps> = ({
                     </>
                   )}
                 </SidePanelContentContainer>
-                <PanelFormsFooter
+                <FormFooter
                   onCancel={close}
                   isLoading={isSubmitting}
                   isSubmitButtonDisabled={!isValid}

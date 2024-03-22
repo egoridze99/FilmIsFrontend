@@ -1,6 +1,7 @@
 import {Moment} from "moment";
 import {ReservationStatus} from "src/types/schedule/schedule.types";
 import {Certificate} from "src/types/shared.types";
+import {Customer} from "src/types/customer.types";
 
 export type FormikInitialValuesType = {
   cinema: number | null;
@@ -9,11 +10,7 @@ export type FormikInitialValuesType = {
   time: string | null;
   duration: number | null;
   count: number | null;
-  guest: {
-    id: number;
-    name: string;
-    telephone: string;
-  } | null;
+  guest: Customer | null;
   film: string | null;
   note: string | null;
   rent: number | null;

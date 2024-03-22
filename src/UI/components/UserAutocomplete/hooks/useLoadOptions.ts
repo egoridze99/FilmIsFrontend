@@ -1,14 +1,14 @@
 import React from "react";
-import {Customer} from "src/types/shared.types";
 import {debounce} from "@mui/material";
 import {CustomerService} from "src/services/customer.service";
+import {Customer} from "src/types/customer.types";
 
 export const useLoadOptions = (
   customerService: CustomerService,
   initialValue?: Customer
 ) => {
   const [searchValue, setSearchValue] = React.useState("");
-  const [options, setOptions] = React.useState<Customer[]>([]);
+  const [options, setOptions] = React.useState<Array<Customer | string>>([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const loadCustomers = React.useCallback(
@@ -17,7 +17,7 @@ export const useLoadOptions = (
 
       const options = await customerService.loadUser(telephone);
       if (options) {
-        setOptions(options);
+        setOptions((_) => [...options, "Добавить пользователя"]);
       }
 
       setIsLoading(false);

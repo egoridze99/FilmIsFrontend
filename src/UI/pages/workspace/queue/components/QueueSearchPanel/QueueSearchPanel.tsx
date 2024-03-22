@@ -10,7 +10,7 @@ import {searchPanelDefaultValues} from "src/UI/pages/workspace/queue/constants/s
 import {CinemaDictionary} from "src/models/dictionaries/cinema.dictionary.model";
 import {QueueSearchBodyType} from "src/types/queue/queue.dataClient.types";
 import Datepicker from "src/UI/components/Datepicker";
-import PanelFormsFooter from "src/UI/components/PanelFormsFooter";
+import FormFooter from "src/UI/components/FormFooter";
 import {DATE_FORMAT} from "src/constants/date";
 
 import "./queueSearchPanel.scss";
@@ -178,9 +178,7 @@ const QueueSearchPanel: React.FC<QueueSearchPanelProps> = ({
                   <Box className="full-width-form-control" marginY={1}>
                     <Field
                       component={Datepicker}
-                      value={
-                        values.end_date ? moment(values.end_date) : null
-                      }
+                      value={values.end_date ? moment(values.end_date) : null}
                       name="end_date"
                       label="Диапазон дат по"
                       onChange={(val) => setFieldValue("end_date", val)}
@@ -208,7 +206,7 @@ const QueueSearchPanel: React.FC<QueueSearchPanelProps> = ({
                     </Field>
                   </Box>
                 </SidePanelContentContainer>
-                <PanelFormsFooter
+                <FormFooter
                   onCancel={close}
                   isLoading={isSubmitting}
                   submitButtonText="Поиск"
