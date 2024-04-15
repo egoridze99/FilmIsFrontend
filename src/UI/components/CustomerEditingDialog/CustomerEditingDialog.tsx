@@ -11,13 +11,13 @@ import {Field, Form, Formik} from "formik";
 import {RadioGroup, TextField} from "formik-mui";
 import FormFooter from "src/UI/components/FormFooter";
 import {Customer} from "src/types/customer.types";
-
-import "./userEditingDialog.scss";
-import {getInitialValues} from "src/UI/components/UserEditingDialog/helpers/getInitialValues";
+import {getInitialValues} from "src/UI/components/CustomerEditingDialog/helpers/getInitialValues";
 import Datepicker from "src/UI/components/Datepicker";
 import moment, {Moment} from "moment/moment";
-import {UserEditingFormValues} from "src/UI/components/UserEditingDialog/UserEditingDialog.types";
+import {UserEditingFormValues} from "src/UI/components/CustomerEditingDialog/CustomerEditingDialog.types";
 import {getSavableData} from "./helpers/getSavableData";
+
+import "./customerEditingDialog.scss";
 
 type UserEditingDialogProps = {
   open: boolean;
@@ -47,7 +47,7 @@ const textFormFields = [
   {name: "gender", kind: "checkbox", options: [{label: "М"}, {label: "Ж"}]}
 ];
 
-const UserEditingDialog: React.FC<UserEditingDialogProps> = ({
+const CustomerEditingDialog: React.FC<UserEditingDialogProps> = ({
   open,
   onClose,
   isEditMode = false,
@@ -57,7 +57,7 @@ const UserEditingDialog: React.FC<UserEditingDialogProps> = ({
   const onSubmit = async (values: UserEditingFormValues) => {
     const data = getSavableData(values);
 
-    const result = await onApply(data as Customer);
+    const result = await onApply(data as unknown as Customer);
 
     if (result) {
       onClose();
@@ -91,8 +91,8 @@ const UserEditingDialog: React.FC<UserEditingDialogProps> = ({
                         <Field
                           component={Datepicker}
                           value={values[i.name] ? moment(values[i.name]) : null}
-                          name="date"
-                          label="Дата"
+                          name={i.name}
+                          label={i.label}
                           placeholder="Выберите дату"
                           onChange={(date) => setDate(i.name, date)}
                           required
@@ -150,4 +150,4 @@ const UserEditingDialog: React.FC<UserEditingDialogProps> = ({
   );
 };
 
-export default UserEditingDialog;
+export default CustomerEditingDialog;

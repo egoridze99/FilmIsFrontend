@@ -1,6 +1,6 @@
 import {Customer} from "src/types/customer.types";
 import moment from "moment";
-import {UserEditingFormValues} from "src/UI/components/UserEditingDialog/UserEditingDialog.types";
+import {UserEditingFormValues} from "src/UI/components/CustomerEditingDialog/CustomerEditingDialog.types";
 import {omit} from "ramda";
 
 export const getInitialValues = (
@@ -14,7 +14,8 @@ export const getInitialValues = (
         : null,
       passport_issue_date: defaultValues.passport_issue_date
         ? moment(defaultValues.passport_issue_date, "DD-MM-YYYY")
-        : null
+        : null,
+      gender: defaultValues.gender || "М"
     } as UserEditingFormValues;
   }
 

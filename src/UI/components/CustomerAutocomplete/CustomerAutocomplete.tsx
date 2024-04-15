@@ -3,12 +3,11 @@ import {Field, useFormikContext} from "formik";
 import {Autocomplete} from "formik-mui";
 import {CircularProgress, TextField} from "@mui/material";
 import {CustomerService} from "src/services/customer.service";
-
-import {useLoadOptions} from "src/UI/components/UserAutocomplete/hooks/useLoadOptions";
+import CustomerEditingDialog from "src/UI/components/CustomerEditingDialog";
+import {useLoadOptions} from "src/UI/components/CustomerAutocomplete/hooks/useLoadOptions";
 import {Customer} from "src/types/customer.types";
 
-import "./userAutocomplete.scss";
-import UserEditingDialog from "src/UI/components/UserEditingDialog";
+import "./customerAutocomplete.scss";
 
 type UserAutocompleteProps = {
   name: string;
@@ -22,7 +21,7 @@ type UserAutocompleteProps = {
  * Использовать только внутри Formik!!!
  * @constructor
  */
-const UserAutocomplete: React.FC<UserAutocompleteProps> = ({
+const CustomerAutocomplete: React.FC<UserAutocompleteProps> = ({
   name,
   label,
   required,
@@ -55,7 +54,7 @@ const UserAutocomplete: React.FC<UserAutocompleteProps> = ({
 
   return (
     <>
-      <UserEditingDialog
+      <CustomerEditingDialog
         open={isFormDialogOpen}
         onClose={() => setIsDialogFormOpen(false)}
         onApply={createUser}
@@ -107,4 +106,4 @@ const UserAutocomplete: React.FC<UserAutocompleteProps> = ({
   );
 };
 
-export default UserAutocomplete;
+export default CustomerAutocomplete;

@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Dialog, DialogContent, DialogTitle} from "@mui/material";
-import UserAutocomplete from "src/UI/components/UserAutocomplete";
+import CustomerAutocomplete from "src/UI/components/CustomerAutocomplete";
 import {Form, Formik} from "formik";
 import {Customer} from "src/types/customer.types";
 import {CustomerService} from "src/services/customer.service";
@@ -39,7 +39,7 @@ const CustomerSearchWindow: React.FC<CustomerSearchWindowProps> = ({
           {({values}) => {
             return (
               <Form>
-                <UserAutocomplete
+                <CustomerAutocomplete
                   name="customer"
                   label="Посетитель"
                   customerService={customerService}
