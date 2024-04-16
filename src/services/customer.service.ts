@@ -10,7 +10,17 @@ export class CustomerService {
   @inject(TYPES.NotificationService)
   private readonly notificationService: INotificationService;
 
+  private subscribers = [] as ((customer: Customer) => void)[];
+
   private abortController: AbortController | null = null;
+
+  onCustomerUpdate = (cb: (customer: Customer) => void) => {
+    this.subscribers.push(cb);
+  };
+
+  unsubscribe = (cb: (customer: Customer) => void): void => {
+    this.subscribers = this.subscribers.filter((c) => c !== cb);
+  };
 
   async loadUser(telephone?: string) {
     if (this.abortController) {
@@ -56,7 +66,10 @@ export class CustomerService {
     try {
       const response = await axios.put<Customer>(`/customer/${id}`, data);
 
-      return applyCustomerAdapter(response.data);
+      const customer = applyCustomerAdapter(response.data);
+      this.subscribers.forEach((cb) => cb(customer));
+
+      return customer;
     } catch (e) {
       console.log(e);
 

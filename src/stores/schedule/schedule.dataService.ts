@@ -14,6 +14,7 @@ import {
 import {reservationStatusDictionary} from "src/constants/statusDictionaries";
 import {CHECKOUTS_KEY, keysDictionary} from "./helpers/changesHistoryConstants";
 import {DATETIME_FORMAT} from "../../constants/date";
+import {applyCustomerAdapter} from "src/utils/customer/applyCustomerAdapter";
 
 @injectable()
 export class ScheduleDataService {
@@ -34,7 +35,8 @@ export class ScheduleDataService {
       return {
         ...reservation,
         date: moment(reservation.date, DATETIME_FORMAT),
-        created_at: moment(reservation.created_at, DATETIME_FORMAT)
+        created_at: moment(reservation.created_at, DATETIME_FORMAT),
+        guest: applyCustomerAdapter(reservation.guest)
       };
     });
   }
@@ -47,7 +49,8 @@ export class ScheduleDataService {
     return reservations.map((reservation) => ({
       ...reservation,
       date: moment(reservation.date, DATETIME_FORMAT),
-      created_at: moment(reservation.created_at, DATETIME_FORMAT)
+      created_at: moment(reservation.created_at, DATETIME_FORMAT),
+      guest: applyCustomerAdapter(reservation.guest)
     }));
   }
 

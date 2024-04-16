@@ -17,6 +17,7 @@ import {AdminContainer} from "src/app/containers/admin.container";
 import {AdminRepository} from "src/stores/admin/admin.repository";
 import {CustomerContainer} from "src/app/containers/customer.container";
 import {CustomerService} from "src/services/customer.service";
+import {Container} from "inversify";
 
 /**
  * Сервисы
@@ -55,10 +56,9 @@ export const workspaceEnv = workspaceEnvContainer.get<WorkspaceEnvRepository>(
  * Расписание сеансов
  */
 const scheduleContainer = new ScheduleContainer();
-scheduleContainer.parent = appContainer;
-export const schedule = scheduleContainer.get<ScheduleRepository>(
-  TYPES.ScheduleRepository
-);
+const test = Container.merge(scheduleContainer, customerServiceContainer);
+test.parent = appContainer;
+export const schedule = test.get<ScheduleRepository>(TYPES.ScheduleRepository);
 
 /**
  * Сертификаты

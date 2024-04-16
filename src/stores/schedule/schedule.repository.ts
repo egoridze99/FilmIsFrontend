@@ -2,7 +2,7 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "src/app/app.types";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {ScheduleDataService} from "src/stores/schedule/schedule.dataService";
-import {action, computed, makeObservable, observable} from "mobx";
+import {action, computed, makeObservable, observable, runInAction} from "mobx";
 import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
 import {sortBy} from "ramda";
 import {
@@ -21,6 +21,8 @@ import {INavigationService} from "src/services/types/navigation.interface";
 import {ROUTER_PATHS} from "src/constants/routerPaths";
 import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
 import {QUEUE_IDS_TO_SEARCH} from "src/constants/storageKeys";
+import {CustomerService} from "src/services/customer.service";
+import {Customer} from "src/types/customer.types";
 
 @injectable()
 export class ScheduleRepository {
@@ -31,6 +33,9 @@ export class ScheduleRepository {
   cashierInfo: CashierInfo | null = null;
 
   @observable isLoading = false;
+
+  @inject(TYPES.CustomerService)
+  private readonly customerService: CustomerService;
 
   @inject(TYPES.ScheduleDataService)
   private readonly dataService: ScheduleDataService;
@@ -146,6 +151,10 @@ export class ScheduleRepository {
     return this.dataService.getChangesHistory(reservationId);
   }
 
+  createReactions() {
+    this.customerService.onCustomerUpdate(this.updateCustomerOnReservation);
+  }
+
   @action
   async loadData(env: WorkspaceEnvModel | null) {
     if (!env) {
@@ -182,9 +191,40 @@ export class ScheduleRepository {
   reset() {
     this.cashierInfo = null;
     this._reservations = [];
+    this.customerService.unsubscribe(this.updateCustomerOnReservation);
   }
 
   private showErrorNotification(e: any) {
     this.notificationService.addNotification(getCommonErrorNotification(e));
+  }
+
+  @action.bound
+  private updateCustomerOnReservation(customer: Customer) {
+    const [reservationsWithEditedCustomer, otherReservations] =
+      this.reservations.reduce(
+        (acc, i) => {
+          if (i.guest.id === customer.id) {
+            acc[0].push(i);
+          } else {
+            acc[1].push(i);
+          }
+
+          return acc;
+        },
+        [[] as Array<Reservation>, [] as Array<Reservation>]
+      );
+
+    if (!reservationsWithEditedCustomer.length) {
+      return;
+    }
+
+    const editedReservations = reservationsWithEditedCustomer.map(
+      (reservation) => ({
+        ...reservation,
+        guest: customer
+      })
+    );
+
+    this._reservations = [...editedReservations, ...otherReservations];
   }
 }

@@ -51,7 +51,11 @@ const Schedule = () => {
   const {schedule, workspaceEnv, dictionaries} = useDomainStore();
   const env = workspaceEnv.envModel;
 
-  React.useEffect(() => () => schedule.reset(), []);
+  React.useEffect(() => {
+    schedule.createReactions();
+
+    return () => schedule.reset();
+  }, []);
   React.useEffect(() => {
     clearSearchValues();
     schedule.loadData(env);
