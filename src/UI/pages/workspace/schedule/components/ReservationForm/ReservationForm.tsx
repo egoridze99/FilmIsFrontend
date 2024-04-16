@@ -27,6 +27,13 @@ import FormFooter from "src/UI/components/FormFooter";
 import {GeneralFields} from "src/UI/pages/workspace/components/GeneralInputFields/GeneralInputFields";
 import CustomerAutocomplete from "src/UI/components/Customer/CustomerAutocomplete";
 import {CustomerService} from "src/services/customer.service";
+import {isCustomerHasBlankFields} from "src/utils/customer/isCustomerHasBlankFields";
+
+const statusesAvailableForBlankUser = [
+  ReservationStatus.not_allowed,
+  ReservationStatus.waiting,
+  ReservationStatus.canceled
+];
 
 type ReservationFormProps = {
   cinemas: Cinema[];
@@ -86,6 +93,18 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
           validateOnMount
         >
           {({values, isValid, setFieldValue, isSubmitting, initialValues}) => {
+            const isBlankUser = values.guest
+              ? isCustomerHasBlankFields(values.guest)
+              : true;
+
+            if (
+              isBlankUser &&
+              values.status &&
+              !statusesAvailableForBlankUser.includes(values.status)
+            ) {
+              setFieldValue("status", ReservationStatus.not_allowed);
+            }
+
             const currentReservationDate = reservation
               ? isCreationFromScratch
                 ? (reservation as QueueItem).start_date
@@ -279,7 +298,16 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                           variant="standard"
                         >
                           {Object.keys(ReservationStatus).map((status) => (
-                            <MenuItem key={status} value={status}>
+                            <MenuItem
+                              key={status}
+                              value={status}
+                              disabled={
+                                isBlankUser &&
+                                !statusesAvailableForBlankUser.includes(
+                                  ReservationStatus[status]
+                                )
+                              }
+                            >
                               {reservationStatusDictionary[status].title}
                             </MenuItem>
                           ))}
