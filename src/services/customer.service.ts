@@ -3,7 +3,7 @@ import {axios} from "src/axios";
 import {Customer} from "src/types/customer.types";
 import {TYPES} from "src/app/app.types";
 import {INotificationService} from "src/services/types/notification.interface";
-import {applyCustomerAdapter} from "src/utils/applyCustomerAdapter";
+import {applyCustomerAdapter} from "src/utils/customer/applyCustomerAdapter";
 
 @injectable()
 export class CustomerService {

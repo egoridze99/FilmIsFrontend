@@ -9,7 +9,7 @@ import {
 } from "src/UI/components/Customer/CustomerCard/CustomerCard.config";
 
 import "./customerCard.scss";
-import CustomerEditingDialog from "src/UI/components/CustomerEditingDialog";
+import CustomerEditingDialog from "src/UI/components/Customer/CustomerEditingDialog";
 
 type CustomerCardProps = {
   customer: Customer | null;

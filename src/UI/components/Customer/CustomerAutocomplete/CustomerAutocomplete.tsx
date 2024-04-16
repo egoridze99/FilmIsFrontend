@@ -3,11 +3,11 @@ import {Field, useFormikContext} from "formik";
 import {Autocomplete} from "formik-mui";
 import {CircularProgress, TextField} from "@mui/material";
 import {CustomerService} from "src/services/customer.service";
-import CustomerEditingDialog from "src/UI/components/CustomerEditingDialog";
-import {useLoadOptions} from "src/UI/components/CustomerAutocomplete/hooks/useLoadOptions";
+import CustomerEditingDialog from "src/UI/components/Customer/CustomerEditingDialog";
+import {useLoadOptions} from "src/UI/components/Customer/CustomerAutocomplete/hooks/useLoadOptions";
 import {Customer} from "src/types/customer.types";
 
-import "./customerAutocomplete.scss";
+import "src/UI/components/Customer/CustomerAutocomplete/customerAutocomplete.scss";
 
 type UserAutocompleteProps = {
   name: string;

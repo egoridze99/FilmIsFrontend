@@ -25,7 +25,7 @@ import "./ReservationForm.scss";
 import {getCertificateNote} from "src/UI/pages/workspace/helpers/getCertificateNote";
 import FormFooter from "src/UI/components/FormFooter";
 import {GeneralFields} from "src/UI/pages/workspace/components/GeneralInputFields/GeneralInputFields";
-import CustomerAutocomplete from "src/UI/components/CustomerAutocomplete";
+import CustomerAutocomplete from "src/UI/components/Customer/CustomerAutocomplete";
 import {CustomerService} from "src/services/customer.service";
 
 type ReservationFormProps = {

@@ -1,6 +1,6 @@
 import moment from "moment";
 import {DATE_FORMAT} from "src/constants/date";
-import {UserEditingFormValues} from "src/UI/components/CustomerEditingDialog/CustomerEditingDialog.types";
+import {UserEditingFormValues} from "src/UI/components/Customer/CustomerEditingDialog/CustomerEditingDialog.types";
 
 export const getSavableData = (values: UserEditingFormValues) => {
   return {

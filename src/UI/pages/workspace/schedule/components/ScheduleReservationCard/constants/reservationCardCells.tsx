@@ -6,6 +6,8 @@ import {
 } from "src/types/schedule/schedule.types";
 import React from "react";
 import {getCertificateNote} from "src/UI/pages/workspace/helpers/getCertificateNote";
+import CustomerCell from "src/UI/components/Customer/CustomerCell";
+import {Customer} from "src/types/customer.types";
 
 export const reservationCardCells = [
   {
@@ -24,14 +26,7 @@ export const reservationCardCells = [
   {
     id: "guest",
     size: 2,
-    render: (key, data) => (
-      <div
-        style={{display: "flex", flexDirection: "column", alignItems: "center"}}
-      >
-        <div>{(data[key] as Reservation["guest"]).name}</div>
-        <div>{(data[key] as Reservation["guest"]).telephone}</div>
-      </div>
-    )
+    render: (key, data) => <CustomerCell customer={data[key] as Customer} />
   },
   {id: "film", title: "Фильм", size: 2},
   {

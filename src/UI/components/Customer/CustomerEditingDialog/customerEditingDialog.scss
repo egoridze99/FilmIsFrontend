@@ -5,6 +5,11 @@
     padding-bottom: 60px!important;
   }
 
+  &__error {
+    color: #e31235;
+    font-size: 12px;
+  }
+
   &__footer {
     position: absolute!important;
     left: 0;

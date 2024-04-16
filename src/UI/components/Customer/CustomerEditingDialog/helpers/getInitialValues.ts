@@ -1,6 +1,6 @@
 import {Customer} from "src/types/customer.types";
 import moment from "moment";
-import {UserEditingFormValues} from "src/UI/components/CustomerEditingDialog/CustomerEditingDialog.types";
+import {UserEditingFormValues} from "src/UI/components/Customer/CustomerEditingDialog/CustomerEditingDialog.types";
 import {omit} from "ramda";
 
 export const getInitialValues = (

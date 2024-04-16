@@ -11,13 +11,14 @@ import {Field, Form, Formik} from "formik";
 import {RadioGroup, TextField} from "formik-mui";
 import FormFooter from "src/UI/components/FormFooter";
 import {Customer} from "src/types/customer.types";
-import {getInitialValues} from "src/UI/components/CustomerEditingDialog/helpers/getInitialValues";
+import {getInitialValues} from "src/UI/components/Customer/CustomerEditingDialog/helpers/getInitialValues";
 import Datepicker from "src/UI/components/Datepicker";
 import moment, {Moment} from "moment/moment";
-import {UserEditingFormValues} from "src/UI/components/CustomerEditingDialog/CustomerEditingDialog.types";
-import {getSavableData} from "./helpers/getSavableData";
+import {UserEditingFormValues} from "src/UI/components/Customer/CustomerEditingDialog/CustomerEditingDialog.types";
+import {getSavableData} from "src/UI/components/Customer/CustomerEditingDialog/helpers/getSavableData";
 
-import "./customerEditingDialog.scss";
+import "src/UI/components/Customer/CustomerEditingDialog/customerEditingDialog.scss";
+import {getValidationSchema} from "src/UI/components/Customer/CustomerEditingDialog/helpers/getValidationSchema";
 
 type UserEditingDialogProps = {
   open: boolean;
@@ -72,10 +73,14 @@ const CustomerEditingDialog: React.FC<UserEditingDialogProps> = ({
       <></>
       <DialogContent className="UserEditingDialog__content">
         <Formik
+          validationSchema={getValidationSchema()}
           initialValues={getInitialValues(defaultData)}
           onSubmit={onSubmit}
+          validateOnMount
         >
-          {({isSubmitting, setFieldValue, values, isValid}) => {
+          {({isSubmitting, setFieldValue, values, isValid, errors}) => {
+            console.log(isValid);
+
             const setDate = (field: string, date: Moment) => {
               setFieldValue(field, date.toDate());
             };
@@ -88,15 +93,25 @@ const CustomerEditingDialog: React.FC<UserEditingDialogProps> = ({
                   switch (i.kind) {
                     case "datepicker":
                       content = (
-                        <Field
-                          component={Datepicker}
-                          value={values[i.name] ? moment(values[i.name]) : null}
-                          name={i.name}
-                          label={i.label}
-                          placeholder="Выберите дату"
-                          onChange={(date) => setDate(i.name, date)}
-                          required
-                        />
+                        <>
+                          <Field
+                            component={Datepicker}
+                            maxDate={moment()}
+                            value={
+                              values[i.name] ? moment(values[i.name]) : null
+                            }
+                            name={i.name}
+                            label={i.label}
+                            placeholder="Выберите дату"
+                            onChange={(date) => setDate(i.name, date)}
+                            required
+                          />
+                          {errors[i.name] && (
+                            <span className="UserEditingDialog__error">
+                              {errors[i.name]}
+                            </span>
+                          )}
+                        </>
                       );
                       break;
                     case "checkbox":

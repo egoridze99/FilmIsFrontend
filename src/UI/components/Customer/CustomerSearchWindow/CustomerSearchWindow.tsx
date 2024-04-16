@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Dialog, DialogContent, DialogTitle} from "@mui/material";
-import CustomerAutocomplete from "src/UI/components/CustomerAutocomplete";
+import CustomerAutocomplete from "src/UI/components/Customer/CustomerAutocomplete";
 import {Form, Formik} from "formik";
 import {Customer} from "src/types/customer.types";
 import {CustomerService} from "src/services/customer.service";
