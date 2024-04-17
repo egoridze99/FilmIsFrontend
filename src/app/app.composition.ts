@@ -79,9 +79,13 @@ export const certificates = certificatesContainer.get<CertificatesRepository>(
 );
 
 /**
- * Сертификаты
+ * Очередь
  */
-const queueContainer = new QueueContainer();
+const baseQueueContainer = new QueueContainer();
+const queueContainer = Container.merge(
+  baseQueueContainer,
+  customerServiceContainer
+);
 queueContainer.parent = appContainer;
 export const queue = queueContainer.get<QueueRepository>(TYPES.QueueRepository);
 

@@ -7,6 +7,7 @@ export const getSavableData = (
 ): QueueCreationBodyType =>
   ({
     ...values,
+    contact: values.contact?.id as any,
     date: values.date!.format(DATE_FORMAT),
     guests_count: parseInt(values.guests_count as string),
     duration: parseInt(values.duration as string)

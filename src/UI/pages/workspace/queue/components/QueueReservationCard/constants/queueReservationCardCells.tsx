@@ -2,6 +2,8 @@ import {ReservationCardCell} from "src/UI/components/ReservationCard/Reservation
 import {QueueItem, QueueItemStatusEnum} from "src/types/shared.types";
 import React from "react";
 import {queueStatusDict} from "src/constants/statusDictionaries";
+import CustomerCell from "src/UI/components/Customer/CustomerCell";
+import {Customer} from "src/types/customer.types";
 
 export const queueReservationCardCells = [
   {
@@ -18,14 +20,7 @@ export const queueReservationCardCells = [
   {
     id: "contact",
     size: 2,
-    render: (key, data) => (
-      <div
-        style={{display: "flex", flexDirection: "column", alignItems: "center"}}
-      >
-        <div>{(data[key] as QueueItem["contact"]).name}</div>
-        <div>{(data[key] as QueueItem["contact"]).telephone}</div>
-      </div>
-    )
+    render: (key, data) => <CustomerCell customer={data[key] as Customer} />
   },
   {
     id: "status",

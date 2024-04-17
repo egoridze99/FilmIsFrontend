@@ -61,6 +61,8 @@ const Queue = () => {
   } = useSearchPanel(searchPanelDefaultValues);
 
   React.useEffect(() => {
+    queue.initialize();
+
     return () => {
       clearSearchValues();
       queue.reset();
@@ -194,6 +196,7 @@ const Queue = () => {
           close={() => setIsCreationPanelOpen(false)}
           cinemaDictionary={dictionaries.cinemaDictionary}
           onCreate={handleCreateQueueItem}
+          customerService={customerService}
         />
       </Drawer>
       <Drawer
@@ -208,6 +211,7 @@ const Queue = () => {
           onCreate={handleEditQueueItem}
           isEditMode
           queueItem={currentEditingItem}
+          customerService={customerService}
         />
       </Drawer>
       <Drawer

@@ -10,6 +10,7 @@ import {
 } from "src/types/queue/queue.dataClient.types";
 import {QueueItem} from "src/types/shared.types";
 import {DATETIME_FORMAT} from "../../constants/date";
+import {applyCustomerAdapter} from "src/utils/customer/applyCustomerAdapter";
 
 @injectable()
 export class QueueDataService {
@@ -25,6 +26,7 @@ export class QueueDataService {
 
     return queue.map((i) => ({
       ...i,
+      contact: applyCustomerAdapter(i.contact),
       start_date: moment(i.start_date, DATETIME_FORMAT),
       end_date: i.end_date ? moment(i.end_date, DATETIME_FORMAT) : null,
       created_at: moment(i.created_at, DATETIME_FORMAT),
@@ -48,6 +50,7 @@ export class QueueDataService {
 
     return queue.map((i) => ({
       ...i,
+      contact: applyCustomerAdapter(i.contact),
       start_date: moment(i.start_date, DATETIME_FORMAT),
       end_date: i.end_date ? moment(i.end_date, DATETIME_FORMAT) : null,
       created_at: moment(i.created_at, DATETIME_FORMAT),

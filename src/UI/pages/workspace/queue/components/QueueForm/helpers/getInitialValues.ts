@@ -21,7 +21,7 @@ export const getInitialValues = (
   }
 
   return {
-    contact: queueItem.contact.name,
+    contact: queueItem.contact,
     date: queueItem.start_date,
     duration: queueItem.duration.toString(),
     end_time: queueItem.end_date?.format("HH:mm") || null,
@@ -30,7 +30,6 @@ export const getInitialValues = (
     note: queueItem.note,
     rooms: queueItem.rooms.map((r) => r.id),
     start_time: queueItem.start_date.format("HH:mm"),
-    telephone: queueItem.contact.telephone,
     status: queueItem.status
   } as FormikInitialValues;
 };

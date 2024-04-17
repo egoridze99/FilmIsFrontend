@@ -2,6 +2,7 @@ import {Roles} from "src/types/core.types";
 import {Moment} from "moment";
 import {DATETIME_FORMAT} from "../constants/date";
 import {number} from "yup";
+import {Customer} from "src/types/customer.types";
 
 export type Cinema = {
   id: number;
@@ -23,12 +24,6 @@ export type UserInfoData = {
   fullname: string;
 };
 
-export type GuestInfoData = {
-  id: number;
-  name: string;
-  telephone: string;
-};
-
 export type Certificate = {
   id: number;
   ident: string;
@@ -40,13 +35,13 @@ export type Certificate = {
   service: string;
   note: string;
   author: UserInfoData;
-  contact: GuestInfoData;
+  contact: Customer;
   cinema: Cinema;
 };
 
 export type QueueItem = {
   author: UserInfoData;
-  contact: GuestInfoData;
+  contact: Customer;
   created_at: Moment;
   start_date: Moment;
   duration: number;

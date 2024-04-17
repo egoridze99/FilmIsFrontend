@@ -15,11 +15,14 @@ import {queueStatusDict} from "src/constants/statusDictionaries";
 import {getSavableData} from "src/UI/pages/workspace/queue/components/QueueForm/helpers/getSavableData";
 import {validationSchema} from "src/UI/pages/workspace/queue/components/QueueForm/helpers/validationSchema";
 import {QueueCreationBodyType} from "src/types/queue/queue.dataClient.types";
+import {CustomerService} from "src/services/customer.service";
+import CustomerAutocomplete from "src/UI/components/Customer/CustomerAutocomplete";
 
 export type QueueFormProps = {
   cinemaDictionary: CinemaDictionary | null;
   close(): void;
   onCreate(data: QueueCreationBodyType): Promise<void>;
+  customerService: CustomerService;
 
   isEditMode?: boolean;
   queueItem?: QueueItem | null;
@@ -41,7 +44,8 @@ const QueueForm: React.FC<QueueFormProps> = ({
   isEditMode,
   onCreate,
   cinemaDictionary,
-  queueItem
+  queueItem,
+  customerService
 }) => {
   const roomsDict = cinemaDictionary?.cinemas.reduce((acc, i) => {
     i.rooms.forEach((r) => {
@@ -165,25 +169,11 @@ const QueueForm: React.FC<QueueFormProps> = ({
                     />
                   </Box>
 
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      name="contact"
-                      label="Имя"
-                      variant="standard"
-                      required
-                    />
-                  </Box>
-
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      name="telephone"
-                      label="Телефон"
-                      variant="standard"
-                      required
-                    />
-                  </Box>
+                  <CustomerAutocomplete
+                    name="contact"
+                    label="Посетитель"
+                    customerService={customerService}
+                  />
 
                   <GeneralInputFields
                     fieldsToRender={["duration", "note"] as any}

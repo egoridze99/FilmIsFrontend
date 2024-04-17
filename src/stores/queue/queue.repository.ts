@@ -12,6 +12,9 @@ import {
   QueueEditBodyType,
   QueueSearchBodyType
 } from "src/types/queue/queue.dataClient.types";
+import {Customer} from "src/types/customer.types";
+import {updateCustomerDataInCollection} from "src/utils/updateCustomerDataInCollection";
+import {CustomerService} from "src/services/customer.service";
 
 @injectable()
 export class QueueRepository {
@@ -20,6 +23,9 @@ export class QueueRepository {
 
   @inject(TYPES.NotificationService)
   private readonly notificationService: INotificationService;
+
+  @inject(TYPES.CustomerService)
+  private readonly customerService: CustomerService;
 
   @observable isLoading: boolean = false;
 
@@ -97,6 +103,10 @@ export class QueueRepository {
     }
   }
 
+  initialize() {
+    this.customerService.onCustomerUpdate(this.updateCustomerOnQueue);
+  }
+
   @action
   async loadData(env: WorkspaceEnvModel | null) {
     if (!env) {
@@ -115,10 +125,24 @@ export class QueueRepository {
 
   @action reset() {
     this._queue = [];
+    this.customerService.unsubscribe(this.updateCustomerOnQueue);
     this.isLoading = false;
   }
 
   private showErrorNotification(e: any) {
     this.notificationService.addNotification(getCommonErrorNotification(e));
+  }
+
+  @action.bound
+  private updateCustomerOnQueue(customer: Customer) {
+    const updatedData = updateCustomerDataInCollection(
+      this._queue,
+      "contact",
+      customer
+    );
+
+    if (updatedData) {
+      this._queue = updatedData;
+    }
   }
 }
