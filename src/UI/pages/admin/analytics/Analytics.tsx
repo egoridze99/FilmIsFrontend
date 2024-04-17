@@ -13,10 +13,13 @@ import AnalyticsToolbar from "src/UI/pages/admin/analytics/components/Toolbar";
 import {usePageData} from "src/contexts/pageData.context";
 import {getNumberMask} from "src/utils/getNumberMask";
 import {observer} from "mobx-react-lite";
+import {useCustomerService} from "src/contexts/services/customer.service.context";
 
 const Analytics = () => {
   useCurrentPageTitle();
   const {contentSize} = usePageData();
+
+  const customerService = useCustomerService();
 
   const {admin} = useDomainStore();
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
@@ -51,7 +54,10 @@ const Analytics = () => {
   return (
     <AppLayout
       toolbarCustomContent={
-        <AdminToolbar getTelephones={() => admin.getTelephones()} />
+        <AdminToolbar
+          getTelephones={() => admin.getTelephones()}
+          customerService={customerService}
+        />
       }
     >
       <SubpagesToolbar

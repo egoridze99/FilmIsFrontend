@@ -9,16 +9,19 @@ import {DataGrid} from "@mui/x-data-grid";
 import {Card, Drawer} from "@mui/material";
 import {getColumns} from "./columns/getColumns";
 import {observer} from "mobx-react-lite";
-import {usePageData} from "../../../../contexts/pageData.context";
+import {usePageData} from "src/contexts/pageData.context";
 import ToolbarButton from "../../../components/ToolbarButton";
 import UserCreationForm from "./components/CreationForm";
 import {UserCreationBodyType} from "src/types/admin/admin.types";
 
 import "./users.scss";
+import {useCustomerService} from "src/contexts/services/customer.service.context";
 
 const Users = () => {
   useCurrentPageTitle();
   const {contentSize} = usePageData();
+
+  const customerService = useCustomerService();
 
   const {admin} = useDomainStore();
 
@@ -41,7 +44,10 @@ const Users = () => {
   return (
     <AppLayout
       toolbarCustomContent={
-        <AdminToolbar getTelephones={() => admin.getTelephones()} />
+        <AdminToolbar
+          getTelephones={() => admin.getTelephones()}
+          customerService={customerService}
+        />
       }
     >
       <SubpagesToolbar
