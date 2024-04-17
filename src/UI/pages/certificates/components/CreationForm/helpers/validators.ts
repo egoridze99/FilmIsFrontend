@@ -4,7 +4,7 @@ export const validationSchema = yup.object().shape({
   card: yup.number().typeError("Числовое поле"),
   cash: yup.number().typeError("Числовое поле"),
   cinema_id: yup.number().required("Обязательное поле"),
-  contact: yup.string().required("Обязательное поле"),
+  contact: yup.object().required("Обязательное поле"),
   note: yup.string().nullable(),
   service: yup.string().required("Обязательное поле"),
   sum: yup
@@ -16,6 +16,5 @@ export const validationSchema = yup.object().shape({
         card || 0 + cash || 0,
         "Сумма сертификата больше, чем сумма карты и налички"
       );
-    }),
-  telephone: yup.string().required("Обязательное поле")
+    })
 });

@@ -19,11 +19,14 @@ import {useSearch} from "src/UI/pages/certificates/hooks/useSearch";
 import Loader from "src/UI/components/Loader";
 
 import "./certificates.scss";
+import CustomerSearchButton from "src/UI/components/Customer/CustomerSearchButton/CustomerSearchButton";
+import {useCustomerService} from "src/contexts/services/customer.service.context";
 
 const Certificates = () => {
   useCurrentPageTitle();
   const {certificates, dictionaries} = useDomainStore();
   const {contentSize} = usePageData();
+  const customerService = useCustomerService();
 
   const {
     searchValues,
@@ -65,6 +68,7 @@ const Certificates = () => {
 
   React.useEffect(() => {
     dictionaries.loadCinemaDictionary().then(() => {
+      certificates.initialize();
       certificates.loadData();
     });
 
@@ -72,7 +76,13 @@ const Certificates = () => {
   }, []);
 
   return (
-    <AppLayout>
+    <AppLayout
+      toolbarCustomContent={
+        <div className="Workspace__toolbar-item">
+          <CustomerSearchButton customerService={customerService} />
+        </div>
+      }
+    >
       <SubpagesToolbar
         customContent={
           <Toolbar
@@ -92,6 +102,7 @@ const Certificates = () => {
           close={() => setIsCreationFormOpen(false)}
           cinemas={dictionaries.cinemaDictionary?.cinemas || []}
           onCreate={createCertificate}
+          customerService={customerService}
         />
       </Drawer>
       <Drawer
@@ -113,8 +124,8 @@ const Certificates = () => {
       <div className="Certificates" style={{height: contentSize.height}}>
         {certificates.isLoading ? (
           <Loader />
-        ) : (
-          certificates.certificates ? <Card>
+        ) : certificates.certificates ? (
+          <Card>
             <div className="Certificates__table">
               <DataGrid
                 rows={certificates.certificates}
@@ -127,7 +138,11 @@ const Certificates = () => {
                 showCellVerticalBorder
               />
             </div>
-          </Card> : <Typography variant="body1" textAlign="center" marginY={2}>Нет сертификатов</Typography>
+          </Card>
+        ) : (
+          <Typography variant="body1" textAlign="center" marginY={2}>
+            Нет сертификатов
+          </Typography>
         )}
       </div>
     </AppLayout>

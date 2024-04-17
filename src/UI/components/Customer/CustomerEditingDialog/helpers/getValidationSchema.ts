@@ -10,6 +10,10 @@ export const getValidationSchema = () => {
     birthday_date: yup
       .date()
       .test("Дата рождения", "Минимальный возраст 18 лет", (value) => {
+        if (!value) {
+          return true;
+        }
+
         return moment().diff(moment(value), "years") >= 18;
       })
       .nullable(),

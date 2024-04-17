@@ -8,6 +8,5 @@ export const initialValues: Nullable<CertificateCreationBodyType> = {
   contact: null,
   note: null,
   service: null,
-  sum: null,
-  telephone: null
+  sum: null
 };

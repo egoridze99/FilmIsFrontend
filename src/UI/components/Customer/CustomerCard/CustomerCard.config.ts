@@ -20,7 +20,7 @@ export const passportFields = [
       console.log(customer);
       return customer?.birthday_date
         ? customer.birthday_date.format("DD-MM-YYYY")
-        : null;
+        : "Не заполнено";
     }
   },
   {
@@ -33,7 +33,7 @@ export const passportFields = [
     render: (customer: Customer | null) =>
       customer?.passport_issue_date
         ? customer.passport_issue_date.format("DD-MM-YYYY")
-        : null
+        : "Не заполнено"
   },
   {
     title: "Паспорт выдан",
@@ -54,6 +54,6 @@ export const passportFields = [
         ? "Мужской"
         : customer?.gender === "Ж"
         ? "Женский"
-        : null
+        : "Не заполнено"
   }
 ];

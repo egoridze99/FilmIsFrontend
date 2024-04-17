@@ -12,21 +12,26 @@ import {Box, MenuItem} from "@mui/material";
 import {Cinema} from "src/types/shared.types";
 import {CertificateServiceEnum} from "src/types/certificates/certificate.types";
 import {validationSchema} from "src/UI/pages/certificates/components/CreationForm/helpers/validators";
+import CustomerAutocomplete from "src/UI/components/Customer/CustomerAutocomplete";
+import {CustomerService} from "src/services/customer.service";
 
 type CreationFormProps = {
   onCreate(data: CertificateCreationBodyType): Promise<boolean>;
   close(): void;
   cinemas: Cinema[];
+  customerService: CustomerService;
 };
 
 const CreationForm: React.FC<CreationFormProps> = ({
   close,
   cinemas,
-  onCreate
+  onCreate,
+  customerService
 }) => {
   const onSubmit = async (values: CertificateCreationBodyType) => {
     return onCreate({
       ...values,
+      contact: values.contact.id as any,
       card: parseFloat(values.card as any),
       cash: parseFloat(values.cash as any),
       sum: parseFloat(values.sum as any)
@@ -44,6 +49,8 @@ const CreationForm: React.FC<CreationFormProps> = ({
           validateOnMount
         >
           {({isSubmitting, isValid, errors}) => {
+            console.log(errors);
+
             return (
               <Form className="side-panel-form__form">
                 <SidePanelContentContainer className="side-panel-form__body">
@@ -65,25 +72,12 @@ const CreationForm: React.FC<CreationFormProps> = ({
                     </Field>
                   </Box>
 
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      name="contact"
-                      label="Имя"
-                      variant="standard"
-                      required
-                    />
-                  </Box>
-
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      name="telephone"
-                      label="Телефон"
-                      variant="standard"
-                      required
-                    />
-                  </Box>
+                  <CustomerAutocomplete
+                    name={"contact"}
+                    label={"Владелец сертификата"}
+                    customerService={customerService}
+                    required
+                  />
 
                   <Box className="full-width-form-control" marginY={1}>
                     <Field

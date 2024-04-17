@@ -1,6 +1,12 @@
 .CustomerCard {
   max-width: 1000px!important;
 
+  &__user-avatar {
+    img {
+      width: 240px;
+    }
+  }
+
   &__content {
     &-container {
       width: 700px;
@@ -12,7 +18,7 @@
 
   &__customer-data {
     flex-grow: 1;
-    margin-left: 100px;
+    margin-left: 130px;
 
     &-element {
       margin-bottom: 5px;

@@ -11,6 +11,9 @@ import {
 } from "src/types/certificates/certificates.dataClient.types";
 import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
 import {CertificatesDataService} from "./certificates.dataService";
+import {CustomerService} from "src/services/customer.service";
+import {Customer} from "src/types/customer.types";
+import {updateCustomerDataInCollection} from "src/utils/updateCustomerDataInCollection";
 
 @injectable()
 export class CertificatesRepository {
@@ -26,8 +29,15 @@ export class CertificatesRepository {
   @inject(TYPES.NotificationService)
   private readonly notificationService: INotificationService;
 
+  @inject(TYPES.CustomerService)
+  private readonly customerService: CustomerService;
+
   constructor() {
     makeObservable(this);
+  }
+
+  initialize() {
+    this.customerService.onCustomerUpdate(this.updateCustomerOnCertificate);
   }
 
   @action
@@ -71,6 +81,7 @@ export class CertificatesRepository {
   @action
   reset() {
     this.certificates = [];
+    this.customerService.unsubscribe(this.updateCustomerOnCertificate);
   }
 
   private getSortedCertificates(data: Certificate[]) {
@@ -84,5 +95,17 @@ export class CertificatesRepository {
 
   private showErrorNotification(e: any) {
     this.notificationService.addNotification(getCommonErrorNotification(e));
+  }
+
+  @action.bound private updateCustomerOnCertificate(customer: Customer) {
+    const updatedData = updateCustomerDataInCollection(
+      this.certificates,
+      "contact",
+      customer
+    );
+
+    if (updatedData) {
+      this.certificates = updatedData;
+    }
   }
 }

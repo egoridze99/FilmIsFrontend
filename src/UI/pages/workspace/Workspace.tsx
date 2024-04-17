@@ -10,10 +10,10 @@ import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {observer} from "mobx-react-lite";
 import {CinemaDictionary} from "src/models/dictionaries/cinema.dictionary.model";
 import Loader from "src/UI/components/Loader";
-
-import "./workspace.scss";
 import CustomerSearchButton from "src/UI/components/Customer/CustomerSearchButton/CustomerSearchButton";
 import {useCustomerService} from "src/contexts/services/customer.service.context";
+
+import "./workspace.scss";
 
 const Workspace = () => {
   const customerService = useCustomerService();

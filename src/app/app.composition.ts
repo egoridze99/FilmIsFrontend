@@ -55,15 +55,24 @@ export const workspaceEnv = workspaceEnvContainer.get<WorkspaceEnvRepository>(
 /**
  * Расписание сеансов
  */
-const scheduleContainer = new ScheduleContainer();
-const test = Container.merge(scheduleContainer, customerServiceContainer);
-test.parent = appContainer;
-export const schedule = test.get<ScheduleRepository>(TYPES.ScheduleRepository);
+const baseScheduleContainer = new ScheduleContainer();
+const scheduleContainer = Container.merge(
+  baseScheduleContainer,
+  customerServiceContainer
+);
+scheduleContainer.parent = appContainer;
+export const schedule = scheduleContainer.get<ScheduleRepository>(
+  TYPES.ScheduleRepository
+);
 
 /**
  * Сертификаты
  */
-const certificatesContainer = new CertificatesContainer();
+const baseCertificatesContainer = new CertificatesContainer();
+const certificatesContainer = Container.merge(
+  baseCertificatesContainer,
+  customerServiceContainer
+);
 certificatesContainer.parent = appContainer;
 export const certificates = certificatesContainer.get<CertificatesRepository>(
   TYPES.CertificatesRepository

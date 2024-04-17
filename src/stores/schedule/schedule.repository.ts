@@ -23,6 +23,7 @@ import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
 import {QUEUE_IDS_TO_SEARCH} from "src/constants/storageKeys";
 import {CustomerService} from "src/services/customer.service";
 import {Customer} from "src/types/customer.types";
+import {updateCustomerDataInCollection} from "src/utils/updateCustomerDataInCollection";
 
 @injectable()
 export class ScheduleRepository {
@@ -200,31 +201,14 @@ export class ScheduleRepository {
 
   @action.bound
   private updateCustomerOnReservation(customer: Customer) {
-    const [reservationsWithEditedCustomer, otherReservations] =
-      this.reservations.reduce(
-        (acc, i) => {
-          if (i.guest.id === customer.id) {
-            acc[0].push(i);
-          } else {
-            acc[1].push(i);
-          }
-
-          return acc;
-        },
-        [[] as Array<Reservation>, [] as Array<Reservation>]
-      );
-
-    if (!reservationsWithEditedCustomer.length) {
-      return;
-    }
-
-    const editedReservations = reservationsWithEditedCustomer.map(
-      (reservation) => ({
-        ...reservation,
-        guest: customer
-      })
+    const updatedData = updateCustomerDataInCollection(
+      this._reservations,
+      "guest",
+      customer
     );
 
-    this._reservations = [...editedReservations, ...otherReservations];
+    if (updatedData) {
+      this._reservations = updatedData;
+    }
   }
 }
