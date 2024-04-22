@@ -4,6 +4,7 @@ import {
   Reservation,
   ReservationStatus
 } from "src/types/schedule/schedule.types";
+import {ChangesResponseType} from "src/types/core.types";
 
 export type ReservationResponseType = Omit<
   Reservation,
@@ -39,10 +40,4 @@ export type ReservationSearchBodyType = {
   end_date: DateTimeType | null;
 };
 
-export type ChangesResponseType = {
-  author: string;
-  created_at: DateTimeType;
-  id: number;
-  new: ChangesItemType;
-  old: ChangesItemType;
-};
+export type ScheduleChangesResponseType = ChangesResponseType<ChangesItemType>;

@@ -9,7 +9,7 @@ type ChangesHistoryType = {
 }[];
 
 export const useChangesHistory = (
-  loadChangesHistory: (reservationId: number) => Promise<ChangesHistoryType>
+  loadChangesHistory: (id: number) => Promise<ChangesHistoryType>
 ) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isChangesModalOpen, setIsChangesModalOpen] = React.useState(false);
@@ -18,12 +18,12 @@ export const useChangesHistory = (
 
   const _isOpen = React.useRef<boolean>(false);
 
-  const onLoadChangesHistory = async (reservationId: number) => {
+  const onLoadChangesHistory = async (id: number) => {
     setIsLoading(true);
     setIsChangesModalOpen(true);
     _isOpen.current = true;
 
-    const changesHistory = await loadChangesHistory(reservationId);
+    const changesHistory = await loadChangesHistory(id);
 
     if (_isOpen.current) {
       setChangesHistory(changesHistory);

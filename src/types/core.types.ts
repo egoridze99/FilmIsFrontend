@@ -1,3 +1,5 @@
+import {DateTimeType} from "src/types/shared.types";
+
 export type User = {
   login: string;
   role: Roles;
@@ -14,3 +16,11 @@ export enum Roles {
 }
 
 export type Nullable<T> = {[K in keyof T]: T[K] | null};
+
+export type ChangesResponseType<T> = {
+  author: string;
+  created_at: DateTimeType;
+  id: number;
+  new: T;
+  old: T;
+};

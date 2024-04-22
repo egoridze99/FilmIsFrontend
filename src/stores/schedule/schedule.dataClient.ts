@@ -4,11 +4,11 @@ import moment, {Moment} from "moment";
 import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
 import {DATE_FORMAT} from "src/constants/date";
 import {
-  ChangesResponseType,
   ReservationCreationBodyType,
   ReservationEditBodyType,
   ReservationResponseType,
-  ReservationSearchBodyType
+  ReservationSearchBodyType,
+  ScheduleChangesResponseType
 } from "src/types/schedule/schedule.dataClient.types";
 import {Certificate} from "src/types/shared.types";
 
@@ -108,7 +108,7 @@ export class ScheduleDataClient {
   }
 
   async getChangesHistory(id: number) {
-    const response = await axios.get<ChangesResponseType[]>(
+    const response = await axios.get<ScheduleChangesResponseType[]>(
       `/reservation/logs/${id}`
     );
 

@@ -24,13 +24,13 @@ import {
 } from "src/types/schedule/schedule.dataClient.types";
 import SearchPanel from "./components/SearchPanel";
 import {useSearchPanel} from "src/UI/pages/workspace/schedule/hooks/useSearchPanel";
-
-import "./schedule.scss";
-import {useChangesHistory} from "src/UI/pages/workspace/schedule/hooks/useChangesHistory";
-import ChangesHistoryModal from "./components/ChangesHistoryModal";
+import {useChangesHistory} from "src/hooks/useChangesHistory";
+import ChangesHistoryModal from "../components/ChangesHistoryModal";
 import Loader from "src/UI/components/Loader";
 import {searchPanelDefaultValues} from "src/UI/pages/workspace/schedule/constants/searchPanelDefaultValues";
 import {useCustomerService} from "src/contexts/services/customer.service.context";
+
+import "./schedule.scss";
 
 const Schedule = () => {
   useCurrentPageTitle();

@@ -72,6 +72,13 @@ export type UserInfo = {
   fullname: string;
 };
 
+export type CustomerComment = {
+  id: number;
+  text: string;
+  created_at: Moment;
+  author: string;
+};
+
 export enum CertificateStatusEnum {
   active = "active",
   redeemed = "redeemed"

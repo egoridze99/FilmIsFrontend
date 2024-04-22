@@ -7,4 +7,5 @@ export type UserEditingFormValues = Omit<
 > & {
   birthday_date: Moment | null;
   passport_issue_date: Moment | null;
+  gender: "М" | "Ж" | null;
 };

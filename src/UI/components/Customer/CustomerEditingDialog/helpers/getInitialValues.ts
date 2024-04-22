@@ -14,8 +14,7 @@ export const getInitialValues = (
         : null,
       passport_issue_date: defaultValues.passport_issue_date
         ? moment(defaultValues.passport_issue_date, "DD-MM-YYYY")
-        : null,
-      gender: defaultValues.gender || "М"
+        : null
     } as UserEditingFormValues;
   }
 
@@ -29,15 +28,15 @@ export const getInitialValues = (
     "passport_issued_by",
     "passport_issue_date",
     "department_code",
-    "passport_identity"
+    "passport_identity",
+    "gender"
   ];
 
   const data = {
     ...fields.reduce((acc, i) => {
       acc[i] = null;
       return acc;
-    }, {}),
-    gender: "М"
+    }, {})
   };
 
   return data as UserEditingFormValues;

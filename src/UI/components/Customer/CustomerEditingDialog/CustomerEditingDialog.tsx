@@ -45,7 +45,12 @@ const textFormFields = [
   },
   {name: "department_code", label: "Код подразделения", kind: "text"},
   {name: "passport_identity", label: "Серия и номер паспорта", kind: "text"},
-  {name: "gender", kind: "checkbox", options: [{label: "М"}, {label: "Ж"}]}
+  {
+    name: "gender",
+    kind: "checkbox",
+    options: [{label: "М"}, {label: "Ж"}],
+    required: true
+  }
 ];
 
 const CustomerEditingDialog: React.FC<UserEditingDialogProps> = ({
@@ -116,7 +121,12 @@ const CustomerEditingDialog: React.FC<UserEditingDialogProps> = ({
                       break;
                     case "checkbox":
                       content = (
-                        <Field component={RadioGroup} name={i.name} row>
+                        <Field
+                          component={RadioGroup}
+                          name={i.name}
+                          row
+                          required={i.required}
+                        >
                           {i.options?.map((option) => (
                             <FormControlLabel
                               value={option.label}

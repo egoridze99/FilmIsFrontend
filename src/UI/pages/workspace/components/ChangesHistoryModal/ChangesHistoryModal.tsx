@@ -11,7 +11,7 @@ import {
   Typography
 } from "@mui/material";
 
-import "./changesHistoryModal.scss";
+import "src/UI/pages/workspace/components/ChangesHistoryModal/changesHistoryModal.scss";
 import {Moment} from "moment";
 
 type ChangesHistoryModalProps = {
