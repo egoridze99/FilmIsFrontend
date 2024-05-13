@@ -8,9 +8,11 @@
   width: 100%;
 
 
-  &__marker {
+  &__markers {
+    display: flex;
+    align-items: center;
     position: absolute;
-    top: -10px;
-    right: 0;
+    top: -5px;
+    right: 5px;
   }
 }

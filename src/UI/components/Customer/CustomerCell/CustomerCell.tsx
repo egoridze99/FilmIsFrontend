@@ -7,6 +7,7 @@ import {useCustomerCardProps} from "src/hooks/useCustomerCardProps";
 import {isCustomerHasBlankFields} from "src/utils/customer/isCustomerHasBlankFields";
 import {Icon, Tooltip} from "@mui/material";
 import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
+import {Description} from "@mui/icons-material";
 
 type CustomerCellProps = {
   customer: Customer;
@@ -28,16 +29,19 @@ const CustomerCell: React.FC<CustomerCellProps> = ({customer}) => {
         className={"CustomerCell"}
         onClick={() => openCustomerCardDialog(customer)}
       >
-        {hasCustomerBlankFields && (
-          <Tooltip
-            title={"Незаполненные паспортные данные"}
-            className="CustomerCell__marker"
-          >
-            <Icon>
-              <DoDisturbOnIcon sx={{color: "#e31235", fontSize: "18px"}} />
-            </Icon>
-          </Tooltip>
-        )}
+        <div className="CustomerCell__markers">
+          {customer.has_comments && (
+            <Tooltip title={"У пользователя есть оставленные комментарии"}>
+              <Description sx={{color: "#007aff", fontSize: "14px"}} />
+            </Tooltip>
+          )}
+
+          {hasCustomerBlankFields && (
+            <Tooltip title={"Незаполненные паспортные данные"}>
+              <DoDisturbOnIcon sx={{color: "#e31235", fontSize: "14px"}} />
+            </Tooltip>
+          )}
+        </div>
 
         <div>{customer.name}</div>
         <div>{customer.telephone}</div>

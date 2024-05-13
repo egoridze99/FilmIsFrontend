@@ -3,9 +3,11 @@ import {Moment} from "moment";
 export type Customer = {
   id: number;
   name: string;
+  telephone: string;
+
+  has_comments?: boolean;
   surname?: string;
   patronymic?: string;
-  telephone: string;
   birthday_date?: Moment;
   birthplace?: string;
   passport_issued_by?: string;
