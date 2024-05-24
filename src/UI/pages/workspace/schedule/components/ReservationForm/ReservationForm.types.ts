@@ -19,7 +19,4 @@ export type FormikInitialValuesType = {
   certificate: Certificate | null;
 
   status?: ReservationStatus;
-  card?: number;
-  cash?: number;
-  checkouts?: {id: number; note: string; sum: number}[];
 };

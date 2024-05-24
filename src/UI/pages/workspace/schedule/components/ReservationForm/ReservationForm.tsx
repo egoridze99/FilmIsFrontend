@@ -1,8 +1,8 @@
 import React from "react";
 import SidePanelHeader from "src/UI/components/SidePanelHeader";
 import SidePanelContentContainer from "src/UI/components/containers/SidePanelContentContainer";
-import {Form, Formik, Field, FieldArray} from "formik";
-import {Box, Divider, MenuItem} from "@mui/material";
+import {Field, Form, Formik} from "formik";
+import {Box, MenuItem, TextField as MUITextField} from "@mui/material";
 import {getInitialValues} from "./helpers/getInitialValues";
 import {Certificate, Cinema, QueueItem} from "src/types/shared.types";
 import {TextField} from "formik-mui";
@@ -17,9 +17,7 @@ import {
   ReservationStatus
 } from "src/types/schedule/schedule.types";
 import {reservationStatusDictionary} from "src/constants/statusDictionaries";
-import CheckoutsSection from "./components/CheckoutsSection";
 import GeneralInputFields from "src/UI/pages/workspace/components/GeneralInputFields";
-import {TextField as MUITextField} from "@mui/material";
 
 import "./ReservationForm.scss";
 import {getCertificateNote} from "src/UI/pages/workspace/helpers/getCertificateNote";
@@ -58,16 +56,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
   isCreationFromScratch,
   customerService
 }) => {
-  const bodyRef = React.useRef<HTMLDivElement | null>(null);
-
   const cinemasAsDict = cinemas.reduce((acc, c) => ({...acc, [c.id]: c}), {});
-
-  const scrollBottom = () => {
-    bodyRef.current?.scroll({
-      top: bodyRef.current?.scrollHeight,
-      behavior: "smooth"
-    });
-  };
 
   const onSubmit = async (data: FormikInitialValuesType) => {
     const savableData = getSavableData(data, Boolean(isEditMode));
@@ -148,11 +137,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
 
             return (
               <Form className="side-panel-form__form">
-                <SidePanelContentContainer
-                  className="side-panel-form__body"
-                  //@ts-ignore
-                  ref={bodyRef}
-                >
+                <SidePanelContentContainer className="side-panel-form__body">
                   <Box className="full-width-form-control">
                     <Field
                       component={TextField}
@@ -313,42 +298,6 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
                           ))}
                         </Field>
                       </Box>
-
-                      <Box className="full-width-form-control" marginY={1}>
-                        <Field
-                          component={TextField}
-                          name="card"
-                          label="Картой"
-                          placeholder="Картой"
-                          variant="standard"
-                        />
-                      </Box>
-
-                      <Box className="full-width-form-control" marginY={1}>
-                        <Field
-                          component={TextField}
-                          name="cash"
-                          label="Наличкой"
-                          placeholder="Наличкой"
-                          variant="standard"
-                        />
-                      </Box>
-
-                      <Divider />
-                      <div className="ReservationForm__checkouts">
-                        <FieldArray
-                          name={"checkouts"}
-                          render={({push}) => {
-                            return (
-                              <CheckoutsSection
-                                push={push}
-                                checkouts={values.checkouts as any}
-                                scrollBottom={scrollBottom}
-                              />
-                            );
-                          }}
-                        ></FieldArray>
-                      </div>
                     </>
                   )}
                 </SidePanelContentContainer>

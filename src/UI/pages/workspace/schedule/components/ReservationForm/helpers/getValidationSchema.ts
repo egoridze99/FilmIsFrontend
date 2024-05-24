@@ -31,18 +31,7 @@ export const getValidationSchema = (isEditMode: boolean) => {
   if (isEditMode) {
     shape = {
       ...shape,
-      status: yup.string().required("Обязательное поле"),
-      card: yup.number().typeError("Допустимо только числовое значение"),
-      cash: yup.number().typeError("Допустимо только числовое значение"),
-      checkouts: yup.array().of(
-        yup.object().shape({
-          note: yup.string().required("Обязательное поле"),
-          sum: yup
-            .number()
-            .required("Обязательное поле")
-            .typeError("Обязательное поле")
-        })
-      )
+      status: yup.string().required("Обязательное поле")
     } as any;
   }
 

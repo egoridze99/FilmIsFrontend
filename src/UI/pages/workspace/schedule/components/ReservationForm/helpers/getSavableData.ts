@@ -23,15 +23,8 @@ export const getSavableData = (
   if (isEditMode) {
     savableData = {
       ...savableData,
-      cash: parseInt((data.cash as any) || "0"),
-      card: parseInt((data.card as any) || "0"),
       note: data.note,
-      status: data.status,
-      checkouts:
-        data.checkouts?.map((c) => ({
-          ...c,
-          sum: parseInt((c.sum as any) || "0")
-        })) || []
+      status: data.status
     } as ReservationEditBodyType;
   }
 

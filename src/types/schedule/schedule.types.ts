@@ -33,25 +33,15 @@ export type Reservation = {
   };
   status: ReservationStatus;
 
-  card: number;
-  cash: number;
   rent: number;
   certificate: Certificate | null;
 
   created_at: Moment;
-  checkouts: CheckoutType[];
-};
-
-export type CheckoutType = {
-  id: number | undefined;
-  sum: number;
-  note: string;
 };
 
 export type ChangesItemType = {
   card: number;
   cash: number;
-  checkouts: CheckoutType[];
   count: number;
   duration: number;
   film: string;

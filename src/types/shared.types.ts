@@ -1,7 +1,6 @@
 import {Roles} from "src/types/core.types";
 import {Moment} from "moment";
 import {DATETIME_FORMAT} from "../constants/date";
-import {number} from "yup";
 import {Customer} from "src/types/customer.types";
 
 export type Cinema = {
@@ -30,8 +29,6 @@ export type Certificate = {
   created_at: Moment;
   status: CertificateStatusEnum;
   sum: number;
-  cash: number;
-  card: number;
   service: string;
   note: string;
   author: UserInfoData;

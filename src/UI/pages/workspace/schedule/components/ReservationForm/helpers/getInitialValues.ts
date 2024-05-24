@@ -60,13 +60,6 @@ export const getInitialValues = (
     date: reservation.date,
     time: reservation.date.format("HH:mm"),
     certificate_ident: reservation.certificate?.ident,
-    rent: reservation.rent || 0,
-    card: reservation.card || 0,
-    cash: reservation.cash || 0,
-    checkouts: reservation.checkouts.map((c) => ({
-      id: c.id as number,
-      note: c.note,
-      sum: c.sum
-    }))
+    rent: reservation.rent || 0
   } as FormikInitialValuesType;
 };

@@ -78,21 +78,21 @@ const Analytics = () => {
                 {admin.analyticData.money.map((item) => (
                   <div>
                     <h2>{item.area}:</h2>
-                    <p>Картой: {getNumberMask(item.card)}</p>
-                    <p>Наличкой: {getNumberMask(item.cash)}</p>
-                    <p>Всего: {getNumberMask(item.sum)}</p>
+                    <p>Картой: {getNumberMask(item.card || 0)}</p>
+                    <p>Наличкой: {getNumberMask(item.cash || 0)}</p>
+                    <p>Всего: {getNumberMask(item.sum || 0)}</p>
                   </div>
                 ))}
               </Card>
 
               <Card className="Analytics__item">
                 <Typography variant="h5" className="Analytics__item-title">
-                  Всего потрачено: {getNumberMask(totals.checkout)}
+                  Всего потрачено: {getNumberMask(Math.abs(totals.checkout))}
                 </Typography>
                 {admin.analyticData.checkout.map((item) => (
                   <div>
                     <h2>{item.area}:</h2>
-                    <span>{getNumberMask(item.sum)}</span>
+                    <span>{getNumberMask(Math.abs(item.sum))}</span>
                   </div>
                 ))}
               </Card>
