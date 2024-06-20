@@ -10,6 +10,7 @@ import UserIcon from "src/UI/components/UserIcon";
 import {usePageData} from "src/contexts/pageData.context";
 import {useCommonServices} from "../../../contexts/commonServices.context";
 import {Roles} from "../../../types/core.types";
+import StandLabel from "src/UI/components/StandLabel";
 
 type AppToolbarProps = {
   routes: RouteType[];
@@ -27,6 +28,8 @@ const AppToolbar: React.FC<AppToolbarProps> = ({routes, customContent}) => {
     return () => reduceSize({height: {AppToolbar: 0}});
   }, []);
 
+  const standLabel = <StandLabel />;
+
   return (
     <AppBar className="AppToolbar" position="relative" elevation={4}>
       <Toolbar className="AppToolbar__toolbar" variant="dense">
@@ -38,9 +41,9 @@ const AppToolbar: React.FC<AppToolbarProps> = ({routes, customContent}) => {
             <ul className="AppToolbar__nav-list">
               {routes
                 .filter((route) => !route.hidden)
-                .filter(route => {
+                .filter((route) => {
                   if (authenticationService.userData?.role === Roles.root) {
-                    return route
+                    return route;
                   }
 
                   return !route.needAdmin;
@@ -67,6 +70,9 @@ const AppToolbar: React.FC<AppToolbarProps> = ({routes, customContent}) => {
             <div className="AppToolbar__custom">{customContent}</div>
           )}
           <UserIcon />
+          {standLabel && (
+            <div className="AppToolbar__stand-label">{standLabel}</div>
+          )}
         </div>
       </Toolbar>
     </AppBar>

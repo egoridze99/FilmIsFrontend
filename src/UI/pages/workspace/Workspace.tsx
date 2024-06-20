@@ -20,6 +20,7 @@ import TransactionsWindow from "src/UI/components/TransactionsWindow";
 import CashierInfoBar from "src/UI/pages/workspace/schedule/components/CashierInfoBar";
 
 import "./workspace.scss";
+import StandLabel from "src/UI/components/StandLabel";
 
 const Workspace = () => {
   const transactionService = useTransactionService();
@@ -62,8 +63,7 @@ const Workspace = () => {
     isTransactionsModalOpen,
     isTransactionsLoading,
     closeTransactionsModal,
-    transactions,
-    addTransactionToList
+    transactions
   } = useTransactions(() =>
     transactionService.loadCinemaTransactions(
       workspaceEnv.envModel?.cinema.id as number,
