@@ -17,7 +17,6 @@ export const passportFields = [
     title: "Дата рождения",
     field: "birthday_date",
     render: (customer: Customer | null) => {
-      console.log(customer);
       return customer?.birthday_date
         ? customer.birthday_date.format("DD-MM-YYYY")
         : "Не заполнено";

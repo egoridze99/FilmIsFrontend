@@ -3,7 +3,7 @@ import {Outlet} from "react-router-dom";
 import {AppLayout} from "src/layouts";
 import SettingsIcon from "@mui/icons-material/Settings";
 import {useDomainStore} from "src/contexts/store.context";
-import {IconButton, Tooltip} from "@mui/material";
+import {IconButton, Modal, Tooltip, Typography} from "@mui/material";
 import {WorkspaceContext} from "src/UI/pages/workspace/Workspace.types";
 import WorkspaceSettingsPanel from "src/UI/pages/workspace/components/WorkspaceSettingsPanel";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
@@ -12,12 +12,30 @@ import {CinemaDictionary} from "src/models/dictionaries/cinema.dictionary.model"
 import Loader from "src/UI/components/Loader";
 import CustomerSearchButton from "src/UI/components/Customer/CustomerSearchButton/CustomerSearchButton";
 import {useCustomerService} from "src/contexts/services/customer.service.context";
+import {AttachMoney} from "@mui/icons-material";
+import {useTransactions} from "src/hooks/useTransactions";
+import {useTransactionService} from "src/contexts/services/transaction.service.context";
+import {Moment} from "moment";
+import TransactionsWindow from "src/UI/components/TransactionsWindow";
+import CashierInfoBar from "src/UI/pages/workspace/schedule/components/CashierInfoBar";
 
 import "./workspace.scss";
 
 const Workspace = () => {
+  const transactionService = useTransactionService();
   const customerService = useCustomerService();
   const {workspaceEnv, dictionaries} = useDomainStore();
+
+  React.useEffect(() => {
+    if (!workspaceEnv.envModel) {
+      return;
+    }
+
+    transactionService.loadCashierInfo(
+      workspaceEnv.envModel.cinema.id,
+      workspaceEnv.envModel.date
+    );
+  }, [workspaceEnv.envModel?.cinema, workspaceEnv.envModel?.date]);
 
   React.useEffect(() => {
     dictionaries.loadCinemaDictionary().then(() => {
@@ -26,6 +44,7 @@ const Workspace = () => {
 
     return () => {
       workspaceEnv.reset();
+      transactionService.clearCashierInfo();
     };
   }, []);
 
@@ -38,10 +57,32 @@ const Workspace = () => {
     }
   };
 
+  const {
+    loadTransactions,
+    isTransactionsModalOpen,
+    isTransactionsLoading,
+    closeTransactionsModal,
+    transactions,
+    addTransactionToList
+  } = useTransactions(() =>
+    transactionService.loadCinemaTransactions(
+      workspaceEnv.envModel?.cinema.id as number,
+      workspaceEnv.envModel?.date as Moment
+    )
+  );
+
   return (
     <AppLayout
       toolbarCustomContent={
         <div className="Workspace__toolbar">
+          <div className="Workspace__toolbar-item">
+            <Tooltip title="Транзакции связанные с кинотеатром">
+              <IconButton onClick={() => loadTransactions()}>
+                <AttachMoney color={"inherit"} style={{color: "#fff"}} />
+              </IconButton>
+            </Tooltip>
+          </div>
+
           <div className="Workspace__toolbar-item">
             <CustomerSearchButton customerService={customerService} />
           </div>
@@ -72,6 +113,53 @@ const Workspace = () => {
             } as WorkspaceContext
           }
         />
+      )}
+
+      <Modal open={isTransactionsModalOpen} onClose={closeTransactionsModal}>
+        <TransactionsWindow
+          addButtonTooltip={
+            "Транзакция будет добавлена в ТЕКУЩИЙ день. Вне зависимости от того, какая дата выбрана"
+          }
+          title={
+            <Typography variant="h6">
+              Информация о транзакциях в кинотеатре по адресу:{" "}
+              {workspaceEnv.envModel?.cinema.name}
+            </Typography>
+          }
+          transactions={transactions}
+          onNewTransactionAdd={async (data) => {
+            const result = await transactionService.createTransaction(data, {
+              cinema_id: workspaceEnv.envModel?.cinema.id as number
+            });
+
+            if (result) {
+              await transactionService.loadCashierInfo(
+                workspaceEnv.envModel!.cinema.id,
+                workspaceEnv.envModel!.date
+              );
+              loadTransactions();
+
+              return true;
+            }
+
+            return false;
+          }}
+          makeRefund={async (transaction) => {
+            const result = await transactionService.makeRefund(transaction);
+
+            if (result) {
+              await transactionService.loadCashierInfo(
+                workspaceEnv.envModel!.cinema.id,
+                workspaceEnv.envModel!.date
+              );
+            }
+          }}
+          isLoading={isTransactionsLoading}
+        />
+      </Modal>
+
+      {transactionService.cashierInfo && (
+        <CashierInfoBar data={transactionService.cashierInfo} />
       )}
     </AppLayout>
   );

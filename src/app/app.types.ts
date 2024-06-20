@@ -14,6 +14,7 @@ export const TYPES = {
    * Бизнесовые сервисы
    */
   CustomerService: Symbol.for("CustomerService"),
+  TransactionService: Symbol.for("TransactionService"),
 
   /**
    * Справочники

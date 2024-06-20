@@ -36,8 +36,7 @@ const QueueReservationCard: React.FC<QueueReservationCardProps> = ({
             tooltip: "Создать резерв",
             onClick: () => onCreateScratch(item),
             Icon: SwapHoriz,
-            shouldRender: () =>
-              item.start_date.isSameOrAfter(moment(), "day")
+            shouldRender: () => item.start_date.isSameOrAfter(moment(), "day")
           },
           {
             tooltip: "Показать историю просмотров",
@@ -49,8 +48,7 @@ const QueueReservationCard: React.FC<QueueReservationCardProps> = ({
             tooltip: "Редактирование элемента",
             onClick: () => onEdit(item),
             Icon: Edit,
-            shouldRender: () =>
-              item.start_date.isSameOrAfter(moment(), "day")
+            shouldRender: () => item.start_date.isSameOrAfter(moment(), "day")
           }
         ]}
       />

@@ -50,12 +50,16 @@ const QueueSearchPanel: React.FC<QueueSearchPanelProps> = ({
   }, {});
 
   const onSubmit = async (values) => {
+    console.log(values);
+
     await search({
       ...values,
       start_date: values.start_date
-        ? values.start_date.format(DATE_FORMAT)
+        ? moment(values.start_date).format(DATE_FORMAT)
         : null,
-      end_date: values.end_date ? values.end_date.format(DATE_FORMAT) : null,
+      end_date: values.end_date
+        ? moment(values.end_date).format(DATE_FORMAT)
+        : null,
       has_another_reservation:
         values.has_another_reservation?.map((i) => Boolean(i)) || null
     });

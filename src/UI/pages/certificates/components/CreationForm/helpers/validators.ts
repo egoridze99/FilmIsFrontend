@@ -7,14 +7,23 @@ export const validationSchema = yup.object().shape({
   contact: yup.object().required("Обязательное поле"),
   note: yup.string().nullable(),
   service: yup.string().required("Обязательное поле"),
+  transactions: yup.array().of(
+    yup.object().shape({
+      transaction_type: yup.string().required("Обязательное поле"),
+      sum: yup
+        .number()
+        .required("Обязательное поле")
+        .typeError("Введите числовое значение")
+    })
+  ),
   sum: yup
     .number()
     .required()
     .typeError("Числовое поле")
-    .when(["card", "cash"], ([card, cash], schema) => {
+    .when(["transactions"], ([transactions], schema) => {
       return schema.max(
-        card || 0 + cash || 0,
-        "Сумма сертификата больше, чем сумма карты и налички"
+        transactions.reduce((acc, t) => acc + parseInt(t.sum), 0),
+        "Сумма сертификата больше, чем сумма транзакций"
       );
     })
 });

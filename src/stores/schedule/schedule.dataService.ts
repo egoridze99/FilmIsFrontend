@@ -15,6 +15,7 @@ import {reservationStatusDictionary} from "src/constants/statusDictionaries";
 import {CHECKOUTS_KEY, keysDictionary} from "./helpers/changesHistoryConstants";
 import {DATETIME_FORMAT} from "../../constants/date";
 import {applyCustomerAdapter} from "src/utils/customer/applyCustomerAdapter";
+import {TransactionCreationType} from "src/types/transactions/transactions.types";
 
 @injectable()
 export class ScheduleDataService {
@@ -58,12 +59,19 @@ export class ScheduleDataService {
     return this.dataClient.loadCertificate(ident);
   }
 
-  async loadCashierInfo(cinemaId: number, date: Moment) {
-    return (await this.dataClient.loadCashierInfo(cinemaId, date)) || null;
-  }
-
   async createReservation(data: ReservationCreationBodyType) {
     return this.dataClient.createReservation(data);
+  }
+
+  async loadReservationTransactions(reservationId: number) {
+    return this.dataClient.loadReservationTransactions(reservationId);
+  }
+
+  createReservationTransaction(
+    data: TransactionCreationType,
+    reservationId: number
+  ) {
+    return this.dataClient.createTransaction(data, reservationId);
   }
 
   async editReservation(data: ReservationEditBodyType, reservationId: number) {

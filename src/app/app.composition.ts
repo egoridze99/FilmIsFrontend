@@ -18,6 +18,8 @@ import {AdminRepository} from "src/stores/admin/admin.repository";
 import {CustomerContainer} from "src/app/containers/customer.container";
 import {CustomerService} from "src/services/customer.service";
 import {Container} from "inversify";
+import {TransactionContainer} from "src/app/containers/transactionContainer";
+import {TransactionService} from "src/services/transaction.service";
 
 /**
  * Сервисы
@@ -43,6 +45,14 @@ export const customerService = customerServiceContainer.get<CustomerService>(
   TYPES.CustomerService
 );
 
+export const transactionsServiceContainer = new TransactionContainer();
+transactionsServiceContainer.parent = appContainer;
+
+export const transactionService =
+  transactionsServiceContainer.get<TransactionService>(
+    TYPES.TransactionService
+  );
+
 /**
  * Окружение рабочего места администратора
  */
@@ -58,7 +68,8 @@ export const workspaceEnv = workspaceEnvContainer.get<WorkspaceEnvRepository>(
 const baseScheduleContainer = new ScheduleContainer();
 const scheduleContainer = Container.merge(
   baseScheduleContainer,
-  customerServiceContainer
+  customerServiceContainer,
+  transactionsServiceContainer
 );
 scheduleContainer.parent = appContainer;
 export const schedule = scheduleContainer.get<ScheduleRepository>(
@@ -71,7 +82,8 @@ export const schedule = scheduleContainer.get<ScheduleRepository>(
 const baseCertificatesContainer = new CertificatesContainer();
 const certificatesContainer = Container.merge(
   baseCertificatesContainer,
-  customerServiceContainer
+  customerServiceContainer,
+  transactionsServiceContainer
 );
 certificatesContainer.parent = appContainer;
 export const certificates = certificatesContainer.get<CertificatesRepository>(

@@ -1,0 +1,17 @@
+.TransactionsSection {
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__transactions {
+      display: flex;
+      & > * {
+        width: 70%;
+        &:not(:last-child) {
+          margin-right: 20px;
+        }
+      }
+    }
+}

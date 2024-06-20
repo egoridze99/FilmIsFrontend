@@ -1,4 +1,4 @@
-import {injectable} from "inversify";
+import {inject, injectable} from "inversify";
 import {axios} from "src/axios";
 import moment, {Moment} from "moment";
 import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
@@ -11,9 +11,15 @@ import {
   ScheduleChangesResponseType
 } from "src/types/schedule/schedule.dataClient.types";
 import {Certificate} from "src/types/shared.types";
+import {TYPES} from "src/app/app.types";
+import {TransactionService} from "src/services/transaction.service";
+import {TransactionCreationType} from "src/types/transactions/transactions.types";
 
 @injectable()
 export class ScheduleDataClient {
+  @inject(TYPES.TransactionService)
+  private readonly transactionService: TransactionService;
+
   async loadReservations(
     cinemaId: number,
     roomId: number | undefined,
@@ -76,17 +82,6 @@ export class ScheduleDataClient {
     return response.data;
   }
 
-  async loadCashierInfo(cinemaId: number, date: Moment): Promise<CashierInfo> {
-    const response = await axios.get<CashierInfo>("/money", {
-      params: {
-        cinema_id: cinemaId,
-        date: date.format(DATE_FORMAT)
-      }
-    });
-
-    return response.data;
-  }
-
   async createReservation(data: ReservationCreationBodyType) {
     const response = await axios.post<Reservation>("/reservation", data);
 
@@ -113,5 +108,15 @@ export class ScheduleDataClient {
     );
 
     return response.data;
+  }
+
+  loadReservationTransactions(reservationId: number) {
+    return this.transactionService.loadReservationTransactions(reservationId);
+  }
+
+  createTransaction(data: TransactionCreationType, reservationId: number) {
+    return this.transactionService.createTransaction(data, {
+      reservation_id: reservationId
+    });
   }
 }

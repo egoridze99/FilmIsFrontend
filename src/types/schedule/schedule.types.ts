@@ -1,10 +1,9 @@
-import {Certificate, Room, UserStatus, Cinema} from "src/types/shared.types";
+import {Certificate, Room, UserStatus} from "src/types/shared.types";
 import {Customer} from "src/types/customer.types";
 import {Moment} from "moment";
 
 export type CashierInfo = {
   id: number;
-  cinema: Cinema;
   date: string;
   income: number;
   expense: number;
@@ -40,8 +39,6 @@ export type Reservation = {
 };
 
 export type ChangesItemType = {
-  card: number;
-  cash: number;
   count: number;
   duration: number;
   film: string;

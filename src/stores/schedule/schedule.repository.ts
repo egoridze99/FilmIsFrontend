@@ -24,14 +24,12 @@ import {QUEUE_IDS_TO_SEARCH} from "src/constants/storageKeys";
 import {CustomerService} from "src/services/customer.service";
 import {Customer} from "src/types/customer.types";
 import {updateCustomerDataInCollection} from "src/utils/updateCustomerDataInCollection";
+import {TransactionCreationType} from "src/types/transactions/transactions.types";
 
 @injectable()
 export class ScheduleRepository {
   @observable
   private _reservations: Reservation[] = [];
-
-  @observable
-  cashierInfo: CashierInfo | null = null;
 
   @observable isLoading = false;
 
@@ -152,6 +150,17 @@ export class ScheduleRepository {
     return this.dataService.getChangesHistory(reservationId);
   }
 
+  async loadReservationTransactions(reservationId: number) {
+    return this.dataService.loadReservationTransactions(reservationId);
+  }
+
+  createReservationTransaction(
+    data: TransactionCreationType,
+    reservationId: number
+  ) {
+    return this.dataService.createReservationTransaction(data, reservationId);
+  }
+
   createReactions() {
     this.customerService.onCustomerUpdate(this.updateCustomerOnReservation);
   }
@@ -177,20 +186,7 @@ export class ScheduleRepository {
   }
 
   @action
-  async loadCashierInfo(env: WorkspaceEnvModel | null) {
-    if (!env) {
-      return;
-    }
-
-    this.cashierInfo = await this.dataService.loadCashierInfo(
-      env.cinema.id,
-      env.date
-    );
-  }
-
-  @action
   reset() {
-    this.cashierInfo = null;
     this._reservations = [];
     this.customerService.unsubscribe(this.updateCustomerOnReservation);
   }

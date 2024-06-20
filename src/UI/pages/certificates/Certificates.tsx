@@ -4,9 +4,9 @@ import {useCurrentPageTitle} from "src/hooks/useCurrentPageTitle";
 import {usePageData} from "src/contexts/pageData.context";
 import {useDomainStore} from "src/contexts/store.context";
 import {DataGrid} from "@mui/x-data-grid";
-import {columns} from "src/UI/pages/certificates/columns/getColumns";
+import {getColumns} from "src/UI/pages/certificates/columns/getColumns";
 import {observer} from "mobx-react-lite";
-import {Card, Drawer, Typography} from "@mui/material";
+import {Card, Drawer, Modal, Typography} from "@mui/material";
 import SubpagesToolbar from "src/UI/components/SubpagesToolbar";
 import Toolbar from "./components/Toolbar";
 import CreationForm from "src/UI/pages/certificates/components/CreationForm";
@@ -21,9 +21,15 @@ import Loader from "src/UI/components/Loader";
 import "./certificates.scss";
 import CustomerSearchButton from "src/UI/components/Customer/CustomerSearchButton/CustomerSearchButton";
 import {useCustomerService} from "src/contexts/services/customer.service.context";
+import {useTransactions} from "src/hooks/useTransactions";
+import {useTransactionService} from "src/contexts/services/transaction.service.context";
+import TransactionsWindow from "src/UI/components/TransactionsWindow";
+import {Certificate} from "src/types/shared.types";
+import {noop} from "src/utils/noop";
 
 const Certificates = () => {
   useCurrentPageTitle();
+  const transactionService = useTransactionService();
   const {certificates, dictionaries} = useDomainStore();
   const {contentSize} = usePageData();
   const customerService = useCustomerService();
@@ -36,6 +42,18 @@ const Certificates = () => {
     clearSearchValues,
     activeSearchItems
   } = useSearch();
+
+  const {
+    itemInTransactionWindow,
+    isTransactionsModalOpen,
+    isTransactionsLoading,
+    loadTransactions,
+    closeTransactionsModal,
+    addTransactionToList,
+    transactions
+  } = useTransactions((id) =>
+    transactionService.loadCertificateTransactions(id)
+  );
 
   const [isCreationFormOpen, setIsCreationFormOpen] = React.useState(false);
 
@@ -129,7 +147,7 @@ const Certificates = () => {
             <div className="Certificates__table">
               <DataGrid
                 rows={certificates.certificates}
-                columns={columns}
+                columns={getColumns(loadTransactions)}
                 disableRowSelectionOnClick
                 initialState={{
                   pagination: {paginationModel: {pageSize: 10}}
@@ -145,6 +163,26 @@ const Certificates = () => {
           </Typography>
         )}
       </div>
+
+      <Modal open={isTransactionsModalOpen} onClose={closeTransactionsModal}>
+        <TransactionsWindow
+          addButtonTooltip={
+            "Транзакция будет добавлена в ТЕКУЩИЙ день. Вне зависимости от того, какая дата выбрана"
+          }
+          title={
+            <Typography variant="h6">
+              Информация о транзакциях сертификата:{" "}
+              {(itemInTransactionWindow as Certificate)?.ident}
+            </Typography>
+          }
+          transactions={transactions}
+          onNewTransactionAdd={noop as any}
+          makeRefund={noop as any}
+          isLoading={isTransactionsLoading}
+          isRefundDisabled={true}
+          isAddingDisabled={true}
+        />
+      </Modal>
     </AppLayout>
   );
 };
