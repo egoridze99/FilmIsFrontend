@@ -1,11 +1,10 @@
 import {GridColDef} from "@mui/x-data-grid";
 import {transactionTypeDictionary} from "src/constants/transactionDictionaries";
 import React from "react";
-import {Button, Tooltip, Typography} from "@mui/material";
+import {Tooltip, Typography} from "@mui/material";
 import {Transaction} from "src/models/transactions/transaction.model";
 import moment from "moment";
 import {TransactionStatusCell} from "src/UI/components/TransactionsWindow/components/TransactionsTable/columns/cells/TransactionStatusCell";
-import {TransactionStatusEnum} from "src/types/transactions/transactions.types";
 import {RefundButtonCell} from "src/UI/components/TransactionsWindow/components/TransactionsTable/columns/cells/RefundButtonCell";
 
 export const getColumns = (props: {
@@ -19,8 +18,10 @@ export const getColumns = (props: {
       width: 180,
       sortable: true,
       filterable: false,
-      valueGetter: (params) =>
-        moment(params.row.created_at).format("DD-MM-YYYY HH:mm")
+      valueGetter: (params) => {
+        console.log(moment(params.row.created_at));
+        return moment(params.row.created_at).format("DD-MM-YYYY HH:mm");
+      }
     },
     {
       field: "sum",

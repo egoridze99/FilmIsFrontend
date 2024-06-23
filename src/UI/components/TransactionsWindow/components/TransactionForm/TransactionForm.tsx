@@ -63,7 +63,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
             })}
             onSubmit={onSubmit}
           >
-            {({isSubmitting, isValid}) => {
+            {({isSubmitting, isValid, setFieldValue, values}) => {
               return (
                 <Form className={"TransactionsWindow__creation-form"}>
                   <Box className={"full-width-form-control"}>
@@ -81,6 +81,14 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
                         component={RadioGroup}
                         row
                         name="transaction_variant"
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          setFieldValue("transaction_variant", value);
+
+                          if (value === "expense") {
+                            setFieldValue("transaction_type", "cash");
+                          }
+                        }}
                       >
                         <FormControlLabel
                           value="income"
@@ -116,16 +124,22 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
                       select
                       variant="standard"
                     >
-                      {Object.values(TransactionTypeEnum).map(
-                        (transactionType) => (
+                      {Object.values(TransactionTypeEnum)
+                        .filter((type) => {
+                          if (values.transaction_variant === "expense") {
+                            return type === "cash";
+                          }
+
+                          return true;
+                        })
+                        .map((transactionType) => (
                           <MenuItem
                             key={transactionType}
                             value={transactionType}
                           >
                             {transactionTypeDictionary[transactionType]}
                           </MenuItem>
-                        )
-                      )}
+                        ))}
                     </Field>
                   </Box>
 

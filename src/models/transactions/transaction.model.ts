@@ -36,7 +36,7 @@ export class Transaction {
       this[field] = initializationData[field];
     });
 
-    this.created_at = moment(initializationData.created_at, "YYYY-MM-DD HH:mm");
+    this.created_at = moment(initializationData.created_at, "DD-MM-YYYY HH:mm");
   }
 
   @action
