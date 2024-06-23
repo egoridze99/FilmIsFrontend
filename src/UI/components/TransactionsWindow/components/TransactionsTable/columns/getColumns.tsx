@@ -9,9 +9,24 @@ import {RefundButtonCell} from "src/UI/components/TransactionsWindow/components/
 
 export const getColumns = (props: {
   makeRefund: (id: Transaction) => void;
+  isRelatedReservationColumnHidden?: boolean;
+  isRelatedCertificateColumnHidden?: boolean;
   isRefundDisabled?: boolean;
 }): GridColDef<Transaction>[] => {
-  return [
+  const columnTemplates = [
+    {
+      field: "id",
+      headerName: "Идентификатор",
+      width: 180,
+      filterable: false,
+      renderCell: (params) => (
+        <Tooltip title={params.row.id}>
+          <Typography variant={"body2"} noWrap={true}>
+            {params.row.id}
+          </Typography>
+        </Tooltip>
+      )
+    },
     {
       field: "created_at",
       headerName: "Дата создания (МСК)",
@@ -19,7 +34,6 @@ export const getColumns = (props: {
       sortable: true,
       filterable: false,
       valueGetter: (params) => {
-        console.log(moment(params.row.created_at));
         return moment(params.row.created_at).format("DD-MM-YYYY HH:mm");
       }
     },
@@ -41,6 +55,18 @@ export const getColumns = (props: {
           </Typography>
         </Tooltip>
       ),
+      filterable: false
+    },
+    {
+      field: "related_reservation_id",
+      headerName: "Связанный резерв",
+      width: 150,
+      filterable: false
+    },
+    {
+      field: "related_certificate_id",
+      headerName: "Связанный сертификат",
+      width: 170,
       filterable: false
     },
     {
@@ -78,5 +104,20 @@ export const getColumns = (props: {
         />
       )
     }
-  ];
+  ] as GridColDef<Transaction>[];
+
+  const columnsToShow = {
+    id: true,
+    created_at: true,
+    sum: true,
+    description: true,
+    related_reservation_id: !props.isRelatedReservationColumnHidden,
+    related_certificate_id: !props.isRelatedCertificateColumnHidden,
+    author: true,
+    transaction_type: true,
+    transaction_status: true,
+    transaction_refund: true
+  };
+
+  return columnTemplates.filter((c) => columnsToShow[c.field]);
 };

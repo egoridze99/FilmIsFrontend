@@ -319,6 +319,8 @@ const Schedule = () => {
           isLoading={isTransactionsLoading}
           isAddingDisabled={isTransactionsEditingBlocked}
           isRefundDisabled={isTransactionsEditingBlocked}
+          isRelatedReservationColumnHidden={true}
+          isRelatedCertificateColumnHidden={true}
           makeRefund={async (transaction) => {
             const result = await transactionService.makeRefund(transaction);
 

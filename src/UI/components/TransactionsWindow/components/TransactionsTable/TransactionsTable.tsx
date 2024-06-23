@@ -11,6 +11,8 @@ type TransactionsTableProps = {
   transactions: Transaction[];
   makeRefund: (id: Transaction) => void;
   isRefundDisabled?: boolean;
+  isRelatedReservationColumnHidden?: boolean;
+  isRelatedCertificateColumnHidden?: boolean;
 };
 
 const TransactionsTable: React.FC<TransactionsTableProps> = ({
@@ -19,7 +21,9 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
   transactions,
   title,
   makeRefund,
-  isRefundDisabled
+  isRefundDisabled,
+  isRelatedReservationColumnHidden,
+  isRelatedCertificateColumnHidden
 }) => {
   return (
     <div className="TransactionsWindow__content-container">
@@ -40,7 +44,12 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
             <div className={"TransactionsWindow__transactions"}>
               <DataGrid
                 rows={transactions}
-                columns={getColumns({makeRefund, isRefundDisabled})}
+                columns={getColumns({
+                  makeRefund,
+                  isRefundDisabled,
+                  isRelatedReservationColumnHidden,
+                  isRelatedCertificateColumnHidden
+                })}
                 disableRowSelectionOnClick
                 initialState={{
                   pagination: {paginationModel: {pageSize: 10}}

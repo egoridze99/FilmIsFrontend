@@ -18,6 +18,8 @@ type TransactionsWindowProps = {
   makeRefund: (id: Transaction) => void;
   isRefundDisabled?: boolean;
   addButtonTooltip?: string;
+  isRelatedReservationColumnHidden?: boolean;
+  isRelatedCertificateColumnHidden?: boolean;
 };
 
 const TransactionsWindow: React.FC<TransactionsWindowProps> = ({
@@ -29,7 +31,9 @@ const TransactionsWindow: React.FC<TransactionsWindowProps> = ({
   transactions,
   makeRefund,
   isRefundDisabled,
-  addButtonTooltip
+  addButtonTooltip,
+  isRelatedReservationColumnHidden,
+  isRelatedCertificateColumnHidden
 }) => {
   const [isCreationMode, setIsCreationMode] = React.useState(false);
 
@@ -75,6 +79,8 @@ const TransactionsWindow: React.FC<TransactionsWindowProps> = ({
             isLoading={isLoading}
             title={title}
             customContent={customContent}
+            isRelatedCertificateColumnHidden={isRelatedCertificateColumnHidden}
+            isRelatedReservationColumnHidden={isRelatedReservationColumnHidden}
           />
         )}
       </div>

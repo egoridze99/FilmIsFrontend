@@ -14,7 +14,9 @@ const baseFields = [
   "description",
   "author",
   "transaction_type",
-  "transaction_status"
+  "transaction_status",
+  "related_reservation_id",
+  "related_certificate_id"
 ];
 
 export class Transaction {
@@ -25,6 +27,8 @@ export class Transaction {
   readonly description: string | null;
   readonly author: UserInfoData;
   readonly transaction_type: TransactionTypeEnum;
+  readonly related_reservation_id: number | null;
+  readonly related_certificate_id: string | null;
 
   @observable
   transaction_status: TransactionStatusEnum;

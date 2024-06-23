@@ -181,6 +181,8 @@ const Certificates = () => {
           isLoading={isTransactionsLoading}
           isRefundDisabled={true}
           isAddingDisabled={true}
+          isRelatedReservationColumnHidden={true}
+          isRelatedCertificateColumnHidden={true}
         />
       </Modal>
     </AppLayout>

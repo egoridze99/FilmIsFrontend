@@ -16,6 +16,8 @@ export type TransactionRawType = {
   author: UserInfoData;
   transaction_type: TransactionTypeEnum;
   transaction_status: TransactionStatusEnum;
+  related_reservation_id: number | null;
+  related_certificate_id: string | null;
 };
 
 export enum TransactionTypeEnum {
