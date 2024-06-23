@@ -164,7 +164,7 @@ const Schedule = () => {
       result = true;
     }
 
-    let reservationDate = (itemInTransactionWindow as Reservation)?.date
+    let reservationDate = moment((itemInTransactionWindow as Reservation)?.date)
       .utc()
       .startOf("day");
     const currentDate = moment().utc().startOf("day").add({day: -1});
