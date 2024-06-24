@@ -16,6 +16,7 @@ import {CHECKOUTS_KEY, keysDictionary} from "./helpers/changesHistoryConstants";
 import {DATETIME_FORMAT} from "../../constants/date";
 import {applyCustomerAdapter} from "src/utils/customer/applyCustomerAdapter";
 import {TransactionCreationType} from "src/types/transactions/transactions.types";
+import {axios} from "src/axios";
 
 @injectable()
 export class ScheduleDataService {
@@ -40,6 +41,17 @@ export class ScheduleDataService {
         guest: applyCustomerAdapter(reservation.guest)
       };
     });
+  }
+
+  async getReservation(id: number) {
+    const reservation = await this.dataClient.getReservation(id);
+
+    return {
+      ...reservation,
+      date: moment(reservation.date, DATETIME_FORMAT),
+      created_at: moment(reservation.created_at, DATETIME_FORMAT),
+      guest: applyCustomerAdapter(reservation.guest)
+    };
   }
 
   async searchReservations(

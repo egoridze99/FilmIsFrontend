@@ -2,18 +2,6 @@ import {Certificate, Room, UserStatus} from "src/types/shared.types";
 import {Customer} from "src/types/customer.types";
 import {Moment} from "moment";
 
-export type CashierInfo = {
-  id: number;
-  date: string;
-  income: number;
-  expense: number;
-  proceeds: number;
-  cashier_start: number;
-  cashier_end: number;
-  all_by_card: number;
-  all_by_cash: number;
-};
-
 export type Reservation = {
   id: number;
 
@@ -33,6 +21,8 @@ export type Reservation = {
   status: ReservationStatus;
 
   rent: number;
+  sum_of_transactions: number;
+
   certificate: Certificate | null;
 
   created_at: Moment;

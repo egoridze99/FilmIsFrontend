@@ -1,4 +1,4 @@
-import {CashierInfo} from "src/types/schedule/schedule.types";
+import {CashierInfo} from "src/types/shared.types";
 
 export const cashierInfoTitleDictionary: Record<
   keyof Omit<CashierInfo, "cinema" | "date" | "id">,

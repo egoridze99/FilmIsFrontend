@@ -2,8 +2,8 @@ import {inject, injectable} from "inversify";
 import {TYPES} from "src/app/app.types";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {ScheduleDataService} from "src/stores/schedule/schedule.dataService";
-import {action, computed, makeObservable, observable, runInAction} from "mobx";
-import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
+import {action, computed, makeObservable, observable} from "mobx";
+import {Reservation} from "src/types/schedule/schedule.types";
 import {sortBy} from "ramda";
 import {
   ReservationCreationBodyType,
@@ -178,6 +178,21 @@ export class ScheduleRepository {
         env.room?.id,
         env.date
       );
+    } catch (e) {
+      this.showErrorNotification(e);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  @action
+  async getReservation(id: number) {
+    try {
+      this.isLoading = true;
+      const reservations = this._reservations.filter((r) => r.id !== id);
+      const updatedReservation = await this.dataService.getReservation(id);
+
+      this._reservations = [...reservations, updatedReservation];
     } catch (e) {
       this.showErrorNotification(e);
     } finally {

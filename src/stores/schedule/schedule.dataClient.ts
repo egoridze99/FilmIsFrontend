@@ -1,7 +1,7 @@
 import {inject, injectable} from "inversify";
 import {axios} from "src/axios";
 import moment, {Moment} from "moment";
-import {CashierInfo, Reservation} from "src/types/schedule/schedule.types";
+import {Reservation} from "src/types/schedule/schedule.types";
 import {DATE_FORMAT} from "src/constants/date";
 import {
   ReservationCreationBodyType,
@@ -84,6 +84,12 @@ export class ScheduleDataClient {
 
   async createReservation(data: ReservationCreationBodyType) {
     const response = await axios.post<Reservation>("/reservation", data);
+
+    return response.data;
+  }
+
+  async getReservation(id: number) {
+    const response = await axios.get<Reservation>(`/reservation/${id}`);
 
     return response.data;
   }

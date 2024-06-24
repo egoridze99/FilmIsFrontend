@@ -1,10 +1,10 @@
 import React from "react";
-import {CashierInfo} from "src/types/schedule/schedule.types";
 import {usePageData} from "src/contexts/pageData.context";
 
 import "./cashierInfoBar.scss";
 import {cashierInfoTitleDictionary} from "src/UI/pages/workspace/schedule/components/CashierInfoBar/constatnts/cashierInfoDictionaries";
 import {Grid} from "@mui/material";
+import {CashierInfo} from "src/types/shared.types";
 
 type CashierInfoBarProps = {
   data: CashierInfo;

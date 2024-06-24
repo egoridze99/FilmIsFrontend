@@ -34,6 +34,7 @@ import {useTransactions} from "src/hooks/useTransactions";
 import TransactionsWindow from "src/UI/components/TransactionsWindow";
 import {useTransactionService} from "src/contexts/services/transaction.service.context";
 import moment from "moment";
+import {TransactionStatusEnum} from "src/types/transactions/transactions.types";
 
 const Schedule = () => {
   useCurrentPageTitle();
@@ -280,9 +281,25 @@ const Schedule = () => {
                 className={"Schedule__reservation-transaction-window-info-text"}
               >
                 <span className="Schedule__reservation-transaction-window-info-text_bolded">
-                  Общая сумма аренды:
+                  Предварительный расчет:
                 </span>{" "}
                 {(itemInTransactionWindow as Reservation)?.rent}
+              </p>
+              <p
+                className={"Schedule__reservation-transaction-window-info-text"}
+              >
+                <span className="Schedule__reservation-transaction-window-info-text_bolded">
+                  Сумма транзакций:
+                </span>{" "}
+                {transactions.reduce((acc, i) => {
+                  if (
+                    i.transaction_status === TransactionStatusEnum.completed
+                  ) {
+                    return acc + i.sum;
+                  }
+
+                  return acc;
+                }, 0) || 0}
               </p>
               {(itemInTransactionWindow as Reservation)?.certificate && (
                 <p
@@ -310,6 +327,9 @@ const Schedule = () => {
                 env!.cinema.id,
                 env!.date
               );
+              await schedule.getReservation(
+                itemInTransactionWindow?.id as number
+              );
               addTransactionToList(result);
               return true;
             }
@@ -328,6 +348,10 @@ const Schedule = () => {
               await transactionService.loadCashierInfo(
                 env!.cinema.id,
                 env!.date
+              );
+
+              await schedule.getReservation(
+                itemInTransactionWindow?.id as number
               );
             }
           }}

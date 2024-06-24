@@ -76,6 +76,18 @@ export type CustomerComment = {
   author: string;
 };
 
+export type CashierInfo = {
+  id: number;
+  date: string;
+  income: number;
+  expense: number;
+  proceeds: number;
+  cashier_start: number;
+  cashier_end: number;
+  all_by_card: number;
+  all_by_cash: number;
+};
+
 export enum CertificateStatusEnum {
   active = "active",
   redeemed = "redeemed"

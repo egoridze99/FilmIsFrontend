@@ -58,5 +58,23 @@ export const reservationCardCells = [
       return note;
     },
     align: "left"
+  },
+  {
+    id: "rent",
+    title: "Предварительный расчет",
+    size: (_, data) => (data.certificate ? 4 : 6),
+    postfix: "₽"
+  },
+  {
+    id: "sum_of_transactions",
+    title: "Сумма транзакций",
+    size: (_, data) => (data.certificate ? 4 : 6),
+    postfix: "₽"
+  },
+  {
+    id: "certificate",
+    size: 4,
+    shouldRender: (key, data) => !!data[key],
+    render: (_, data) => `Сертификат: ${data.certificate?.sum}`
   }
 ] as ReservationCardCell<Reservation>[];

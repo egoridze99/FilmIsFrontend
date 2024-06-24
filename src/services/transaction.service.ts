@@ -9,10 +9,10 @@ import {
 } from "src/types/transactions/transactions.types";
 import {TYPES} from "src/app/app.types";
 import {INotificationService} from "src/services/types/notification.interface";
-import {CashierInfo} from "src/types/schedule/schedule.types";
 import {action, makeObservable, observable} from "mobx";
 import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
 import {Transaction} from "src/models/transactions/transaction.model";
+import {CashierInfo} from "src/types/shared.types";
 
 @injectable()
 export class TransactionService {
