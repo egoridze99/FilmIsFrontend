@@ -23,7 +23,7 @@ export const validationSchema = yup.object().shape({
     .when(["transactions"], ([transactions], schema) => {
       return schema.max(
         transactions.reduce((acc, t) => acc + parseInt(t.sum), 0),
-        "Сумма сертификата больше, чем сумма транзакций"
+        "Сумма сертификата не равна сумме транзакций"
       );
     })
 });

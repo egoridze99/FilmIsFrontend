@@ -98,7 +98,9 @@ export const getColumns = (props: {
       filterable: false,
       renderCell: (params) => (
         <RefundButtonCell
-          disabled={props.isRefundDisabled}
+          disabled={
+            props.isRefundDisabled || !!params.row.related_certificate_id
+          }
           makeRefund={() => props.makeRefund(params.row)}
           transaction={params.row}
         />

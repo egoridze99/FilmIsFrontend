@@ -75,14 +75,16 @@ const Analytics = () => {
                 <Typography variant="h5" className="Analytics__item-title">
                   Всего заработано: {getNumberMask(totals.money)}
                 </Typography>
-                {admin.analyticData.money.map((item) => (
-                  <div>
-                    <h2>{item.area}:</h2>
-                    <p>Картой: {getNumberMask(item.card || 0)}</p>
-                    <p>Наличкой: {getNumberMask(item.cash || 0)}</p>
-                    <p>Всего: {getNumberMask(item.sum || 0)}</p>
-                  </div>
-                ))}
+                <div className="Analytics__scrollable-container">
+                  {admin.analyticData.money.map((item) => (
+                    <div>
+                      <h2>{item.area}:</h2>
+                      <p>Картой: {getNumberMask(item.card || 0)}</p>
+                      <p>Наличкой: {getNumberMask(item.cash || 0)}</p>
+                      <p>Всего: {getNumberMask(item.sum || 0)}</p>
+                    </div>
+                  ))}
+                </div>
               </Card>
 
               <Card className="Analytics__item">

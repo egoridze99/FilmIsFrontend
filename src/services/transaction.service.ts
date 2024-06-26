@@ -98,6 +98,8 @@ export class TransactionService {
 
   @action
   async loadCashierInfo(cinemaId: number, date: Moment) {
+    this.cashierInfo = null;
+
     const response = await axios.get<CashierInfo>("/money", {
       params: {
         cinema_id: cinemaId,
