@@ -164,27 +164,30 @@ const Certificates = () => {
         )}
       </div>
 
-      <Modal open={isTransactionsModalOpen} onClose={closeTransactionsModal}>
-        <TransactionsWindow
-          addButtonTooltip={
-            "Транзакция будет добавлена в ТЕКУЩИЙ день. Вне зависимости от того, какая дата выбрана"
-          }
-          title={
-            <Typography variant="h6">
-              Информация о транзакциях сертификата:{" "}
-              {(itemInTransactionWindow as Certificate)?.ident}
-            </Typography>
-          }
-          transactions={transactions}
-          onNewTransactionAdd={noop as any}
-          makeRefund={noop as any}
-          isLoading={isTransactionsLoading}
-          isRefundDisabled={true}
-          isAddingDisabled={true}
-          isRelatedReservationColumnHidden={true}
-          isRelatedCertificateColumnHidden={true}
-        />
-      </Modal>
+      <TransactionsWindow
+        isOpen={isTransactionsModalOpen}
+        onClose={closeTransactionsModal}
+        loadTransactionHistory={(id) =>
+          transactionService.loadTransactionChangesLog(id) as any
+        }
+        addButtonTooltip={
+          "Транзакция будет добавлена в ТЕКУЩИЙ день. Вне зависимости от того, какая дата выбрана"
+        }
+        title={
+          <Typography variant="h6">
+            Информация о транзакциях сертификата:{" "}
+            {(itemInTransactionWindow as Certificate)?.ident}
+          </Typography>
+        }
+        transactions={transactions}
+        onNewTransactionAdd={noop as any}
+        makeRefund={noop as any}
+        isLoading={isTransactionsLoading}
+        isRefundDisabled={true}
+        isAddingDisabled={true}
+        isRelatedReservationColumnHidden={true}
+        isRelatedCertificateColumnHidden={true}
+      />
     </AppLayout>
   );
 };

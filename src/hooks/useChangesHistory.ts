@@ -1,7 +1,7 @@
 import React from "react";
 import {Moment} from "moment";
 
-type ChangesHistoryType = {
+export type ChangesHistoryType = {
   author: string;
   created_at: Moment;
   id: number;
@@ -9,7 +9,7 @@ type ChangesHistoryType = {
 }[];
 
 export const useChangesHistory = (
-  loadChangesHistory: (id: number) => Promise<ChangesHistoryType>
+  loadChangesHistory: (id: number | string) => Promise<ChangesHistoryType>
 ) => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isChangesModalOpen, setIsChangesModalOpen] = React.useState(false);
@@ -18,7 +18,7 @@ export const useChangesHistory = (
 
   const _isOpen = React.useRef<boolean>(false);
 
-  const onLoadChangesHistory = async (id: number) => {
+  const onLoadChangesHistory = async (id: number | string) => {
     setIsLoading(true);
     setIsChangesModalOpen(true);
     _isOpen.current = true;

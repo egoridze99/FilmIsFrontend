@@ -3,6 +3,8 @@ import {Box, CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from "@mui/x-data-grid";
 import {getColumns} from "./columns/getColumns";
 import {Transaction} from "src/models/transactions/transaction.model";
+import {ChangesResponseType} from "src/types/core.types";
+import {ChangesHistoryType} from "src/hooks/useChangesHistory";
 
 type TransactionsTableProps = {
   title?: React.ReactNode | React.ReactNode[];
@@ -13,6 +15,7 @@ type TransactionsTableProps = {
   isRefundDisabled?: boolean;
   isRelatedReservationColumnHidden?: boolean;
   isRelatedCertificateColumnHidden?: boolean;
+  loadTransactionHistory: (transactionId: string) => Promise<void>;
 };
 
 const TransactionsTable: React.FC<TransactionsTableProps> = ({
@@ -23,7 +26,8 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
   makeRefund,
   isRefundDisabled,
   isRelatedReservationColumnHidden,
-  isRelatedCertificateColumnHidden
+  isRelatedCertificateColumnHidden,
+  loadTransactionHistory
 }) => {
   return (
     <div className="TransactionsWindow__content-container">
@@ -46,6 +50,7 @@ const TransactionsTable: React.FC<TransactionsTableProps> = ({
                 rows={transactions}
                 columns={getColumns({
                   makeRefund,
+                  loadTransactionHistory,
                   isRefundDisabled,
                   isRelatedReservationColumnHidden,
                   isRelatedCertificateColumnHidden

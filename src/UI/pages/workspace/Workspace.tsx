@@ -115,48 +115,51 @@ const Workspace = () => {
         />
       )}
 
-      <Modal open={isTransactionsModalOpen} onClose={closeTransactionsModal}>
-        <TransactionsWindow
-          addButtonTooltip={
-            "Транзакция будет добавлена в ТЕКУЩИЙ день. Вне зависимости от того, какая дата выбрана"
+      <TransactionsWindow
+        isOpen={isTransactionsModalOpen}
+        onClose={closeTransactionsModal}
+        addButtonTooltip={
+          "Транзакция будет добавлена в ТЕКУЩИЙ день. Вне зависимости от того, какая дата выбрана"
+        }
+        title={
+          <Typography variant="h6">
+            Информация о транзакциях в кинотеатре по адресу:{" "}
+            {workspaceEnv.envModel?.cinema.name}
+          </Typography>
+        }
+        transactions={transactions}
+        onNewTransactionAdd={async (data) => {
+          const result = await transactionService.createTransaction(data, {
+            cinema_id: workspaceEnv.envModel?.cinema.id as number
+          });
+
+          if (result) {
+            await transactionService.loadCashierInfo(
+              workspaceEnv.envModel!.cinema.id,
+              workspaceEnv.envModel!.date
+            );
+            loadTransactions();
+
+            return true;
           }
-          title={
-            <Typography variant="h6">
-              Информация о транзакциях в кинотеатре по адресу:{" "}
-              {workspaceEnv.envModel?.cinema.name}
-            </Typography>
+
+          return false;
+        }}
+        makeRefund={async (transaction) => {
+          const result = await transactionService.makeRefund(transaction);
+
+          if (result) {
+            await transactionService.loadCashierInfo(
+              workspaceEnv.envModel!.cinema.id,
+              workspaceEnv.envModel!.date
+            );
           }
-          transactions={transactions}
-          onNewTransactionAdd={async (data) => {
-            const result = await transactionService.createTransaction(data, {
-              cinema_id: workspaceEnv.envModel?.cinema.id as number
-            });
-
-            if (result) {
-              await transactionService.loadCashierInfo(
-                workspaceEnv.envModel!.cinema.id,
-                workspaceEnv.envModel!.date
-              );
-              loadTransactions();
-
-              return true;
-            }
-
-            return false;
-          }}
-          makeRefund={async (transaction) => {
-            const result = await transactionService.makeRefund(transaction);
-
-            if (result) {
-              await transactionService.loadCashierInfo(
-                workspaceEnv.envModel!.cinema.id,
-                workspaceEnv.envModel!.date
-              );
-            }
-          }}
-          isLoading={isTransactionsLoading}
-        />
-      </Modal>
+        }}
+        isLoading={isTransactionsLoading}
+        loadTransactionHistory={(id) =>
+          transactionService.loadTransactionChangesLog(id) as any
+        }
+      />
 
       {transactionService.cashierInfo && (
         <CashierInfoBar data={transactionService.cashierInfo} />

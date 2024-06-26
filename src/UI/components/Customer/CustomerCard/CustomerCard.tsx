@@ -50,9 +50,7 @@ const CustomerCard: React.FC<CustomerCardProps> = ({
     isChangesLoading,
     loadChangesHistory,
     changesHistory
-  } = useChangesHistory((id: number) =>
-    customerService.loadChangesHistory(id as number)
-  );
+  } = useChangesHistory((id) => customerService.loadChangesHistory(id as any));
 
   const [comments, setComments] = React.useState<CustomerComment[]>([]);
 

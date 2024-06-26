@@ -1,6 +1,6 @@
 import moment, {Moment} from "moment";
 import {axios} from "src/axios";
-import {DATE_FORMAT} from "src/constants/date";
+import {DATE_FORMAT, DATETIME_FORMAT} from "src/constants/date";
 import {inject, injectable} from "inversify";
 import {
   TransactionCreationType,
@@ -13,6 +13,11 @@ import {action, makeObservable, observable} from "mobx";
 import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
 import {Transaction} from "src/models/transactions/transaction.model";
 import {CashierInfo} from "src/types/shared.types";
+import {ChangesResponseType} from "src/types/core.types";
+import {historyKeysDictionary} from "src/services/constants/transaction.service.constants";
+import {reservationStatusDictionary} from "src/constants/statusDictionaries";
+import {ReservationStatus} from "src/types/schedule/schedule.types";
+import {transactionStatusDictionary} from "src/constants/transactionDictionaries";
 
 @injectable()
 export class TransactionService {
@@ -93,6 +98,55 @@ export class TransactionService {
     } catch (e) {
       this.baseErrorHandler(e);
       return false;
+    }
+  }
+
+  async loadTransactionChangesLog(transactionId: string) {
+    try {
+      const rawChanges = await axios.get<ChangesResponseType<any>[]>(
+        `/transactions/logs`,
+        {
+          params: {
+            transaction_id: transactionId
+          }
+        }
+      );
+
+      return rawChanges.data.map((item) => {
+        const copy = {...item} as any;
+
+        return {
+          author: item.author,
+          created_at: moment(item.created_at, DATETIME_FORMAT),
+          id: item.id,
+          data: Object.keys(item.new).reduce((acc, key) => {
+            let wasChanged = copy.new[key] !== copy.old[key];
+
+            if (key === "transaction_status") {
+              copy.new.transaction_status =
+                transactionStatusDictionary[
+                  copy.new.transaction_status as TransactionStatusEnum
+                ];
+              copy.old.transaction_status =
+                transactionStatusDictionary[
+                  copy.old.transaction_status as TransactionStatusEnum
+                ];
+            }
+
+            if (wasChanged) {
+              acc[historyKeysDictionary[key]] = {
+                new: copy.new[key],
+                old: copy.old[key]
+              };
+            }
+
+            return acc;
+          }, {})
+        };
+      });
+    } catch (e) {
+      this.baseErrorHandler(e);
+      return null;
     }
   }
 

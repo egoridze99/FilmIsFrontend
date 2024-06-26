@@ -21,9 +21,14 @@ export const validationSchema = yup.object().shape({
     .required()
     .typeError("Числовое поле")
     .when(["transactions"], ([transactions], schema) => {
-      return schema.max(
-        transactions.reduce((acc, t) => acc + parseInt(t.sum), 0),
-        "Сумма сертификата не равна сумме транзакций"
+      const totalTransactionSum = transactions.reduce(
+        (acc, t) => acc + parseInt(t.sum, 10),
+        0
+      );
+      return schema.test(
+        "is-equal",
+        "Сумма сертификата не равна сумме транзакций",
+        (value) => value === totalTransactionSum
       );
     })
 });

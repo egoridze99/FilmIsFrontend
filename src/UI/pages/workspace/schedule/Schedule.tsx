@@ -110,7 +110,7 @@ const Schedule = () => {
 
     if (success) {
       await schedule.loadData(env);
-      await transactionService.loadCashierInfo(env!.cinema.id, env!.date);
+      transactionService.loadCashierInfo(env!.cinema.id, env!.date);
 
       closeEditForm();
     }
@@ -134,7 +134,7 @@ const Schedule = () => {
     loadChangesHistory,
     closeChangesModal,
     isChangesLoading
-  } = useChangesHistory((id) => schedule.loadChangesHistory(id));
+  } = useChangesHistory((id) => schedule.loadChangesHistory(id as any));
 
   const {
     itemInTransactionWindow,
@@ -270,6 +270,11 @@ const Schedule = () => {
 
       <Modal open={isTransactionsModalOpen} onClose={closeTransactionsModal}>
         <TransactionsWindow
+          isOpen={isTransactionsModalOpen}
+          onClose={closeTransactionsModal}
+          loadTransactionHistory={(id) =>
+            transactionService.loadTransactionChangesLog(id) as any
+          }
           title={
             <Typography variant="h6">
               Информация о транзакциях резерва №{itemInTransactionWindow?.id}

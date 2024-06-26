@@ -1,14 +1,16 @@
 import {GridColDef} from "@mui/x-data-grid";
 import {transactionTypeDictionary} from "src/constants/transactionDictionaries";
 import React from "react";
-import {Tooltip, Typography} from "@mui/material";
+import {IconButton, Tooltip, Typography} from "@mui/material";
 import {Transaction} from "src/models/transactions/transaction.model";
 import moment from "moment";
 import {TransactionStatusCell} from "src/UI/components/TransactionsWindow/components/TransactionsTable/columns/cells/TransactionStatusCell";
 import {RefundButtonCell} from "src/UI/components/TransactionsWindow/components/TransactionsTable/columns/cells/RefundButtonCell";
+import {History} from "@mui/icons-material";
 
 export const getColumns = (props: {
   makeRefund: (id: Transaction) => void;
+  loadTransactionHistory: (transactionId: string) => Promise<void>;
   isRelatedReservationColumnHidden?: boolean;
   isRelatedCertificateColumnHidden?: boolean;
   isRefundDisabled?: boolean;
@@ -17,14 +19,25 @@ export const getColumns = (props: {
     {
       field: "id",
       headerName: "Идентификатор",
-      width: 180,
+      width: 220,
       filterable: false,
       renderCell: (params) => (
-        <Tooltip title={params.row.id}>
-          <Typography variant={"body2"} noWrap={true}>
-            {params.row.id}
-          </Typography>
-        </Tooltip>
+        <div className="TransactionsWindow__transactions-id-cell-container">
+          <Tooltip title="Показать историю изменений">
+            <IconButton
+              className="TransactionsWindow__transactions-id-cell-history-btn"
+              onClick={() => props.loadTransactionHistory(params.row.id)}
+            >
+              <History />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title={params.row.id}>
+            <Typography variant={"body2"} noWrap={true}>
+              {params.row.id}
+            </Typography>
+          </Tooltip>
+        </div>
       )
     },
     {

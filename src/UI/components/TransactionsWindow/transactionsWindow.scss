@@ -45,6 +45,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &-id-cell-history-btn {
+      margin-right: 10px!important;
+    }
+
+    &-id-cell-container {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
   }
 
   &__creation-form {
