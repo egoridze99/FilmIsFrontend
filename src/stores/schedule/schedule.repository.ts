@@ -31,6 +31,8 @@ export class ScheduleRepository {
   @observable
   private _reservations: Reservation[] = [];
 
+  private activeRequests = 0; // Счетчик активных запросов
+
   @observable isLoading = false;
 
   @inject(TYPES.CustomerService)
@@ -173,6 +175,7 @@ export class ScheduleRepository {
 
     try {
       this.isLoading = true;
+      this.activeRequests += 1;
       this._reservations = await this.dataService.loadReservations(
         env.cinema.id,
         env.room?.id,
@@ -181,7 +184,11 @@ export class ScheduleRepository {
     } catch (e) {
       this.showErrorNotification(e);
     } finally {
-      this.isLoading = false;
+      this.activeRequests -= 1;
+
+      if (this.activeRequests === 0) {
+        this.isLoading = false;
+      }
     }
   }
 

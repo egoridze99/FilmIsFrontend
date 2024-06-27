@@ -28,7 +28,6 @@ export type ReservationEditBodyType = ReservationCreationBodyType & {
   card: number;
   cash: number;
   status: ReservationStatus;
-  checkouts: {note: string; sum: number; id?: number}[];
 };
 
 export type ReservationSearchBodyType = {

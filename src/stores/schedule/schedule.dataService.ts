@@ -16,7 +16,6 @@ import {CHECKOUTS_KEY, keysDictionary} from "./helpers/changesHistoryConstants";
 import {DATETIME_FORMAT} from "../../constants/date";
 import {applyCustomerAdapter} from "src/utils/customer/applyCustomerAdapter";
 import {TransactionCreationType} from "src/types/transactions/transactions.types";
-import {axios} from "src/axios";
 
 @injectable()
 export class ScheduleDataService {

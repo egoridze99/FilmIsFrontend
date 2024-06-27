@@ -95,14 +95,9 @@ export class ScheduleDataClient {
   }
 
   async editReservation(data: ReservationEditBodyType, reservationId: number) {
-    const currentTime = moment().format("YYYY-MM-DD HH:mm");
-
     const response = await axios.put<number[]>(
       `/reservation/${reservationId}`,
-      {
-        data,
-        currentTime
-      }
+      data
     );
 
     return response.data;

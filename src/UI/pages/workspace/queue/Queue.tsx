@@ -71,6 +71,10 @@ const Queue = () => {
   }, []);
 
   React.useEffect(() => {
+    if (sessionStorageService.getItem(QUEUE_IDS_TO_SEARCH)) {
+      return;
+    }
+
     clearSearchValues();
     queue.loadData(env);
   }, [env?.cinema, env?.room, env?.date]);
