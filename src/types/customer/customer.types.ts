@@ -1,6 +1,6 @@
-import {Moment} from "moment";
+import {Moment} from "moment/moment";
 
-export type Customer = {
+export type CustomerRawType = {
   id: number;
   name: string;
   telephone: string;

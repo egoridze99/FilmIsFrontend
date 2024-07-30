@@ -7,7 +7,7 @@ import {
 import React from "react";
 import {getCertificateNote} from "src/UI/pages/workspace/helpers/getCertificateNote";
 import CustomerCell from "src/UI/components/Customer/CustomerCell";
-import {Customer} from "src/types/customer.types";
+import {Customer} from "src/models/customers/customer.model";
 
 export const reservationCardCells = [
   {

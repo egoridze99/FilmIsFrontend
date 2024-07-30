@@ -1,6 +1,6 @@
-import {Reservation} from "src/types/schedule/schedule.types";
-import {Customer} from "src/types/customer.types";
+import {Customer} from "src/models/customers/customer.model";
 
+// FIXME удалить
 export const updateCustomerDataInCollection = <T extends object>(
   collection: Array<T>,
   customerField: keyof T,

@@ -7,12 +7,13 @@ import {
 
 export type QueueItemResponseType = Omit<
   QueueItem,
-  "created_at" | "start_date" | "end_date" | "view_by"
+  "created_at" | "start_date" | "end_date" | "view_by" | "contact"
 > & {
   created_at: DateTimeType;
   start_date: DateTimeType;
   end_date: DateTimeType | null;
   view_by: Array<Omit<QueueViewLog, "created_at"> & {created_at: DateTimeType}>;
+  contact_id: number;
 };
 
 export type QueueCreationBodyType = {

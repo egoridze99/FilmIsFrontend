@@ -3,7 +3,7 @@ import {Outlet} from "react-router-dom";
 import {AppLayout} from "src/layouts";
 import SettingsIcon from "@mui/icons-material/Settings";
 import {useDomainStore} from "src/contexts/store.context";
-import {IconButton, Modal, Tooltip, Typography} from "@mui/material";
+import {IconButton, Tooltip, Typography} from "@mui/material";
 import {WorkspaceContext} from "src/UI/pages/workspace/Workspace.types";
 import WorkspaceSettingsPanel from "src/UI/pages/workspace/components/WorkspaceSettingsPanel";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
@@ -20,7 +20,6 @@ import TransactionsWindow from "src/UI/components/TransactionsWindow";
 import CashierInfoBar from "src/UI/pages/workspace/schedule/components/CashierInfoBar";
 
 import "./workspace.scss";
-import StandLabel from "src/UI/components/StandLabel";
 
 const Workspace = () => {
   const transactionService = useTransactionService();

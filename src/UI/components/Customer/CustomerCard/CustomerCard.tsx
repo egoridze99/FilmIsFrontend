@@ -1,5 +1,4 @@
 import React from "react";
-import {Customer} from "src/types/customer.types";
 import {
   Box,
   Button,
@@ -28,11 +27,13 @@ import {TextField} from "formik-mui";
 import {History} from "@mui/icons-material";
 import ChangesHistoryModal from "src/UI/pages/workspace/components/ChangesHistoryModal";
 import {useChangesHistory} from "src/hooks/useChangesHistory";
+import {Customer} from "src/models/customers/customer.model";
+import {CustomerRawType} from "src/types/customer/customer.types";
 
 type CustomerCardProps = {
   customer: Customer | null;
 
-  onEdit(data: Customer): Promise<boolean>;
+  onEdit(data: CustomerRawType): Promise<boolean>;
   onClose(): void;
 };
 

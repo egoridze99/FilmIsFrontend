@@ -1,6 +1,7 @@
 import React from "react";
-import {Customer} from "src/types/customer.types";
 import {useCustomerService} from "src/contexts/services/customer.service.context";
+import {Customer} from "src/models/customers/customer.model";
+import {CustomerRawType} from "src/types/customer/customer.types";
 
 export const useCustomerCardProps = () => {
   const customerService = useCustomerService();
@@ -15,7 +16,7 @@ export const useCustomerCardProps = () => {
     setCustomer(null);
   };
 
-  const onEdit = async (editingData: Customer) => {
+  const onEdit = async (editingData: CustomerRawType) => {
     const result = await customerService.editUser(
       customer?.id as number,
       editingData

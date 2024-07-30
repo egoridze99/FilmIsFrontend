@@ -1,31 +1,67 @@
 import {inject, injectable} from "inversify";
 import {axios} from "src/axios";
-import {Customer} from "src/types/customer.types";
 import {TYPES} from "src/app/app.types";
 import {INotificationService} from "src/services/types/notification.interface";
-import {applyCustomerAdapter} from "src/utils/customer/applyCustomerAdapter";
 import {CustomerComment} from "src/types/shared.types";
 import moment from "moment";
 import {DATETIME_FORMAT} from "src/constants/date";
 import {ChangesResponseType} from "src/types/core.types";
 import {historyKeysDictionary} from "src/services/constants/customer.service.constants";
+import {CustomerRawType} from "src/types/customer/customer.types";
+import {Customer} from "src/models/customers/customer.model";
+import {action, makeObservable, observable} from "mobx";
+import {mergeAll, pickAll} from "ramda";
 
 @injectable()
 export class CustomerService {
   @inject(TYPES.NotificationService)
   private readonly notificationService: INotificationService;
 
-  private subscribers = [] as ((customer: Customer) => void)[];
-
   private abortController: AbortController | null = null;
 
-  onCustomerUpdate = (cb: (customer: Customer) => void) => {
-    this.subscribers.push(cb);
-  };
+  @observable private customersInApp: Record<number, Customer> = {};
 
-  unsubscribe = (cb: (customer: Customer) => void): void => {
-    this.subscribers = this.subscribers.filter((c) => c !== cb);
-  };
+  constructor() {
+    makeObservable(this);
+  }
+
+  @action async getCustomersById(
+    ids: number | number[],
+    format: "array" | "dict" = "array"
+  ): Promise<Customer[] | Customer | Record<number, Customer>> {
+    const isIdsArray = Array.isArray(ids);
+    const idsAsArray = isIdsArray ? ids : [ids];
+
+    const unloadedIds = idsAsArray.filter((id) => !(id in this.customersInApp));
+
+    if (unloadedIds.length) {
+      const response = await axios.get<CustomerRawType[]>(
+        `/customer/id?ids=${unloadedIds}`
+      );
+
+      const data = response.data;
+
+      this.customersInApp = mergeAll([
+        this.customersInApp,
+        data.reduce((acc, customer) => {
+          acc[customer.id] = new Customer(customer);
+          return acc;
+        }, {})
+      ]);
+    }
+
+    if (!isIdsArray) {
+      return this.customersInApp[ids];
+    }
+
+    return format === "array"
+      ? ids.map((id) => this.customersInApp[id])
+      : pickAll(ids, this.customersInApp);
+  }
+
+  @action clearCustomersInApp() {
+    this.customersInApp = {};
+  }
 
   async loadUser(telephone?: string) {
     if (this.abortController) {
@@ -35,7 +71,7 @@ export class CustomerService {
     const abortController = (this.abortController = new AbortController());
 
     try {
-      const response = await axios.get<Customer[]>("/customer", {
+      const response = await axios.get<CustomerRawType[]>("/customer", {
         params: {
           telephone
         },
@@ -43,17 +79,17 @@ export class CustomerService {
       });
       this.abortController = null;
 
-      return response.data.map((c) => applyCustomerAdapter(c));
+      return response.data.map((c) => new Customer(c));
     } catch (e) {
       return null;
     }
   }
 
-  async createUser(data: Customer): Promise<Customer | null> {
+  async createUser(data: CustomerRawType): Promise<Customer | null> {
     try {
-      const response = await axios.post<Customer>("/customer", data);
+      const response = await axios.post<CustomerRawType>("/customer", data);
 
-      return applyCustomerAdapter(response.data);
+      return new Customer(response.data);
     } catch (e) {
       console.log(e);
 
@@ -67,14 +103,21 @@ export class CustomerService {
     }
   }
 
-  async editUser(id: number, data: Customer): Promise<Customer | null> {
+  async editUser(id: number, data: CustomerRawType): Promise<Customer | null> {
     try {
-      const response = await axios.put<Customer>(`/customer/${id}`, data);
+      const response = await axios.put<CustomerRawType>(
+        `/customer/${id}`,
+        data
+      );
 
-      const customer = applyCustomerAdapter(response.data);
-      this.subscribers.forEach((cb) => cb(customer));
+      const customer = response.data;
+      if (customer.id in this.customersInApp) {
+        this.customersInApp[customer.id].setValuesFromRawType(customer);
+      } else {
+        this.customersInApp[customer.id] = new Customer(customer);
+      }
 
-      return customer;
+      return this.customersInApp[customer.id];
     } catch (e) {
       console.log(e);
 

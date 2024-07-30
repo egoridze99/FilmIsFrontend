@@ -2,20 +2,22 @@ import {inject, injectable} from "inversify";
 import {WorkspaceEnvModel} from "src/models/workspaceEnv/workspaceEnv.model";
 import {TYPES} from "src/app/app.types";
 import {QueueDataClient} from "src/stores/queue/queue.dataClient";
-import moment from "moment";
 import {
   QueueCreationBodyType,
   QueueEditBodyType,
   QueueSearchBodyType
 } from "src/types/queue/queue.dataClient.types";
 import {QueueItem} from "src/types/shared.types";
-import {DATETIME_FORMAT} from "../../constants/date";
-import {applyCustomerAdapter} from "src/utils/customer/applyCustomerAdapter";
+import {CustomerService} from "src/services/customer.service";
+import {applyQueueAdapter} from "src/stores/queue/applyQueueAdapter";
 
 @injectable()
 export class QueueDataService {
   @inject(TYPES.QueueDataClient)
   private readonly dataClient: QueueDataClient;
+
+  @inject(TYPES.CustomerService)
+  private readonly customerService: CustomerService;
 
   async loadQueue(env: WorkspaceEnvModel): Promise<QueueItem[]> {
     const queue = await this.dataClient.loadQueue(
@@ -24,17 +26,13 @@ export class QueueDataService {
       env.date
     );
 
-    return queue.map((i) => ({
-      ...i,
-      contact: applyCustomerAdapter(i.contact),
-      start_date: moment(i.start_date, DATETIME_FORMAT),
-      end_date: i.end_date ? moment(i.end_date, DATETIME_FORMAT) : null,
-      created_at: moment(i.created_at, DATETIME_FORMAT),
-      view_by: i.view_by.map((l) => ({
-        ...l,
-        created_at: moment(l.created_at, DATETIME_FORMAT)
-      }))
-    }));
+    const customersIds = queue.map((r) => r.contact_id);
+    const customers = await this.customerService.getCustomersById(
+      customersIds,
+      "dict"
+    );
+
+    return queue.map((i) => applyQueueAdapter(i, customers[i.contact_id]));
   }
 
   async createQueueItem(data: QueueCreationBodyType) {
@@ -48,17 +46,13 @@ export class QueueDataService {
   async searchQueueItems(data: QueueSearchBodyType): Promise<QueueItem[]> {
     const queue = await this.dataClient.searchQueueItems(data);
 
-    return queue.map((i) => ({
-      ...i,
-      contact: applyCustomerAdapter(i.contact),
-      start_date: moment(i.start_date, DATETIME_FORMAT),
-      end_date: i.end_date ? moment(i.end_date, DATETIME_FORMAT) : null,
-      created_at: moment(i.created_at, DATETIME_FORMAT),
-      view_by: i.view_by.map((l) => ({
-        ...l,
-        created_at: moment(l.created_at, DATETIME_FORMAT)
-      }))
-    }));
+    const customersIds = queue.map((r) => r.contact_id);
+    const customers = await this.customerService.getCustomersById(
+      customersIds,
+      "dict"
+    );
+
+    return queue.map((i) => applyQueueAdapter(i, customers[i.contact_id]));
   }
 
   async closeQueueItem(id: number) {

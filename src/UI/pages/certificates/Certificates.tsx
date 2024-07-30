@@ -49,7 +49,6 @@ const Certificates = () => {
     isTransactionsLoading,
     loadTransactions,
     closeTransactionsModal,
-    addTransactionToList,
     transactions
   } = useTransactions((id) =>
     transactionService.loadCertificateTransactions(id)
@@ -86,11 +85,13 @@ const Certificates = () => {
 
   React.useEffect(() => {
     dictionaries.loadCinemaDictionary().then(() => {
-      certificates.initialize();
       certificates.loadData();
     });
 
-    return () => certificates.reset();
+    return () => {
+      customerService.clearCustomersInApp();
+      certificates.reset();
+    };
   }, []);
 
   return (
@@ -133,6 +134,7 @@ const Certificates = () => {
           search={searchCertificates}
           close={() => setIsSearchPanelOpen(false)}
           onReset={() => {
+            customerService.clearCustomersInApp();
             certificates.loadData();
             clearSearchValues();
           }}

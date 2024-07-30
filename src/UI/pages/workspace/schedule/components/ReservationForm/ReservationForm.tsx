@@ -25,7 +25,6 @@ import FormFooter from "src/UI/components/FormFooter";
 import {GeneralFields} from "src/UI/pages/workspace/components/GeneralInputFields/GeneralInputFields";
 import CustomerAutocomplete from "src/UI/components/Customer/CustomerAutocomplete";
 import {CustomerService} from "src/services/customer.service";
-import {isCustomerHasBlankFields} from "src/utils/customer/isCustomerHasBlankFields";
 
 const statusesAvailableForBlankUser = [
   ReservationStatus.not_allowed,
@@ -83,7 +82,7 @@ const ReservationForm: React.FC<ReservationFormProps> = ({
         >
           {({values, isValid, setFieldValue, isSubmitting, initialValues}) => {
             const isBlankUser = values.guest
-              ? isCustomerHasBlankFields(values.guest)
+              ? values.guest.isCustomerHasBlankFields
               : true;
 
             if (

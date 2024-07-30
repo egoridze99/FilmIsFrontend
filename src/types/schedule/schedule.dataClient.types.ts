@@ -8,8 +8,8 @@ import {ChangesResponseType} from "src/types/core.types";
 
 export type ReservationResponseType = Omit<
   Reservation,
-  "date" | "created_at"
-> & {date: DateTimeType; created_at: DateTimeType};
+  "date" | "created_at" | "guest"
+> & {date: DateTimeType; created_at: DateTimeType; guest_id: number};
 
 export type ReservationCreationBodyType = {
   room: Room;

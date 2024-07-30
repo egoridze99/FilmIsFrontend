@@ -89,7 +89,9 @@ export class ScheduleDataClient {
   }
 
   async getReservation(id: number) {
-    const response = await axios.get<Reservation>(`/reservation/${id}`);
+    const response = await axios.get<ReservationResponseType>(
+      `/reservation/${id}`
+    );
 
     return response.data;
   }

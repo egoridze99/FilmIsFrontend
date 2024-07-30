@@ -22,8 +22,6 @@ import {ROUTER_PATHS} from "src/constants/routerPaths";
 import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
 import {QUEUE_IDS_TO_SEARCH} from "src/constants/storageKeys";
 import {CustomerService} from "src/services/customer.service";
-import {Customer} from "src/types/customer.types";
-import {updateCustomerDataInCollection} from "src/utils/updateCustomerDataInCollection";
 import {TransactionCreationType} from "src/types/transactions/transactions.types";
 
 @injectable()
@@ -163,10 +161,6 @@ export class ScheduleRepository {
     return this.dataService.createReservationTransaction(data, reservationId);
   }
 
-  createReactions() {
-    this.customerService.onCustomerUpdate(this.updateCustomerOnReservation);
-  }
-
   @action
   async loadData(env: WorkspaceEnvModel | null) {
     if (!env) {
@@ -210,23 +204,9 @@ export class ScheduleRepository {
   @action
   reset() {
     this._reservations = [];
-    this.customerService.unsubscribe(this.updateCustomerOnReservation);
   }
 
   private showErrorNotification(e: any) {
     this.notificationService.addNotification(getCommonErrorNotification(e));
-  }
-
-  @action.bound
-  private updateCustomerOnReservation(customer: Customer) {
-    const updatedData = updateCustomerDataInCollection(
-      this._reservations,
-      "guest",
-      customer
-    );
-
-    if (updatedData) {
-      this._reservations = updatedData;
-    }
   }
 }

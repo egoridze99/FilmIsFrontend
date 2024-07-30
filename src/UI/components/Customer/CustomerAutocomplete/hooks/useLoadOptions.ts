@@ -1,7 +1,7 @@
 import React from "react";
 import {debounce} from "@mui/material";
 import {CustomerService} from "src/services/customer.service";
-import {Customer} from "src/types/customer.types";
+import {Customer} from "src/models/customers/customer.model";
 
 export const useLoadOptions = (
   customerService: CustomerService,

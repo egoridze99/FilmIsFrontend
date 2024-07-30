@@ -1,7 +1,7 @@
 import {Roles} from "src/types/core.types";
 import {Moment} from "moment";
 import {DATETIME_FORMAT} from "../constants/date";
-import {Customer} from "src/types/customer.types";
+import {Customer} from "src/models/customers/customer.model";
 
 export type Cinema = {
   id: number;

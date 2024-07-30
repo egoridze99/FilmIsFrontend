@@ -3,7 +3,7 @@ import {QueueItem, QueueItemStatusEnum} from "src/types/shared.types";
 import React from "react";
 import {queueStatusDict} from "src/constants/statusDictionaries";
 import CustomerCell from "src/UI/components/Customer/CustomerCell";
-import {Customer} from "src/types/customer.types";
+import {Customer} from "src/models/customers/customer.model";
 
 export const queueReservationCardCells = [
   {

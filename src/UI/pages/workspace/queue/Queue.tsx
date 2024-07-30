@@ -61,8 +61,6 @@ const Queue = () => {
   } = useSearchPanel(searchPanelDefaultValues);
 
   React.useEffect(() => {
-    queue.initialize();
-
     return () => {
       clearSearchValues();
       queue.reset();
@@ -77,6 +75,10 @@ const Queue = () => {
 
     clearSearchValues();
     queue.loadData(env);
+
+    return () => {
+      customerService.clearCustomersInApp();
+    };
   }, [env?.cinema, env?.room, env?.date]);
 
   React.useEffect(() => {
@@ -242,6 +244,7 @@ const Queue = () => {
         <QueueSearchPanel
           close={() => setIsSearchPanelOpen(false)}
           onReset={() => {
+            customerService.clearCustomersInApp();
             queue.loadData(env);
             clearSearchValues();
           }}

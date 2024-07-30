@@ -1,8 +1,8 @@
-import {Customer} from "src/types/customer.types";
 import {Moment} from "moment";
+import {CustomerRawType} from "src/types/customer/customer.types";
 
 export type UserEditingFormValues = Omit<
-  Customer,
+  CustomerRawType,
   "birthday_date" | "passport_issue_date"
 > & {
   birthday_date: Moment | null;

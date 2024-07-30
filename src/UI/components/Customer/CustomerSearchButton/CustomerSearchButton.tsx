@@ -5,7 +5,7 @@ import CustomerSearchWindow from "src/UI/components/Customer/CustomerSearchWindo
 import {CustomerService} from "src/services/customer.service";
 import {useCustomerCardProps} from "src/hooks/useCustomerCardProps";
 import CustomerCard from "src/UI/components/Customer/CustomerCard";
-import {Customer} from "src/types/customer.types";
+import {Customer} from "src/models/customers/customer.model";
 
 type CustomerSearchButtonProps = {
   customerService: CustomerService;

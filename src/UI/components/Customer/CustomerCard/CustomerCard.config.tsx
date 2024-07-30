@@ -1,10 +1,13 @@
-import {Customer} from "src/types/customer.types";
-import {getCustomerFullname} from "src/UI/components/Customer/CustomerCard/getCustomerFullname";
+import React from "react";
+import {Customer} from "src/models/customers/customer.model";
+import CustomerFullName from "src/UI/components/Customer/CustomerCard/components/CustomerFullName/CustomerFullName";
 
 export const baseFields = [
   {
     title: "ФИО",
-    render: (customer: Customer | null) => getCustomerFullname(customer)
+    render: (customer: Customer | null) => (
+      <CustomerFullName customer={customer} />
+    )
   },
   {
     title: "Телефон",

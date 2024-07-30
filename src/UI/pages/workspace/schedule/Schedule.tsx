@@ -57,13 +57,15 @@ const Schedule = () => {
   const env = workspaceEnv.envModel;
 
   React.useEffect(() => {
-    schedule.createReactions();
-
     return () => schedule.reset();
   }, []);
   React.useEffect(() => {
     clearSearchValues();
     schedule.loadData(env);
+
+    return () => {
+      customerService.clearCustomersInApp();
+    };
   }, [env?.cinema, env?.room, env?.date]);
 
   const {closeSettings} = useOutletContext<WorkspaceContext>();
@@ -223,6 +225,7 @@ const Schedule = () => {
           search={handleSearch}
           searchValues={searchValues}
           onReset={() => {
+            customerService.clearCustomersInApp();
             schedule.loadData(env);
             clearSearchValues();
           }}

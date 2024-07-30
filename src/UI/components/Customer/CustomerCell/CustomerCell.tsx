@@ -1,21 +1,19 @@
 import React from "react";
-import {Customer} from "src/types/customer.types";
-
-import "./customerCell.scss";
 import CustomerCard from "src/UI/components/Customer/CustomerCard";
 import {useCustomerCardProps} from "src/hooks/useCustomerCardProps";
-import {isCustomerHasBlankFields} from "src/utils/customer/isCustomerHasBlankFields";
-import {Icon, Tooltip} from "@mui/material";
+import {Tooltip} from "@mui/material";
 import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
 import {Description} from "@mui/icons-material";
+import {Customer} from "src/models/customers/customer.model";
+import {observer} from "mobx-react-lite";
+
+import "./customerCell.scss";
 
 type CustomerCellProps = {
   customer: Customer;
 };
 
 const CustomerCell: React.FC<CustomerCellProps> = ({customer}) => {
-  const hasCustomerBlankFields = isCustomerHasBlankFields(customer);
-
   const {
     onCustomerEdit,
     closeCustomerCardDialog,
@@ -36,7 +34,7 @@ const CustomerCell: React.FC<CustomerCellProps> = ({customer}) => {
             </Tooltip>
           )}
 
-          {hasCustomerBlankFields && (
+          {customer.isCustomerHasBlankFields && (
             <Tooltip title={"Незаполненные паспортные данные"}>
               <DoDisturbOnIcon sx={{color: "#e31235", fontSize: "14px"}} />
             </Tooltip>
@@ -55,4 +53,4 @@ const CustomerCell: React.FC<CustomerCellProps> = ({customer}) => {
   );
 };
 
-export default CustomerCell;
+export default observer(CustomerCell);

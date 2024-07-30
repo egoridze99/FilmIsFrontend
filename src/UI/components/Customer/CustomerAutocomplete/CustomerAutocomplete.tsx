@@ -5,9 +5,10 @@ import {CircularProgress, TextField} from "@mui/material";
 import {CustomerService} from "src/services/customer.service";
 import CustomerEditingDialog from "src/UI/components/Customer/CustomerEditingDialog";
 import {useLoadOptions} from "src/UI/components/Customer/CustomerAutocomplete/hooks/useLoadOptions";
-import {Customer} from "src/types/customer.types";
 
 import "src/UI/components/Customer/CustomerAutocomplete/customerAutocomplete.scss";
+import {Customer} from "src/models/customers/customer.model";
+import {CustomerRawType} from "src/types/customer/customer.types";
 
 type UserAutocompleteProps = {
   name: string;
@@ -36,7 +37,7 @@ const CustomerAutocomplete: React.FC<UserAutocompleteProps> = ({
     formikContext.values?.[name]
   );
 
-  const createUser = async (data: Customer) => {
+  const createUser = async (data: CustomerRawType) => {
     const newUser = await customerService.createUser(data);
 
     if (!newUser) {

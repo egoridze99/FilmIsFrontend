@@ -1,6 +1,6 @@
 import {Certificate, Room, UserStatus} from "src/types/shared.types";
-import {Customer} from "src/types/customer.types";
 import {Moment} from "moment";
+import {Customer} from "src/models/customers/customer.model";
 
 export type Reservation = {
   id: number;

@@ -13,14 +13,19 @@ import {
 } from "src/types/schedule/schedule.types";
 import {reservationStatusDictionary} from "src/constants/statusDictionaries";
 import {CHECKOUTS_KEY, keysDictionary} from "./helpers/changesHistoryConstants";
-import {DATETIME_FORMAT} from "../../constants/date";
-import {applyCustomerAdapter} from "src/utils/customer/applyCustomerAdapter";
+import {DATETIME_FORMAT} from "src/constants/date";
 import {TransactionCreationType} from "src/types/transactions/transactions.types";
+import {CustomerService} from "src/services/customer.service";
+import {applyReservationAdapter} from "src/stores/schedule/helpers/applyReservationAdapter";
+import {Customer} from "src/models/customers/customer.model";
 
 @injectable()
 export class ScheduleDataService {
   @inject(TYPES.ScheduleDataClient)
   private readonly dataClient: ScheduleDataClient;
+
+  @inject(TYPES.CustomerService)
+  private readonly customerService: CustomerService;
 
   async loadReservations(
     cinemaId: number,
@@ -32,25 +37,29 @@ export class ScheduleDataService {
       roomId,
       date
     );
+
+    const customersIds = reservations.map((r) => r.guest_id);
+    const customers = await this.customerService.getCustomersById(
+      customersIds,
+      "dict"
+    );
+
     return reservations.map((reservation) => {
-      return {
-        ...reservation,
-        date: moment(reservation.date, DATETIME_FORMAT),
-        created_at: moment(reservation.created_at, DATETIME_FORMAT),
-        guest: applyCustomerAdapter(reservation.guest)
-      };
+      return applyReservationAdapter(
+        reservation,
+        customers[reservation.guest_id]
+      );
     });
   }
 
   async getReservation(id: number) {
     const reservation = await this.dataClient.getReservation(id);
 
-    return {
-      ...reservation,
-      date: moment(reservation.date, DATETIME_FORMAT),
-      created_at: moment(reservation.created_at, DATETIME_FORMAT),
-      guest: applyCustomerAdapter(reservation.guest)
-    };
+    const customer = await this.customerService.getCustomersById(
+      reservation.guest_id
+    );
+
+    return applyReservationAdapter(reservation, customer as Customer);
   }
 
   async searchReservations(
@@ -58,12 +67,15 @@ export class ScheduleDataService {
   ): Promise<Reservation[]> {
     const reservations = await this.dataClient.searchReservations(data);
 
-    return reservations.map((reservation) => ({
-      ...reservation,
-      date: moment(reservation.date, DATETIME_FORMAT),
-      created_at: moment(reservation.created_at, DATETIME_FORMAT),
-      guest: applyCustomerAdapter(reservation.guest)
-    }));
+    const customersIds = reservations.map((r) => r.guest_id);
+    const customers = await this.customerService.getCustomersById(
+      customersIds,
+      "dict"
+    );
+
+    return reservations.map((reservation) =>
+      applyReservationAdapter(reservation, customers[reservation.guest_id])
+    );
   }
 
   async loadCertificate(ident: string) {

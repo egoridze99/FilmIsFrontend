@@ -2,6 +2,7 @@ import {Reservation} from "src/types/schedule/schedule.types";
 import {FormikInitialValuesType} from "src/UI/pages/workspace/schedule/components/ReservationForm/ReservationForm.types";
 import {Cinema, QueueItem} from "src/types/shared.types";
 import {clone} from "ramda";
+import {Customer} from "src/models/customers/customer.model";
 
 export const getInitialValues = (
   cinemas: Cinema[],
@@ -35,11 +36,11 @@ export const getInitialValues = (
       time: reservation.start_date.format("HH:mm"),
       duration: reservation.duration,
       count: reservation.guests_count,
-      guest: {
+      guest: new Customer({
         id: reservation.contact.id,
         name: reservation.contact.name,
         telephone: reservation.contact.telephone
-      },
+      }),
       film: null,
       note: reservation.note,
       rent: 0,

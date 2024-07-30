@@ -1,17 +1,15 @@
-import {Customer} from "src/types/customer.types";
 import moment from "moment";
 import {UserEditingFormValues} from "src/UI/components/Customer/CustomerEditingDialog/CustomerEditingDialog.types";
 import {omit} from "ramda";
+import {Customer} from "src/models/customers/customer.model";
 
 export const getInitialValues = (
   defaultValues?: Customer
 ): UserEditingFormValues => {
   if (defaultValues) {
     return {
-      ...omit(["id"], defaultValues),
-      birthday_date: defaultValues.birthday_date
-        ? moment(defaultValues.birthday_date, "DD-MM-YYYY")
-        : null,
+      ...omit(["id"], defaultValues.fieldsAsDict),
+      birthday_date: defaultValues.birthday_date || null,
       passport_issue_date: defaultValues.passport_issue_date
         ? moment(defaultValues.passport_issue_date, "DD-MM-YYYY")
         : null

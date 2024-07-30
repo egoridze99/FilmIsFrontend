@@ -15,6 +15,7 @@ import {validationSchema} from "src/UI/pages/certificates/components/CreationFor
 import CustomerAutocomplete from "src/UI/components/Customer/CustomerAutocomplete";
 import {CustomerService} from "src/services/customer.service";
 import TransactionsSection from "./components/TransactionsSection";
+import {Customer} from "src/models/customers/customer.model";
 
 type CreationFormProps = {
   onCreate(data: CertificateCreationBodyType): Promise<boolean>;
@@ -36,7 +37,7 @@ const CreationForm: React.FC<CreationFormProps> = ({
 
     return onCreate({
       ...values,
-      contact: values.contact.id as any,
+      contact: (values.contact as unknown as Customer).id,
       sum: parseFloat(values.sum as any),
       transactions: values.transactions.map((t) => ({
         ...t,

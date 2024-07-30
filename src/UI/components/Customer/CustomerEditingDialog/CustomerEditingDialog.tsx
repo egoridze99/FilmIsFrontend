@@ -10,7 +10,6 @@ import {
 import {Field, Form, Formik} from "formik";
 import {RadioGroup, TextField} from "formik-mui";
 import FormFooter from "src/UI/components/FormFooter";
-import {Customer} from "src/types/customer.types";
 import {getInitialValues} from "src/UI/components/Customer/CustomerEditingDialog/helpers/getInitialValues";
 import Datepicker from "src/UI/components/Datepicker";
 import moment, {Moment} from "moment/moment";
@@ -19,12 +18,14 @@ import {getSavableData} from "src/UI/components/Customer/CustomerEditingDialog/h
 
 import "src/UI/components/Customer/CustomerEditingDialog/customerEditingDialog.scss";
 import {getValidationSchema} from "src/UI/components/Customer/CustomerEditingDialog/helpers/getValidationSchema";
+import {CustomerRawType} from "src/types/customer/customer.types";
+import {Customer} from "src/models/customers/customer.model";
 
 type UserEditingDialogProps = {
   open: boolean;
   onClose(): void;
 
-  onApply(data: Customer): Promise<boolean>;
+  onApply(data: CustomerRawType): Promise<boolean>;
 
   defaultData?: Customer;
   isEditMode?: boolean;
@@ -63,7 +64,7 @@ const CustomerEditingDialog: React.FC<UserEditingDialogProps> = ({
   const onSubmit = async (values: UserEditingFormValues) => {
     const data = getSavableData(values);
 
-    const result = await onApply(data as unknown as Customer);
+    const result = await onApply(data as unknown as CustomerRawType);
 
     if (result) {
       onClose();
