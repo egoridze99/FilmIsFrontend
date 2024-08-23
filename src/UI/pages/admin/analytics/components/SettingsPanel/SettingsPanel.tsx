@@ -3,8 +3,7 @@ import SidePanelHeader from "src/UI/components/SidePanelHeader";
 import {Field, Form, Formik} from "formik";
 import SidePanelContentContainer from "src/UI/components/containers/SidePanelContentContainer";
 import Datepicker from "src/UI/components/Datepicker";
-import {Box, MenuItem} from "@mui/material";
-import {TextField} from "formik-mui";
+import {Box} from "@mui/material";
 import FormFooter from "src/UI/components/FormFooter";
 import {Moment} from "moment";
 import {DATE_FORMAT} from "src/constants/date";
@@ -12,11 +11,7 @@ import {DATE_FORMAT} from "src/constants/date";
 import "./settingsPanel.scss";
 
 type SettingsPanelProps = {
-  onSubmit(values: {
-    dateFrom: string;
-    dateTo: string;
-    area: string;
-  }): Promise<void>;
+  onSubmit(values: {dateFrom: string; dateTo: string}): Promise<void>;
   close(): void;
 };
 
@@ -27,12 +22,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   const onSubmit = async (values: {
     dateFrom: Moment | null;
     dateTo: Moment | null;
-    area: "cinema" | "room";
   }) => {
     await submit({
       dateFrom: values.dateFrom ? values.dateFrom.format(DATE_FORMAT) : "",
-      dateTo: values.dateTo ? values.dateTo.format(DATE_FORMAT) : "",
-      area: values.area
+      dateTo: values.dateTo ? values.dateTo.format(DATE_FORMAT) : ""
     });
 
     return true;
@@ -72,26 +65,6 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                       onChange={(val) => setFieldValue("dateTo", val)}
                       required
                     />
-                  </Box>
-
-                  <Box className="full-width-form-control" marginY={1}>
-                    <Field
-                      component={TextField}
-                      type="text"
-                      name="area"
-                      label="Разрез"
-                      select
-                      variant="standard"
-                    >
-                      {[
-                        {title: "Кинотеатр", value: "cinema"},
-                        {title: "Зал", value: "room"}
-                      ].map((i) => (
-                        <MenuItem key={i.value} value={i.value}>
-                          {i.title}
-                        </MenuItem>
-                      ))}
-                    </Field>
                   </Box>
                 </SidePanelContentContainer>
                 <FormFooter

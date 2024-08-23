@@ -22,14 +22,14 @@ type TransactionsWindowProps = {
   isLoading: boolean;
   transactions: Transaction[];
   isAddingDisabled?: boolean;
-  makeRefund: (id: Transaction) => void;
-  isRefundDisabled?: boolean;
+  makeRefund: (id: Transaction) => Promise<void>;
   addButtonTooltip?: string;
   isRelatedReservationColumnHidden?: boolean;
   isRelatedCertificateColumnHidden?: boolean;
   loadTransactionHistory: (
     transactionId: string
   ) => Promise<ChangesHistoryType>;
+  isRoot: boolean;
 };
 
 const TransactionsWindow: React.FC<TransactionsWindowProps> = ({
@@ -42,11 +42,11 @@ const TransactionsWindow: React.FC<TransactionsWindowProps> = ({
   title = "Информация о транзакиях",
   transactions,
   makeRefund,
-  isRefundDisabled,
   addButtonTooltip,
   isRelatedReservationColumnHidden,
   isRelatedCertificateColumnHidden,
-  loadTransactionHistory
+  loadTransactionHistory,
+  isRoot
 }) => {
   const [isCreationMode, setIsCreationMode] = React.useState(false);
 
@@ -99,7 +99,6 @@ const TransactionsWindow: React.FC<TransactionsWindowProps> = ({
             ) : (
               <TransactionsTable
                 loadTransactionHistory={loadChangesHistory}
-                isRefundDisabled={isRefundDisabled}
                 makeRefund={makeRefund}
                 transactions={transactions}
                 isLoading={isLoading}
@@ -111,6 +110,7 @@ const TransactionsWindow: React.FC<TransactionsWindowProps> = ({
                 isRelatedReservationColumnHidden={
                   isRelatedReservationColumnHidden
                 }
+                isRoot={isRoot}
               />
             )}
           </div>

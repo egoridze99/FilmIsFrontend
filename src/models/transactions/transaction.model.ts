@@ -16,7 +16,9 @@ const baseFields = [
   "transaction_type",
   "transaction_status",
   "related_reservation_id",
-  "related_certificate_id"
+  "related_certificate_id",
+  "is_refund_available",
+  "payment_url"
 ];
 
 export class Transaction {
@@ -29,6 +31,8 @@ export class Transaction {
   readonly transaction_type: TransactionTypeEnum;
   readonly related_reservation_id: number | null;
   readonly related_certificate_id: string | null;
+  readonly is_refund_available: boolean;
+  readonly payment_url: string | null;
 
   @observable
   transaction_status: TransactionStatusEnum;

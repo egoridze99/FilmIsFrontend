@@ -18,10 +18,12 @@ import {useTransactionService} from "src/contexts/services/transaction.service.c
 import {Moment} from "moment";
 import TransactionsWindow from "src/UI/components/TransactionsWindow";
 import CashierInfoBar from "src/UI/pages/workspace/schedule/components/CashierInfoBar";
+import {useCommonServices} from "src/contexts/commonServices.context";
 
 import "./workspace.scss";
 
 const Workspace = () => {
+  const {authenticationService} = useCommonServices();
   const transactionService = useTransactionService();
   const customerService = useCustomerService();
   const {workspaceEnv, dictionaries} = useDomainStore();
@@ -115,6 +117,7 @@ const Workspace = () => {
       )}
 
       <TransactionsWindow
+        isRoot={authenticationService.isRoot}
         isOpen={isTransactionsModalOpen}
         onClose={closeTransactionsModal}
         addButtonTooltip={

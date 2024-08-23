@@ -45,7 +45,7 @@ const Users = () => {
     <AppLayout
       toolbarCustomContent={
         <AdminToolbar
-          getTelephones={() => admin.getTelephones()}
+          getTelephones={(data) => admin.getTelephones(data)}
           customerService={customerService}
         />
       }

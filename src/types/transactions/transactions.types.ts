@@ -18,6 +18,8 @@ export type TransactionRawType = {
   transaction_status: TransactionStatusEnum;
   related_reservation_id: number | null;
   related_certificate_id: string | null;
+  is_refund_available: boolean;
+  payment_url: string | null;
 };
 
 export enum TransactionTypeEnum {

@@ -2,23 +2,28 @@ import {injectable} from "inversify";
 import {axios} from "src/axios";
 import {AnalyticType, UserCreationBodyType} from "src/types/admin/admin.types";
 import {UserInfo} from "src/types/shared.types";
-import {Roles} from "src/types/core.types";
 
 @injectable()
 export class AdminDataClient {
-  async getTelephones() {
-    const response = await axios.get<{data: string[]}>("/admin/telephones");
+  async getTelephones(data: {
+    city: number;
+    min_visits: number;
+    last_visit_threshold: string;
+    ignore_before_date: string;
+  }) {
+    const response = await axios.get<{data: string[]}>("/admin/telephones", {
+      params: data
+    });
 
     return response.data.data;
   }
 
   async getAnalyticData(
     dateFrom: string,
-    dateTo: string,
-    area: "cinema" | "room"
+    dateTo: string
   ): Promise<AnalyticType> {
     const response = await axios.get<AnalyticType>("/admin/common", {
-      params: {untill: dateFrom, till: dateTo, area}
+      params: {until: dateFrom, till: dateTo}
     });
 
     return response.data;

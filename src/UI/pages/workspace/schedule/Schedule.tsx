@@ -35,6 +35,7 @@ import TransactionsWindow from "src/UI/components/TransactionsWindow";
 import {useTransactionService} from "src/contexts/services/transaction.service.context";
 import moment from "moment";
 import {TransactionStatusEnum} from "src/types/transactions/transactions.types";
+import {useCommonServices} from "src/contexts/commonServices.context";
 
 const Schedule = () => {
   useCurrentPageTitle();
@@ -51,6 +52,7 @@ const Schedule = () => {
     setIsSearchPanelOpen,
     activeSearchItems
   } = useSearchPanel(searchPanelDefaultValues);
+  const {authenticationService} = useCommonServices();
   const customerService = useCustomerService();
   const transactionService = useTransactionService();
   const {schedule, workspaceEnv, dictionaries} = useDomainStore();
@@ -273,6 +275,7 @@ const Schedule = () => {
 
       <Modal open={isTransactionsModalOpen} onClose={closeTransactionsModal}>
         <TransactionsWindow
+          isRoot={authenticationService.isRoot}
           isOpen={isTransactionsModalOpen}
           onClose={closeTransactionsModal}
           loadTransactionHistory={(id) =>
@@ -346,7 +349,6 @@ const Schedule = () => {
           }}
           isLoading={isTransactionsLoading}
           isAddingDisabled={isTransactionsEditingBlocked}
-          isRefundDisabled={isTransactionsEditingBlocked}
           isRelatedReservationColumnHidden={true}
           isRelatedCertificateColumnHidden={true}
           makeRefund={async (transaction) => {

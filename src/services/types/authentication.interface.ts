@@ -4,6 +4,7 @@ export interface IAuthenticationService {
   isLoading: boolean;
   isAuthenticated: boolean;
   userData: User | null;
+  isRoot: boolean;
 
   signIn(
     login: string,

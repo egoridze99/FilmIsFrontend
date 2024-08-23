@@ -3,6 +3,12 @@ import {Moment} from "moment";
 import {DATETIME_FORMAT} from "../constants/date";
 import {Customer} from "src/models/customers/customer.model";
 
+export type City = {
+  id: number;
+  name: string;
+  timezone: string;
+};
+
 export type Cinema = {
   id: number;
   name: string;

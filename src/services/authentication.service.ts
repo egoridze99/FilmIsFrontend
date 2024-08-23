@@ -11,7 +11,7 @@ import {TYPES} from "src/app/app.types";
 import {IStorage} from "src/services/types/storage.interface";
 import {AUTHENTICATION_KEY} from "src/constants/storageKeys";
 import jwtDecode from "jwt-decode";
-import {User} from "src/types/core.types";
+import {Roles, User} from "src/types/core.types";
 import {axios} from "src/axios";
 import {IAuthenticationService} from "src/services/types/authentication.interface";
 
@@ -67,6 +67,11 @@ export class AuthenticationService implements IAuthenticationService {
     }
 
     return (jwtDecode(this.jwt) as {identity: User}).identity;
+  }
+
+  @computed
+  get isRoot() {
+    return this.userData?.role === Roles.root || false;
   }
 
   @action

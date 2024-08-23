@@ -6,7 +6,7 @@ import {useDomainStore} from "src/contexts/store.context";
 import {DataGrid} from "@mui/x-data-grid";
 import {getColumns} from "src/UI/pages/certificates/columns/getColumns";
 import {observer} from "mobx-react-lite";
-import {Card, Drawer, Modal, Typography} from "@mui/material";
+import {Card, Drawer, Typography} from "@mui/material";
 import SubpagesToolbar from "src/UI/components/SubpagesToolbar";
 import Toolbar from "./components/Toolbar";
 import CreationForm from "src/UI/pages/certificates/components/CreationForm";
@@ -26,9 +26,11 @@ import {useTransactionService} from "src/contexts/services/transaction.service.c
 import TransactionsWindow from "src/UI/components/TransactionsWindow";
 import {Certificate} from "src/types/shared.types";
 import {noop} from "src/utils/noop";
+import {useCommonServices} from "src/contexts/commonServices.context";
 
 const Certificates = () => {
   useCurrentPageTitle();
+  const {authenticationService} = useCommonServices();
   const transactionService = useTransactionService();
   const {certificates, dictionaries} = useDomainStore();
   const {contentSize} = usePageData();
@@ -167,6 +169,7 @@ const Certificates = () => {
       </div>
 
       <TransactionsWindow
+        isRoot={authenticationService.isRoot}
         isOpen={isTransactionsModalOpen}
         onClose={closeTransactionsModal}
         loadTransactionHistory={(id) =>
@@ -185,7 +188,6 @@ const Certificates = () => {
         onNewTransactionAdd={noop as any}
         makeRefund={noop as any}
         isLoading={isTransactionsLoading}
-        isRefundDisabled={true}
         isAddingDisabled={true}
         isRelatedReservationColumnHidden={true}
         isRelatedCertificateColumnHidden={true}

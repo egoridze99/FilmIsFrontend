@@ -75,11 +75,16 @@ const TransactionsSection: React.FC<TransactionsSectionProps> = ({
               select
               variant="standard"
             >
-              {Object.values(TransactionTypeEnum).map((transactionType) => (
-                <MenuItem key={transactionType} value={transactionType}>
-                  {transactionTypeDictionary[transactionType]}
-                </MenuItem>
-              ))}
+              {Object.values(TransactionTypeEnum)
+                .filter(
+                  (transactionType) =>
+                    transactionType !== TransactionTypeEnum.sbp
+                )
+                .map((transactionType) => (
+                  <MenuItem key={transactionType} value={transactionType}>
+                    {transactionTypeDictionary[transactionType]}
+                  </MenuItem>
+                ))}
             </Field>
           </Box>
         ))}

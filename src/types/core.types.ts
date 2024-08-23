@@ -24,3 +24,8 @@ export type ChangesResponseType<T> = {
   new: T;
   old: T;
 };
+
+export enum DictionariesEnum {
+  CinemaDictionary = "CinemaDictionary",
+  CityDictionary = "CityDictionary"
+}

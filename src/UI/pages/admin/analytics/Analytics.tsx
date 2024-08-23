@@ -7,13 +7,33 @@ import SubpagesToolbar from "src/UI/components/SubpagesToolbar";
 import {useDomainStore} from "src/contexts/store.context";
 import AdminToolbar from "src/UI/pages/admin/components/AdminToolbar";
 import Loader from "src/UI/components/Loader";
-import {Card, Drawer, Typography} from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Drawer,
+  Typography
+} from "@mui/material";
 import SettingsPanel from "src/UI/pages/admin/analytics/components/SettingsPanel";
 import AnalyticsToolbar from "src/UI/pages/admin/analytics/components/Toolbar";
 import {usePageData} from "src/contexts/pageData.context";
-import {getNumberMask} from "src/utils/getNumberMask";
 import {observer} from "mobx-react-lite";
 import {useCustomerService} from "src/contexts/services/customer.service.context";
+import {ArrowDropDownIcon} from "@mui/x-date-pickers";
+import {getNumberMask} from "src/utils/getNumberMask";
+
+const cinemaSlicesDict = {
+  cinema: "Кинотеатр",
+  reservations: "Резервы",
+  total: "Всего"
+};
+
+const incomeKeysDict = {
+  card: "По карте",
+  cash: "Наличкой",
+  sbp: "СБП",
+  total: "Всего"
+};
 
 const Analytics = () => {
   useCurrentPageTitle();
@@ -26,26 +46,8 @@ const Analytics = () => {
 
   React.useEffect(() => () => admin.clearAnalyticData(), []);
 
-  const totals = React.useMemo(() => {
-    return {
-      money: admin.analyticData?.money.reduce((acc, i) => acc + i.sum, 0) || 0,
-      duration:
-        admin.analyticData?.duration.reduce((acc, i) => acc + i.sum, 0) || 0,
-      checkout:
-        admin.analyticData?.checkout.reduce((acc, i) => acc + i.sum, 0) || 0
-    };
-  }, [admin.analyticData]);
-
-  const onSettingsApply = async (data: {
-    dateFrom: string;
-    dateTo: string;
-    area: string;
-  }) => {
-    const success = await admin.getAnalyticData(
-      data.dateFrom,
-      data.dateTo,
-      data.area as any
-    );
+  const onSettingsApply = async (data: {dateFrom: string; dateTo: string}) => {
+    const success = await admin.getAnalyticData(data.dateFrom, data.dateTo);
     if (success) {
       setIsSettingsOpen(false);
     }
@@ -55,7 +57,7 @@ const Analytics = () => {
     <AppLayout
       toolbarCustomContent={
         <AdminToolbar
-          getTelephones={() => admin.getTelephones()}
+          getTelephones={(data) => admin.getTelephones(data)}
           customerService={customerService}
         />
       }
@@ -70,46 +72,185 @@ const Analytics = () => {
       ) : (
         admin.analyticData && (
           <>
-            <div className="Analytics" style={{height: contentSize.height}}>
-              <Card className="Analytics__item">
-                <Typography variant="h5" className="Analytics__item-title">
-                  Всего заработано: {getNumberMask(totals.money)}
-                </Typography>
-                <div className="Analytics__scrollable-container">
-                  {admin.analyticData.money.map((item) => (
-                    <div>
-                      <h2>{item.area}:</h2>
-                      <p>Картой: {getNumberMask(item.card || 0)}</p>
-                      <p>Наличкой: {getNumberMask(item.cash || 0)}</p>
-                      <p>Всего: {getNumberMask(item.sum || 0)}</p>
-                    </div>
-                  ))}
-                </div>
-              </Card>
+            <div className="Analytics" style={{maxHeight: contentSize.height}}>
+              <div className="Analytics__container">
+                {admin.analyticData.map((cinema) => (
+                  <Accordion key={cinema.cinema_id} disableGutters>
+                    <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
+                      <Typography variant="h6">{cinema.cinema_name}</Typography>
+                    </AccordionSummary>
 
-              <Card className="Analytics__item">
-                <Typography variant="h5" className="Analytics__item-title">
-                  Всего потрачено: {getNumberMask(Math.abs(totals.checkout))}
-                </Typography>
-                {admin.analyticData.checkout.map((item) => (
-                  <div>
-                    <h2>{item.area}:</h2>
-                    <span>{getNumberMask(Math.abs(item.sum))}</span>
-                  </div>
-                ))}
-              </Card>
+                    <AccordionDetails>
+                      {cinema.total_duration && (
+                        <Typography>
+                          <Typography component="span" fontWeight={500}>
+                            Общая продолжительность бронирований:
+                          </Typography>{" "}
+                          {getNumberMask(cinema.total_duration)}
+                        </Typography>
+                      )}
 
-              <Card className="Analytics__item">
-                <Typography variant="h5" className="Analytics__item-title">
-                  Всего часов просмотров: {getNumberMask(totals.duration)}
-                </Typography>
-                {admin.analyticData.duration.map((item) => (
-                  <div>
-                    <h2>{item.area}:</h2>
-                    <span>{getNumberMask(item.sum)}</span>
-                  </div>
+                      {cinema.income && (
+                        <>
+                          <Typography fontWeight={500}>Доход:</Typography>
+                          <div className="Analytics__cashier-data">
+                            {Object.entries(cinemaSlicesDict).map(
+                              ([key, title]) => {
+                                if (cinema!.income![key]) {
+                                  return (
+                                    <>
+                                      <Typography fontWeight={500}>
+                                        {title}:
+                                      </Typography>
+                                      <div className="Analytics__cashier-data-section">
+                                        {Object.keys(incomeKeysDict).map(
+                                          (paymentMethod) => (
+                                            <Typography>
+                                              {incomeKeysDict[paymentMethod]}:{" "}
+                                              {getNumberMask(
+                                                cinema!.income![key][
+                                                  paymentMethod
+                                                ]
+                                              )}
+                                            </Typography>
+                                          )
+                                        )}
+                                      </div>
+                                    </>
+                                  );
+                                }
+
+                                return null;
+                              }
+                            )}
+                          </div>
+                        </>
+                      )}
+
+                      {cinema.expense && (
+                        <>
+                          <Typography fontWeight={500}>Расход:</Typography>
+                          <div className="Analytics__cashier-data">
+                            {Object.entries(cinemaSlicesDict).map(
+                              ([key, title]) => {
+                                if (cinema!.expense![key]) {
+                                  return (
+                                    <Typography>
+                                      {title}:{" "}
+                                      {getNumberMask(cinema!.expense![key])}
+                                    </Typography>
+                                  );
+                                }
+
+                                return null;
+                              }
+                            )}
+                          </div>
+                        </>
+                      )}
+
+                      {cinema.refunds && (
+                        <>
+                          <Typography fontWeight={500}>Возвраты:</Typography>
+                          <div className="Analytics__cashier-data">
+                            {Object.entries(cinemaSlicesDict).map(
+                              ([key, title]) => {
+                                if (cinema!.refunds![key]) {
+                                  return (
+                                    <Typography>
+                                      {title}:{" "}
+                                      {getNumberMask(cinema!.refunds![key])}
+                                    </Typography>
+                                  );
+                                }
+
+                                return null;
+                              }
+                            )}
+                          </div>
+                        </>
+                      )}
+
+                      {cinema.rooms && cinema.rooms.length && (
+                        <div className="Analytics__rooms">
+                          <Typography fontWeight={500}>
+                            Инфа по залам
+                          </Typography>
+                          {cinema.rooms.map((room) => (
+                            <Accordion key={room.room_id} disableGutters>
+                              <AccordionSummary
+                                expandIcon={<ArrowDropDownIcon />}
+                              >
+                                <Typography fontWeight={500}>
+                                  {room.room_name}
+                                </Typography>
+                              </AccordionSummary>
+
+                              <AccordionDetails>
+                                {room.total_duration && (
+                                  <Typography>
+                                    <Typography
+                                      component="span"
+                                      fontWeight={500}
+                                    >
+                                      Общая продолжительность бронирований:
+                                    </Typography>{" "}
+                                    {getNumberMask(room.total_duration)}
+                                  </Typography>
+                                )}
+
+                                {room.income && (
+                                  <>
+                                    <Typography fontWeight={500}>
+                                      Доход:
+                                    </Typography>
+                                    <div className="Analytics__cashier-data">
+                                      {Object.keys(incomeKeysDict).map(
+                                        (paymentMethod) => (
+                                          <Typography>
+                                            {incomeKeysDict[paymentMethod]}:{" "}
+                                            {getNumberMask(
+                                              room!.income![paymentMethod]
+                                            )}
+                                          </Typography>
+                                        )
+                                      )}
+                                    </div>
+                                  </>
+                                )}
+
+                                {room.expense && (
+                                  <Typography>
+                                    <Typography
+                                      component="span"
+                                      fontWeight={500}
+                                    >
+                                      Расходы:
+                                    </Typography>{" "}
+                                    {getNumberMask(room.expense)}
+                                  </Typography>
+                                )}
+
+                                {room.refunds && (
+                                  <Typography>
+                                    <Typography
+                                      component="span"
+                                      fontWeight={500}
+                                    >
+                                      Возвраты:
+                                    </Typography>{" "}
+                                    {getNumberMask(room.refunds)}
+                                  </Typography>
+                                )}
+                              </AccordionDetails>
+                            </Accordion>
+                          ))}
+                        </div>
+                      )}
+                    </AccordionDetails>
+                  </Accordion>
                 ))}
-              </Card>
+              </div>
             </div>
           </>
         )

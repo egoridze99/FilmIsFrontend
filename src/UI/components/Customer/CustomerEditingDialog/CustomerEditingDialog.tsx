@@ -85,8 +85,6 @@ const CustomerEditingDialog: React.FC<UserEditingDialogProps> = ({
           validateOnMount
         >
           {({isSubmitting, setFieldValue, values, isValid, errors}) => {
-            console.log(isValid);
-
             const setDate = (field: string, date: Moment) => {
               setFieldValue(field, date.toDate());
             };

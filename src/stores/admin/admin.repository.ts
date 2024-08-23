@@ -7,7 +7,6 @@ import {AdminDataClient} from "src/stores/admin/admin.dataClient";
 import fileSaver from "file-saver";
 import {INotificationService} from "src/services/types/notification.interface";
 import {getCommonErrorNotification} from "src/utils/getCommonErrorNotification";
-import {Roles} from "src/types/core.types";
 
 @injectable()
 export class AdminRepository {
@@ -30,27 +29,27 @@ export class AdminRepository {
     makeObservable(this);
   }
 
-  async getTelephones() {
-    const data = await this.dataClient.getTelephones();
-    const dataAsString = data.join("\n");
-    fileSaver.saveAs(
+  async getTelephones(data: {
+    city: number;
+    min_visits: number;
+    last_visit_threshold: string;
+    ignore_before_date: string;
+  }) {
+    const loadedData = await this.dataClient.getTelephones(data);
+    const dataAsString = loadedData.join("\n");
+    await fileSaver.saveAs(
       new Blob([dataAsString], {type: "text/plain;charset=utf-8"}),
       "telephones.txt"
     );
   }
 
   @action
-  async getAnalyticData(
-    dateFrom: string,
-    dateTo: string,
-    area: "cinema" | "room"
-  ) {
+  async getAnalyticData(dateFrom: string, dateTo: string) {
     try {
       this.isLoading = true;
       this.analyticData = await this.dataClient.getAnalyticData(
         dateFrom,
-        dateTo,
-        area
+        dateTo
       );
       return true;
     } catch (e) {

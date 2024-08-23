@@ -7,25 +7,26 @@ import moment from "moment";
 import {TransactionStatusCell} from "src/UI/components/TransactionsWindow/components/TransactionsTable/columns/cells/TransactionStatusCell";
 import {RefundButtonCell} from "src/UI/components/TransactionsWindow/components/TransactionsTable/columns/cells/RefundButtonCell";
 import {History} from "@mui/icons-material";
+import {TransactionStatusEnum} from "src/types/transactions/transactions.types";
 
 export const getColumns = (props: {
-  makeRefund: (id: Transaction) => void;
+  makeRefund: (id: Transaction) => Promise<void>;
   loadTransactionHistory: (transactionId: string) => Promise<void>;
   isRelatedReservationColumnHidden?: boolean;
   isRelatedCertificateColumnHidden?: boolean;
-  isRefundDisabled?: boolean;
+  isRoot: boolean;
 }): GridColDef<Transaction>[] => {
   const columnTemplates = [
     {
       field: "id",
       headerName: "Идентификатор",
-      width: 220,
+      width: 250,
       filterable: false,
       renderCell: (params) => (
         <div className="TransactionsWindow__transactions-id-cell-container">
           <Tooltip title="Показать историю изменений">
             <IconButton
-              className="TransactionsWindow__transactions-id-cell-history-btn"
+              className="TransactionsWindow__transactions-id-cell-history-btn_with-margin"
               onClick={() => props.loadTransactionHistory(params.row.id)}
             >
               <History />
@@ -83,6 +84,12 @@ export const getColumns = (props: {
       filterable: false
     },
     {
+      field: "payment_url",
+      headerName: "Ссылка на оплату",
+      width: 450,
+      filterable: false
+    },
+    {
       field: "author",
       headerName: "Автор",
       width: 160,
@@ -112,7 +119,9 @@ export const getColumns = (props: {
       renderCell: (params) => (
         <RefundButtonCell
           disabled={
-            props.isRefundDisabled || !!params.row.related_certificate_id
+            !params.row.is_refund_available &&
+            !props.isRoot &&
+            params.row.transaction_status !== TransactionStatusEnum.refunded
           }
           makeRefund={() => props.makeRefund(params.row)}
           transaction={params.row}
@@ -126,6 +135,7 @@ export const getColumns = (props: {
     created_at: true,
     sum: true,
     description: true,
+    payment_url: true,
     related_reservation_id: !props.isRelatedReservationColumnHidden,
     related_certificate_id: !props.isRelatedCertificateColumnHidden,
     author: true,
