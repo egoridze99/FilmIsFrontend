@@ -33,11 +33,9 @@ const CreationForm: React.FC<CreationFormProps> = ({
   const bodyRef = React.useRef<HTMLDivElement | null>(null);
 
   const onSubmit = async (values: CertificateCreationBodyType) => {
-    console.log(values);
-
     return onCreate({
       ...values,
-      contact: (values.contact as unknown as Customer).id,
+      contact: (values.contact as unknown as Customer).id as number,
       sum: parseFloat(values.sum as any),
       transactions: values.transactions.map((t) => ({
         ...t,

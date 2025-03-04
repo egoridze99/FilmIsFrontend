@@ -74,14 +74,17 @@ const CustomerCard: React.FC<CustomerCardProps> = ({
       >
         <DialogTitle>
           Профиль пользователя
-          <Tooltip title="Показать историю изменений">
-            <IconButton
-              className="CustomerCard__changes-btn"
-              onClick={() => loadChangesHistory(customer?.id as number)}
-            >
-              <History />
-            </IconButton>
-          </Tooltip>
+          {(customer?._isAbleToReadAndEdit ||
+            customer?.isCustomerHasBlankFields) && (
+            <Tooltip title="Показать историю изменений">
+              <IconButton
+                className="CustomerCard__changes-btn"
+                onClick={() => loadChangesHistory(customer?.id as number)}
+              >
+                <History />
+              </IconButton>
+            </Tooltip>
+          )}
         </DialogTitle>
         <DialogContent className="CustomerCard__content-container">
           <div className="CustomerCard__content">
@@ -90,12 +93,15 @@ const CustomerCard: React.FC<CustomerCardProps> = ({
             </div>
 
             <div className="CustomerCard__customer-data">
-              <p
-                className="CustomerCard__edit-btn"
-                onClick={() => setIsEditingDialogOpen(true)}
-              >
-                Редактировать
-              </p>
+              {(customer?._isAbleToReadAndEdit ||
+                customer?.isCustomerHasBlankFields) && (
+                <p
+                  className="CustomerCard__edit-btn"
+                  onClick={() => setIsEditingDialogOpen(true)}
+                >
+                  Редактировать
+                </p>
+              )}
 
               {baseFields.map((i) => (
                 <div className="CustomerCard__customer-data-element">

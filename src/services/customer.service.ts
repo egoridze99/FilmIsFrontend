@@ -11,11 +11,15 @@ import {CustomerRawType} from "src/types/customer/customer.types";
 import {Customer} from "src/models/customers/customer.model";
 import {action, makeObservable, observable} from "mobx";
 import {mergeAll, pickAll} from "ramda";
+import {AuthenticationService} from "./authentication.service";
 
 @injectable()
 export class CustomerService {
   @inject(TYPES.NotificationService)
   private readonly notificationService: INotificationService;
+
+  @inject(TYPES.AuthenticationService)
+  private readonly authService: AuthenticationService;
 
   private abortController: AbortController | null = null;
 
@@ -44,7 +48,7 @@ export class CustomerService {
       this.customersInApp = mergeAll([
         this.customersInApp,
         data.reduce((acc, customer) => {
-          acc[customer.id] = new Customer(customer);
+          acc[customer.id] = new Customer(customer, this.authService.isRoot);
           return acc;
         }, {})
       ]);
@@ -79,7 +83,7 @@ export class CustomerService {
       });
       this.abortController = null;
 
-      return response.data.map((c) => new Customer(c));
+      return response.data.map((c) => new Customer(c, this.authService.isRoot));
     } catch (e) {
       return null;
     }
@@ -89,7 +93,7 @@ export class CustomerService {
     try {
       const response = await axios.post<CustomerRawType>("/customer", data);
 
-      return new Customer(response.data);
+      return new Customer(response.data, this.authService.isRoot);
     } catch (e) {
       console.log(e);
 
@@ -114,7 +118,7 @@ export class CustomerService {
       if (customer.id in this.customersInApp) {
         this.customersInApp[customer.id].setValuesFromRawType(customer);
       } else {
-        this.customersInApp[customer.id] = new Customer(customer);
+        this.customersInApp[customer.id] = new Customer(customer, this.authService.isRoot);
       }
 
       return this.customersInApp[customer.id];
