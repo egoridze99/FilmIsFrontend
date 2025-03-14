@@ -29,6 +29,7 @@ type UserEditingDialogProps = {
 
   defaultData?: Customer;
   isEditMode?: boolean;
+  pretypedTelephone?: string;
 };
 
 const textFormFields = [
@@ -59,7 +60,8 @@ const CustomerEditingDialog: React.FC<UserEditingDialogProps> = ({
   onClose,
   isEditMode = false,
   onApply,
-  defaultData
+  defaultData,
+  pretypedTelephone
 }) => {
   const onSubmit = async (values: UserEditingFormValues) => {
     const data = getSavableData(values);
@@ -80,7 +82,7 @@ const CustomerEditingDialog: React.FC<UserEditingDialogProps> = ({
       <DialogContent className="UserEditingDialog__content">
         <Formik
           validationSchema={getValidationSchema()}
-          initialValues={getInitialValues(defaultData)}
+          initialValues={getInitialValues(defaultData, pretypedTelephone)}
           onSubmit={onSubmit}
           validateOnMount
         >

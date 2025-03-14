@@ -179,6 +179,38 @@ const SearchPanel: React.FC<SearchPanelProps> = ({
                       }
                     />
                   </Box>
+
+                  <Box className="full-width-form-control" marginY={1}>
+                    <Field
+                      component={Datepicker}
+                      value={
+                        values.created_start_date
+                          ? moment(values.created_start_date)
+                          : null
+                      }
+                      name="created_start_date"
+                      label="Диапазон создания с"
+                      onChange={(val) =>
+                        setFieldValue("created_start_date", val.toDate())
+                      }
+                    />
+                  </Box>
+
+                  <Box className="full-width-form-control" marginY={1}>
+                    <Field
+                      component={Datepicker}
+                      value={
+                        values.created_end_date
+                          ? moment(values.created_end_date)
+                          : null
+                      }
+                      name="created_end_date"
+                      label="Диапазон создания по"
+                      onChange={(val) =>
+                        setFieldValue("created_end_date", val.toDate())
+                      }
+                    />
+                  </Box>
                 </SidePanelContentContainer>
                 <FormFooter
                   onCancel={close}

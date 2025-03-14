@@ -32,10 +32,12 @@ const CustomerAutocomplete: React.FC<UserAutocompleteProps> = ({
 
   const formikContext = useFormikContext();
 
-  const {options, setSearchValue, isLoading} = useLoadOptions(
-    customerService,
-    formikContext.values?.[name]
-  );
+  const {
+    options,
+    setSearchValue,
+    isLoading,
+    searchValue: telephone
+  } = useLoadOptions(customerService, formikContext.values?.[name]);
 
   const createUser = async (data: CustomerRawType) => {
     const newUser = await customerService.createUser(data);
@@ -59,6 +61,7 @@ const CustomerAutocomplete: React.FC<UserAutocompleteProps> = ({
         open={isFormDialogOpen}
         onClose={() => setIsDialogFormOpen(false)}
         onApply={createUser}
+        pretypedTelephone={telephone}
       />
       <Field
         onChange={(_, val: Customer | string) => {

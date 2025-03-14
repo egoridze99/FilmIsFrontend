@@ -36,14 +36,11 @@ export const getInitialValues = (
       time: reservation.start_date.format("HH:mm"),
       duration: reservation.duration,
       count: reservation.guests_count,
-      guest: new Customer(
-        {
-          id: reservation.contact.id as number,
-          name: reservation.contact.name,
-          telephone: reservation.contact.telephone
-        },
-        true
-      ),
+      guest: new Customer({
+        id: reservation.contact.id as number,
+        name: reservation.contact.name,
+        telephone: reservation.contact.telephone
+      }),
       film: null,
       note: reservation.note,
       rent: 0,

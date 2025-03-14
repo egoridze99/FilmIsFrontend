@@ -4,7 +4,8 @@ import {omit} from "ramda";
 import {Customer} from "src/models/customers/customer.model";
 
 export const getInitialValues = (
-  defaultValues?: Customer
+  defaultValues?: Customer,
+  pretypedTelephone?: string
 ): UserEditingFormValues => {
   if (defaultValues) {
     return {
@@ -30,12 +31,8 @@ export const getInitialValues = (
     "gender"
   ];
 
-  const data = {
-    ...fields.reduce((acc, i) => {
-      acc[i] = null;
-      return acc;
-    }, {})
-  };
-
-  return data as UserEditingFormValues;
+  return fields.reduce((acc, i) => {
+    acc[i] = i === "telephone" ? (pretypedTelephone ?? null) : null;
+    return acc;
+  }, {}) as UserEditingFormValues;
 };

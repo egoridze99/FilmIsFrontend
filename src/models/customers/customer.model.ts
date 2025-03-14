@@ -2,122 +2,45 @@ import moment from "moment/moment";
 import {action, computed, makeObservable, observable} from "mobx";
 import {CustomerRawType} from "src/types/customer/customer.types";
 import {omit} from "ramda";
-import {
-  CastOptionalToRequired,
-  NullableFields
-} from "../../types/utility.types";
-import {DATE_FORMAT} from "../../constants/date";
-
-type CustomerDataType = NullableFields<CastOptionalToRequired<CustomerRawType>>;
+import {Moment} from "moment";
 
 export class Customer {
-  @observable private data: CustomerDataType;
+  readonly id: number;
 
-  readonly _isAbleToReadAndEdit: boolean = false;
+  @observable name: string;
+  @observable telephone: string;
 
-  constructor(data: CustomerRawType, isAbleToRead: boolean) {
+  @observable has_comments: boolean | null;
+  @observable surname: string | null;
+  @observable patronymic: string | null;
+  @observable birthday_date: Moment | null;
+  @observable birthplace: string | null;
+  @observable passport_issued_by: string | null;
+  @observable passport_issue_date: Moment | null;
+  @observable department_code: string | null;
+  @observable passport_identity: string | null;
+  @observable gender: "М" | "Ж" | null;
+
+  constructor(data: CustomerRawType) {
     makeObservable(this);
 
+    this.id = data.id;
     this.setValuesFromRawType(data);
-    this._isAbleToReadAndEdit = isAbleToRead;
   }
 
   @action setValuesFromRawType(data: CustomerRawType) {
-    this.data = Object.entries(data).reduce(
-      (acc, [key, value]) => {
-        acc[key] = value ?? null;
-        return acc;
-      },
-      {} as typeof this.data
-    );
+    const dataWithoutId = omit(["id"], data);
 
-    this.data.birthday_date = data.birthday_date
-      ? moment(data.birthday_date)
+    for (let key in dataWithoutId) {
+      this[key] = data[key] || null;
+    }
+
+    this.birthday_date = dataWithoutId.birthday_date
+      ? moment(dataWithoutId.birthday_date)
       : null;
-
-    this.data.passport_issue_date = data.passport_issue_date
-      ? moment(data.passport_issue_date)
+    this.passport_issue_date = dataWithoutId.passport_issue_date
+      ? moment(dataWithoutId.passport_issue_date)
       : null;
-  }
-
-  @computed get id() {
-    return this.data.id;
-  }
-
-  @computed get name() {
-    return this.data.name as string;
-  }
-
-  @computed get telephone() {
-    return this.data.telephone as string;
-  }
-
-  @computed get has_comments() {
-    return this.data.has_comments;
-  }
-
-  @computed get birthday_date() {
-    if (!this.data.birthplace) {
-      return null;
-    }
-
-    return this._isAbleToReadAndEdit
-      ? this.data.birthday_date
-      : "*".repeat(DATE_FORMAT.length);
-  }
-
-  @computed get birthplace() {
-    if (!this.data.birthplace) {
-      return null;
-    }
-
-    return this._isAbleToReadAndEdit
-      ? this.data.birthplace
-      : "*".repeat(this.data.birthplace?.length || 4);
-  }
-
-  @computed get passport_issued_by() {
-    if (!this.data.passport_issued_by) {
-      return null;
-    }
-
-    return this._isAbleToReadAndEdit
-      ? this.data.passport_issued_by
-      : "*".repeat(15);
-  }
-
-  @computed get passport_issue_date() {
-    if (!this.data.passport_issue_date) {
-      return null;
-    }
-
-    return this._isAbleToReadAndEdit
-      ? this.data.passport_issue_date
-      : "*".repeat(DATE_FORMAT.length);
-  }
-
-  @computed get department_code() {
-    if (!this.data.department_code) {
-      return null;
-    }
-
-    return this._isAbleToReadAndEdit
-      ? this.data.department_code
-      : "*".repeat(this.data.department_code.length);
-  }
-
-  @computed get passport_identity() {
-    if (!this.data.passport_identity) {
-      return null;
-    }
-
-    return this._isAbleToReadAndEdit
-      ? this.data.passport_identity
-      : "*".repeat(this.data.passport_identity.length);
-  }
-
-  @computed get gender() {
-    return this.data.gender;
   }
 
   @computed get fieldsAsDict(): CustomerRawType {
@@ -138,28 +61,20 @@ export class Customer {
     ];
 
     return fields.reduce((acc, field) => {
-      acc[field] = this.data[field];
+      acc[field] = this[field];
       return acc;
     }, {} as CustomerRawType);
   }
 
   @computed get fullname() {
-    if (!this._isAbleToReadAndEdit) {
-      return this.name;
-    }
-
     const fieldsDescriptionDict = {
       surname: "фамилия",
       patronymic: "отчество"
     };
 
-    const emptyValues = ["surname", "patronymic"].filter((i) => !this?.data[i]);
+    const emptyValues = ["surname", "patronymic"].filter((i) => !this?.[i]);
 
-    const fullName = [
-      this?.data?.surname || "",
-      this?.data?.name,
-      this?.data?.patronymic || ""
-    ]
+    const fullName = [this?.surname || "", this?.name, this?.patronymic || ""]
       .join(" ")
       .trim();
 
@@ -184,14 +99,10 @@ export class Customer {
   }
 
   @computed get isCustomerTooYoung() {
-    return moment().diff(this.data.birthday_date, "years") < 18;
+    return moment().diff(this.birthday_date, "years") < 18;
   }
 
-  @action
-  setFieldValue<T extends CustomerDataType, K extends keyof CustomerDataType>(
-    key: K,
-    value: T[K]
-  ) {
-    this.data[key] = value;
+  @action setFieldValue(key: keyof this, value: (typeof this)[keyof this]) {
+    this[key] = value;
   }
 }

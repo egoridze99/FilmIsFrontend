@@ -29,6 +29,7 @@ import ChangesHistoryModal from "src/UI/pages/workspace/components/ChangesHistor
 import {useChangesHistory} from "src/hooks/useChangesHistory";
 import {Customer} from "src/models/customers/customer.model";
 import {CustomerRawType} from "src/types/customer/customer.types";
+import {useCommonServices} from "src/contexts/commonServices.context";
 
 type CustomerCardProps = {
   customer: Customer | null;
@@ -42,6 +43,7 @@ const CustomerCard: React.FC<CustomerCardProps> = ({
   onClose,
   onEdit
 }) => {
+  const {authenticationService} = useCommonServices();
   const customerService = useCustomerService();
 
   const [isEditingDialogOpen, setIsEditingDialogOpen] = React.useState(false);
@@ -74,7 +76,7 @@ const CustomerCard: React.FC<CustomerCardProps> = ({
       >
         <DialogTitle>
           Профиль пользователя
-          {(customer?._isAbleToReadAndEdit ||
+          {(authenticationService.isRoot ||
             customer?.isCustomerHasBlankFields) && (
             <Tooltip title="Показать историю изменений">
               <IconButton
@@ -93,7 +95,7 @@ const CustomerCard: React.FC<CustomerCardProps> = ({
             </div>
 
             <div className="CustomerCard__customer-data">
-              {(customer?._isAbleToReadAndEdit ||
+              {(authenticationService.isRoot ||
                 customer?.isCustomerHasBlankFields) && (
                 <p
                   className="CustomerCard__edit-btn"
@@ -123,9 +125,12 @@ const CustomerCard: React.FC<CustomerCardProps> = ({
                       {i.title}
                     </div>
                     <div className="CustomerCard__customer-data-element-value">
-                      {i.render
-                        ? i.render(customer)
-                        : customer?.[i.field] || "Не заполнено"}
+                      {authenticationService.isRoot ||
+                      customer?.isCustomerHasBlankFields
+                        ? i.render
+                          ? i.render(customer)
+                          : customer?.[i.field] || "Не заполнено"
+                        : "******"}
                     </div>
                   </div>
                 ))}

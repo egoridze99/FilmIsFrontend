@@ -3,13 +3,29 @@ import {debounce} from "@mui/material";
 import {CustomerService} from "src/services/customer.service";
 import {Customer} from "src/models/customers/customer.model";
 
+const addUserOption = "Добавить пользователя";
+
 export const useLoadOptions = (
   customerService: CustomerService,
   initialValue?: Customer
 ) => {
-  const [searchValue, setSearchValue] = React.useState("");
+  const [searchValue, _setSearchValue] = React.useState("");
   const [options, setOptions] = React.useState<Array<Customer | string>>([]);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const lastTypedTelephone = React.useRef<string | null>(
+    initialValue?.telephone || null
+  );
+
+  const setSearchValue = (val: string) => {
+    _setSearchValue(() => {
+      if (val !== addUserOption) {
+        lastTypedTelephone.current = val;
+      }
+
+      return val;
+    });
+  };
 
   const loadCustomers = React.useCallback(
     debounce(async (telephone: string) => {
@@ -17,7 +33,7 @@ export const useLoadOptions = (
 
       const options = await customerService.loadUser(telephone);
       if (options) {
-        setOptions((_) => [...options, "Добавить пользователя"]);
+        setOptions((_) => [...options, addUserOption]);
       }
 
       setIsLoading(false);
@@ -39,6 +55,7 @@ export const useLoadOptions = (
     isLoading,
     options,
     setSearchValue,
-    loadCustomers
+    loadCustomers,
+    searchValue: lastTypedTelephone.current || ""
   };
 };

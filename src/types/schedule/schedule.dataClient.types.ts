@@ -37,6 +37,8 @@ export type ReservationSearchBodyType = {
   telephone: string | null;
   start_date: DateTimeType | null;
   end_date: DateTimeType | null;
+  created_start_date: DateTimeType | null;
+  created_end_date: DateTimeType | null;
 };
 
 export type ScheduleChangesResponseType = ChangesResponseType<ChangesItemType>;

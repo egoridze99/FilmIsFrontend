@@ -69,7 +69,15 @@ export class ScheduleDataClient {
     }
 
     if (data.end_date) {
-      url += `date_to=${moment(data.end_date).format(DATE_FORMAT)}`;
+      url += `date_to=${moment(data.end_date).format(DATE_FORMAT)}&`;
+    }
+
+    if (data.created_start_date) {
+      url += `created_start_date=${moment(data.created_start_date).format(DATE_FORMAT)}&`;
+    }
+
+    if (data.created_end_date) {
+      url += `created_end_date=${moment(data.created_end_date).format(DATE_FORMAT)}&`;
     }
 
     const response = await axios.get<ReservationResponseType[]>(url);

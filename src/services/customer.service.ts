@@ -48,7 +48,7 @@ export class CustomerService {
       this.customersInApp = mergeAll([
         this.customersInApp,
         data.reduce((acc, customer) => {
-          acc[customer.id] = new Customer(customer, this.authService.isRoot);
+          acc[customer.id] = new Customer(customer);
           return acc;
         }, {})
       ]);
@@ -83,7 +83,7 @@ export class CustomerService {
       });
       this.abortController = null;
 
-      return response.data.map((c) => new Customer(c, this.authService.isRoot));
+      return response.data.map((c) => new Customer(c));
     } catch (e) {
       return null;
     }
@@ -93,7 +93,7 @@ export class CustomerService {
     try {
       const response = await axios.post<CustomerRawType>("/customer", data);
 
-      return new Customer(response.data, this.authService.isRoot);
+      return new Customer(response.data);
     } catch (e) {
       console.log(e);
 
@@ -118,7 +118,7 @@ export class CustomerService {
       if (customer.id in this.customersInApp) {
         this.customersInApp[customer.id].setValuesFromRawType(customer);
       } else {
-        this.customersInApp[customer.id] = new Customer(customer, this.authService.isRoot);
+        this.customersInApp[customer.id] = new Customer(customer);
       }
 
       return this.customersInApp[customer.id];
