@@ -1,14 +1,16 @@
 import React from "react";
 import {Field, useFormikContext} from "formik";
 import {Autocomplete} from "formik-mui";
-import {CircularProgress, TextField} from "@mui/material";
+import {CircularProgress, TextField, Tooltip} from "@mui/material";
 import {CustomerService} from "src/services/customer.service";
 import CustomerEditingDialog from "src/UI/components/Customer/CustomerEditingDialog";
 import {useLoadOptions} from "src/UI/components/Customer/CustomerAutocomplete/hooks/useLoadOptions";
-
-import "src/UI/components/Customer/CustomerAutocomplete/customerAutocomplete.scss";
 import {Customer} from "src/models/customers/customer.model";
 import {CustomerRawType} from "src/types/customer/customer.types";
+import {Description} from "@mui/icons-material";
+import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
+
+import "src/UI/components/Customer/CustomerAutocomplete/customerAutocomplete.scss";
 
 type UserAutocompleteProps = {
   name: string;
@@ -85,9 +87,31 @@ const CustomerAutocomplete: React.FC<UserAutocompleteProps> = ({
         loadingText={<CircularProgress color="inherit" size={20} />}
         renderOption={(props, option: Customer | string) => (
           <li {...props}>
-            {typeof option === "string"
-              ? option
-              : `${option.name} ${option.telephone}`}
+            {typeof option === "string" ? (
+              option
+            ) : (
+              <div className="UserAutocomplete-option">
+                <div className="UserAutocomplete-option-markers">
+                  {option.has_comments && (
+                    <Tooltip
+                      title={"У пользователя есть оставленные комментарии"}
+                    >
+                      <Description sx={{color: "#007aff", fontSize: "14px"}} />
+                    </Tooltip>
+                  )}
+
+                  {option.isCustomerHasBlankFields && (
+                    <Tooltip title={"Незаполненные паспортные данные"}>
+                      <DoDisturbOnIcon
+                        sx={{color: "#e31235", fontSize: "14px"}}
+                      />
+                    </Tooltip>
+                  )}
+                </div>
+
+                {`${option.name} ${option.telephone}`}
+              </div>
+            )}
           </li>
         )}
         onInputChange={(_, newInputValue: string) => {
